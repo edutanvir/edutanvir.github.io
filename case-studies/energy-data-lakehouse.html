@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Energy Data Lakehouse | Md Tanvir Ahmed</title>
+
+    <meta
+        name="description"
+        content="Explore an energy data lakehouse project using Microsoft Fabric, PySpark, and Power BI to prepare energy data for analytics."
+    >
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <!-- NAVIGATION -->
+    <header class="site-header">
+        <nav class="navbar container" aria-label="Main navigation">
+            <a class="logo" href="../index.html">
+                TA<span>.</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#contact">Contact</a>
+            </div>
+
+            <a
+                class="nav-button"
+                href="https://github.com/edutanvir"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                GitHub ↗
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero container energy-case-hero">
+            <p class="eyebrow">
+                PROJECT CASE STUDY · MICROSOFT FABRIC
+            </p>
+
+            <h1>
+                Energy data.<br>
+                <span>Clearer insights.</span>
+            </h1>
+
+            <p class="hero-description">
+                Exploring how energy-sector datasets can be organized,
+                transformed, and presented through a Microsoft Fabric
+                lakehouse and Power BI reporting workflow.
+            </p>
+
+            <div class="hero-actions">
+                <a
+                    class="button button-primary"
+                    href="#dashboard"
+                >
+                    Explore the dashboard ↓
+                </a>
+
+                <a
+                    class="button button-secondary"
+                    href="../index.html#projects"
+                >
+                    ← All projects
+                </a>
+            </div>
+
+            <div class="tags energy-case-tags">
+                <span>Microsoft Fabric</span>
+                <span>Lakehouse</span>
+                <span>PySpark</span>
+                <span>Power BI</span>
+            </div>
+        </section>
+
+        <!-- PROJECT OVERVIEW -->
+        <section class="section container">
+            <p class="eyebrow">01 · PROJECT OVERVIEW</p>
+
+            <h2>Making energy data easier to analyze.</h2>
+
+            <p class="section-description">
+                Energy information can come from different sources,
+                use different structures, and measure different aspects
+                of the energy sector. This project explores a data
+                workflow that brings selected datasets into a common
+                analytical environment and presents the resulting
+                information through an interactive dashboard.
+            </p>
+
+            <div class="principles">
+                <article class="principle">
+                    <span class="principle-number">01</span>
+                    <h3>The challenge</h3>
+                    <p>
+                        Prepare energy-related data for consistent
+                        exploration, comparison, and reporting.
+                    </p>
+                </article>
+
+                <article class="principle">
+                    <span class="principle-number">02</span>
+                    <h3>The engineering</h3>
+                    <p>
+                        Use Fabric and PySpark to organize and transform
+                        datasets for analytical consumption.
+                    </p>
+                </article>
+
+                <article class="principle">
+                    <span class="principle-number">03</span>
+                    <h3>The outcome</h3>
+                    <p>
+                        Present energy generation, emissions, and
+                        pricing measures in a report for exploration.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <!-- ARCHITECTURE -->
+        <section class="section projects-section">
+            <div class="container">
+                <p class="eyebrow">02 · DATA ARCHITECTURE</p>
+
+                <h2>From source data to reporting.</h2>
+
+                <p class="section-description">
+                    The following is a high-level representation of
+                    the workflow. Update it to reflect the exact
+                    components and processing steps you implemented.
+                </p>
+
+                <div class="energy-architecture">
+                    <article class="architecture-card">
+                        <span class="architecture-step">01</span>
+                        <h3>Data sources</h3>
+                        <p>
+                            Selected energy datasets from public
+                            information sources.
+                        </p>
+                    </article>
+
+                    <div class="energy-architecture-arrow"
+                         aria-hidden="true">→</div>
+
+                    <article class="architecture-card">
+                        <span class="architecture-step">02</span>
+                        <h3>Data preparation</h3>
+                        <p>
+                            Inspect, clean, standardize, and transform
+                            data using the implemented Fabric workflow.
+                        </p>
+                    </article>
+
+                    <div class="energy-architecture-arrow"
+                         aria-hidden="true">→</div>
+
+                    <article class="architecture-card">
+                        <span class="architecture-step">03</span>
+                        <h3>Lakehouse</h3>
+                        <p>
+                            Organize prepared datasets for reuse
+                            and analytical queries.
+                        </p>
+                    </article>
+
+                    <div class="energy-architecture-arrow"
+                         aria-hidden="true">→</div>
+
+                    <article class="architecture-card">
+                        <span class="architecture-step">04</span>
+                        <h3>Power BI</h3>
+                        <p>
+                            Explore measures, trends, geographic
+                            comparisons, and report filters.
+                        </p>
+                    </article>
+                </div>
+
+                <p class="architecture-note">
+                    Architecture overview · Conceptual representation,
+                    not a verified record of every implemented component.
+                </p>
+            </div>
+        </section>
+
+        <!-- DASHBOARD SCREENSHOT -->
+        <section class="section container" id="dashboard">
+            <p class="eyebrow">03 · DASHBOARD WALKTHROUGH</p>
+
+            <h2>Explore the energy dashboard.</h2>
+
+            <p class="section-description">
+                The report brings several energy indicators together
+                so users can explore generation, emissions, pricing,
+                and geographic patterns.
+            </p>
+
+            <figure class="energy-dashboard-figure">
+                <img
+                    src="../images/energy-dashboard.png"
+                    alt="Microsoft Fabric energy dashboard showing energy generation, CO2, average price, trends, and country comparisons"
+                    class="energy-dashboard-image"
+                    loading="lazy"
+                >
+
+                <figcaption>
+                    Microsoft Fabric report · Energy sources and
+                    geographic comparisons.
+                </figcaption>
+            </figure>
+
+            <div class="dashboard-observations">
+                <article class="principle">
+                    <h3>Key performance indicators</h3>
+                    <p>
+                        Summary cards present the displayed CO₂ measure,
+                        total generation, and average price.
+                    </p>
+                </article>
+
+                <article class="principle">
+                    <h3>Generation by geography</h3>
+                    <p>
+                        Country-level comparisons help users examine
+                        how reported generation differs across locations.
+                    </p>
+                </article>
+
+                <article class="principle">
+                    <h3>Energy-source breakdown</h3>
+                    <p>
+                        Source categories allow users to explore the
+                        composition of the generation represented in
+                        the report.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <!-- ANALYTICAL QUESTIONS -->
+        <section class="section projects-section">
+            <div class="container">
+                <p class="eyebrow">04 · ANALYTICAL QUESTIONS</p>
+
+                <h2>What can the report help explore?</h2>
+
+                <div class="principles">
+                    <article class="principle">
+                        <span class="principle-number">01</span>
+                        <h3>Generation patterns</h3>
+                        <p>
+                            How does reported energy generation vary
+                            across years and geographic areas?
+                        </p>
+                    </article>
+
+                    <article class="principle">
+                        <span class="principle-number">02</span>
+                        <h3>Energy-source mix</h3>
+                        <p>
+                            What share of the displayed generation
+                            is associated with each source category?
+                        </p>
+                    </article>
+
+                    <article class="principle">
+                        <span class="principle-number">03</span>
+                        <h3>Emissions and pricing</h3>
+                        <p>
+                            How do the available emissions and price
+                            measures change across the selected data?
+                        </p>
+                    </article>
+                </div>
+
+                <p class="architecture-note">
+                    These are analytical questions, not conclusions
+                    about causation. Interpret each measure using its
+                    source, units, date range, and data coverage.
+                </p>
+            </div>
+        </section>
+
+        <!-- ENGINEERING DECISIONS -->
+        <section class="section container">
+            <p class="eyebrow">05 · ENGINEERING DECISIONS</p>
+
+            <h2>Why the data workflow matters.</h2>
+
+            <div class="case-study-text">
+                <h3>Data consistency</h3>
+                <p>
+                    Before comparing energy information, verify that
+                    date fields, geographic names, energy-source labels,
+                    and units are represented consistently. Differences
+                    in source definitions can otherwise lead to misleading
+                    comparisons.
+                </p>
+
+                <h3>Transformation and validation</h3>
+                <p>
+                    Data preparation should make the transformations
+                    traceable and help identify missing values,
+                    unexpected records, and incompatible data types.
+                    Document the checks actually used in your project.
+                </p>
+
+                <h3>Analytics-ready reporting</h3>
+                <p>
+                    A well-structured analytical dataset makes report
+                    measures easier to maintain and interpret. The
+                    dashboard should communicate what each measure
+                    represents and the period and geography it covers.
+                </p>
+            </div>
+        </section>
+
+        <!-- LIMITATIONS -->
+        <section class="section projects-section">
+            <div class="container">
+                <p class="eyebrow">06 · LIMITATIONS AND NEXT STEPS</p>
+
+                <h2>Good analysis starts with context.</h2>
+
+                <p class="section-description">
+                    Energy datasets can differ in reporting periods,
+                    geographic coverage, measurement units, and
+                    definitions. These differences should be checked
+                    before drawing conclusions from comparisons.
+                </p>
+
+                <div class="principles">
+                    <article class="principle">
+                        <h3>Document the sources</h3>
+                        <p>
+                            Record the dataset name, publisher, retrieval
+                            date, and relevant definitions.
+                        </p>
+                    </article>
+
+                    <article class="principle">
+                        <h3>Validate the measures</h3>
+                        <p>
+                            Confirm units, aggregation rules, missing
+                            periods, and the meaning of each KPI.
+                        </p>
+                    </article>
+
+                    <article class="principle">
+                        <h3>Improve reproducibility</h3>
+                        <p>
+                            Document the transformation workflow and
+                            add data-quality checks that can be repeated.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLOSING -->
+        <section class="section container">
+            <p class="eyebrow">PROJECT SUMMARY</p>
+
+            <h2>Engineering a clearer view of energy data.</h2>
+
+            <p class="section-description">
+                This project demonstrates an approach to preparing
+                energy datasets for analysis using Microsoft Fabric
+                and presenting the resulting measures through Power BI.
+                The next step is to document the exact source datasets,
+                implemented transformations, and validated findings.
+            </p>
+
+            <div class="hero-actions">
+                <a
+                    class="button button-primary"
+                    href="../index.html#projects"
+                >
+                    ← Back to projects
+                </a>
+
+                <a
+                    class="button button-secondary"
+                    href="https://github.com/edutanvir"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Explore GitHub ↗
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>© 2026 Md Tanvir Ahmed</p>
+            <a href="#top"
+               onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+                Back to top ↑
+            </a>
+            <p>Built with HTML, CSS &amp; GitHub Pages.</p>
+        </div>
+    </footer>
+</body>
+</html>
