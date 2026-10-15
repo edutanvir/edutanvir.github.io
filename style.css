@@ -886,3 +886,226 @@ a:focus-visible {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* Carousel: match the new HTML */
+.project-carousel {
+    margin-top: 38px;
+    overflow: hidden;
+    border: 1px solid #e4e5e7;
+    border-radius: 28px;
+    background: #f5f5f7;
+    color: #1d1d1f;
+}
+
+.project-slide {
+    display: none;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: center;
+    gap: 32px;
+    padding: clamp(20px, 4vw, 48px);
+}
+
+.project-slide.active:not([hidden]) {
+    display: grid;
+}
+
+.project-slide[hidden] {
+    display: none !important;
+}
+
+.project-slide .slide-copy h3 {
+    margin: 12px 0;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+}
+
+.project-slide .slide-copy > p:not(.project-category) {
+    color: #515154;
+}
+
+.project-slide .project-category {
+    color: #515154;
+}
+
+.project-slide .tags span {
+    border-color: #d5d5da;
+    color: #424245;
+}
+
+.project-slide .button-primary {
+    background: #0071e3;
+    border-color: #0071e3;
+    color: white;
+}
+
+.slide-image-link {
+    display: block;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+.slide-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+}
+
+.slide-placeholder {
+    min-height: 280px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #e4edf8, #f5f5f7);
+    color: #1d1d1f;
+}
+
+.placeholder-label {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+}
+
+.placeholder-symbol {
+    margin: 15px 0;
+    color: #0071e3;
+    font-size: 4rem;
+}
+
+.slide-placeholder p {
+    color: #515154;
+}
+
+.carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 28px 24px;
+}
+
+.carousel-dots,
+.carousel-arrows {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.carousel-dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #a1a1a6;
+    cursor: pointer;
+}
+
+.carousel-dot.active {
+    width: 26px;
+    background: #0071e3;
+}
+
+.carousel-counter {
+    color: #6e6e73;
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.carousel-arrow {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50%;
+    background: #e5e5ea;
+    color: #1d1d1f;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .project-slide {
+        grid-template-columns: 1fr;
+    }
+
+    .project-slide .slide-image-link,
+    .project-slide .slide-placeholder {
+        order: -1;
+    }
+}
+
+@media (max-width: 560px) {
+    .project-carousel {
+        border-radius: 18px;
+    }
+
+    .project-slide {
+        padding: 18px;
+        gap: 22px;
+    }
+
+    .carousel-controls {
+        padding: 0 18px 18px;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* NYC TAXI PROJECT SCREENSHOT */
+
+.taxi-image-visual {
+    background: #f5f5f7;
+    color: #1d1d1f;
+    padding: 24px;
+    gap: 20px;
+}
+
+.taxi-image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.project-screenshot {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 460px;
+    object-fit: contain;
+    border-radius: 14px;
+}
+
+.taxi-image-visual .visual-topline,
+.taxi-image-visual .visual-footnote {
+    color: #424245;
+}
+
+@media (max-width: 600px) {
+    .taxi-image-visual {
+        padding: 12px;
+    }
+
+    .project-screenshot {
+        max-height: 280px;
+    }
+}
+
+.case-study-image {
+    margin-top: 32px;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+}
