@@ -185,7 +185,7 @@ a:focus-visible {
 }
 
 .button-secondary:hover {
-    background: #24242b;
+    background: #00bf79;
 }
 
 .tech-list,
@@ -204,7 +204,7 @@ a:focus-visible {
     padding: 5px 11px;
     border: 1px solid var(--border);
     border-radius: 999px;
-    color: var(--muted);
+    color: rgb(255, 71, 71)
     font-size: 0.78rem;
 }
 
@@ -531,8 +531,8 @@ a:focus-visible {
 
 .tags span {
     padding: 4px 10px;
-    border-color: #d2d2d7;
-    color: #424245;
+    border-color: #99d4ff;
+    color: #ffffff;
     font-size: 0.73rem;
 }
 
@@ -1119,7 +1119,7 @@ a:focus-visible {
 
 .energy-case-tags {
     margin-top: 24px;
-    color: #eeeefd;
+    color: #ff6868;
 }
 
 .energy-architecture {
