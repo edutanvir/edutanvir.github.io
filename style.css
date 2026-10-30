@@ -204,7 +204,7 @@ a:focus-visible {
     padding: 5px 11px;
     border: 1px solid var(--border);
     border-radius: 999px;
-    color: rgb(255, 71, 71)
+    color: rgb(255, 71, 71);
     font-size: 0.78rem;
 }
 
