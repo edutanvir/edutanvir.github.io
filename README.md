@@ -33,7 +33,8 @@ edutanvir.github.io/
 ├── contact.html               Contact page and form
 ├── style.css                  Design system and styles
 ├── script.js                  Carousel, effects, and contact form
-├── favicon.png                Browser tab icon
+├── favicon.ico                Browser tab icon
+├── favicon-96x96.png          Browser and search-result icon
 ├── apple-touch-icon.png       Home-screen icon
 ├── case-studies/
 │   ├── energy-data-lakehouse.html
