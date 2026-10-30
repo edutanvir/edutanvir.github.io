@@ -1,6 +1,3 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Yvpce6FCO5cFPsnl8wG8IHw75jNu79dyV88mL65VA8MdgTWwlQon30f8tw82+8T" crossorigin="anonymous">
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,385 +6,358 @@
 
     <title>Md Tanvir Ahmed | Azure Data Engineer</title>
     <meta name="description"
-          content="Explore Md Tanvir Ahmed's Azure data engineering projects, Microsoft Fabric dashboards, cloud architectures, and technical case studies.">
+          content="Md Tanvir Ahmed is an Azure data engineer. Explore cloud data pipelines, Microsoft Fabric dashboards, lakehouse architectures, and technical case studies.">
+    <meta name="theme-color" content="#000000">
 
-    <meta name="theme-color" content="#0b1120">
+    <!-- Link previews (LinkedIn, Slack, etc.).
+         Confirm this is your live address; previews need a full URL. -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Md Tanvir Ahmed | Azure Data Engineer">
+    <meta property="og:description" content="Cloud data pipelines, lakehouses, and analytics dashboards on Azure and Microsoft Fabric.">
+    <meta property="og:url" content="https://edutanvir.github.io/">
+    <meta property="og:image" content="https://edutanvir.github.io/images/energy-dashboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script>document.documentElement.classList.add("js");</script>
 </head>
 
 <body>
-    <!-- Navigation -->
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <header class="site-header">
-        <nav class="navbar container" aria-label="Main navigation">
-            <a class="logo" href="#home">TA<span>.</span></a>
+        <nav class="nav container" aria-label="Main navigation">
+            <a class="logo" href="#home" aria-label="Md Tanvir Ahmed, back to top">
+                <span class="logo-mark" aria-hidden="true">
+                    <img src="images/profile.jpg" alt="" width="34" height="34">
+                    <svg class="logo-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="3"/><path d="M5 5.5v13c0 1.7 3.1 3 7 3s7-1.3 7-3v-13"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>
+                </span>
+                <span class="logo-text">Tanvir Ahmed</span>
+            </a>
 
             <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
+                <a href="#approach">Approach</a>
             </div>
 
-            <a class="nav-button"
-               href="https://github.com/edutanvir"
-               target="_blank"
-               rel="noopener noreferrer">
-                GitHub ↗
-            </a>
+            <div class="nav-actions">
+                <a class="nav-ext" href="https://github.com/edutanvir"
+                   target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a class="btn btn-primary btn-small" href="contact.html">Contact</a>
+            </div>
         </nav>
+        <div class="scroll-progress" aria-hidden="true"></div>
     </header>
 
-    <main>
-        <!-- Hero -->
-        <section class="hero container" id="home">
-            <div class="hero-copy">
-                <p class="eyebrow">
-                    AZURE DATA ENGINEERING · CLOUD ANALYTICS
-                </p>
+    <main id="main">
+        <!-- HERO -->
+        <section class="hero" id="home">
+            <div class="container">
+                <p class="kicker">Azure data engineering and cloud analytics</p>
 
-                <h1>
-                    Data into
-                    <span>decisions.</span>
+                <h1 class="display">
+                    <span class="line">Data into</span>
+                    <span class="line gradient-text">decisions.</span>
                 </h1>
 
-                <p class="hero-description">
-                    I'm Md Tanvir Ahmed. I build and explore cloud data
-                    pipelines, lakehouse solutions, and analytics platforms
-                    using Microsoft Azure, Fabric, Databricks, Python, and SQL.
+                <p class="lead">
+                    I'm Md Tanvir Ahmed. I build cloud data pipelines, lakehouses,
+                    and analytics platforms with Microsoft Azure, Fabric,
+                    Databricks, Python, and SQL.
                 </p>
 
                 <div class="hero-actions">
-                    <a class="button button-primary" href="#projects">
-                        Explore my projects ↓
-                    </a>
-
-                    <a class="button button-secondary"
+                    <a class="btn btn-primary" href="#projects" data-magnetic>View projects</a>
+                    <a class="btn btn-secondary"
                        href="https://www.linkedin.com/in/tanvir-de/"
-                       target="_blank"
-                       rel="noopener noreferrer">
-                        Connect on LinkedIn ↗
+                       target="_blank" rel="noopener noreferrer" data-magnetic>
+                        Connect on LinkedIn
                     </a>
                 </div>
 
-                <div class="tech-list" aria-label="Core technologies">
-                    <span>Microsoft Fabric</span>
-                    <span>Azure Data Factory</span>
-                    <span>Databricks</span>
-                    <span>PySpark</span>
-                    <span>SQL</span>
+                <!-- Signature moment: data moving from source to dashboard -->
+                <div class="flow" role="img"
+                     aria-label="Data flows from raw sources, through a lakehouse, to dashboards">
+                    <div class="flow-node">
+                        <strong>Raw data</strong>
+                        <span>Azure Data Factory, ADLS Gen2</span>
+                    </div>
+                    <div class="flow-link"></div>
+                    <div class="flow-node">
+                        <strong>Lakehouse</strong>
+                        <span>Databricks, PySpark, SQL</span>
+                    </div>
+                    <div class="flow-link"></div>
+                    <div class="flow-node">
+                        <strong>Dashboards</strong>
+                        <span>Microsoft Fabric, Power BI</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- About -->
-        <section class="section container" id="about">
-            <p class="eyebrow">ABOUT MY WORK</p>
-            <h2>Engineering data for better decisions.</h2>
-
-            <p class="section-description">
-                My projects explore how raw information becomes trusted,
-                analytics-ready data. I focus on ingestion, transformation,
-                lakehouse architecture, data quality, and business intelligence.
-            </p>
-
-            <div class="principles">
-                <article class="principle">
-                    <span class="principle-number">01</span>
-                    <h3>Build reliable pipelines</h3>
-                    <p>
-                        Ingest, transform, validate, and organize data
-                        using cloud engineering tools.
+        <!-- ABOUT -->
+        <section class="section" id="about">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">About my work</p>
+                    <h2>Engineering data for better decisions.</h2>
+                    <p class="lead">
+                        My projects show how raw information becomes trusted,
+                        analytics-ready data. I focus on ingestion, transformation,
+                        lakehouse architecture, data quality, and business intelligence.
                     </p>
-                </article>
+                </div>
 
-                <article class="principle">
-                    <span class="principle-number">02</span>
-                    <h3>Design clear architectures</h3>
-                    <p>
-                        Document data flows, storage layers, transformations,
-                        and analytical serving patterns.
-                    </p>
-                </article>
+                <div class="grid-3" data-stagger>
+                    <article class="card">
+                        <h3>Build reliable pipelines</h3>
+                        <p>
+                            Ingest, transform, validate, and organize data
+                            using cloud engineering tools.
+                        </p>
+                    </article>
 
-                <article class="principle">
-                    <span class="principle-number">03</span>
-                    <h3>Connect data to decisions</h3>
-                    <p>
-                        Explain analytical findings, engineering trade-offs,
-                        and potential business uses.
-                    </p>
-                </article>
+                    <article class="card">
+                        <h3>Design clear architectures</h3>
+                        <p>
+                            Document data flows, storage layers, transformations,
+                            and analytical serving patterns.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <h3>Connect data to decisions</h3>
+                        <p>
+                            Explain analytical findings, engineering trade-offs,
+                            and potential business uses.
+                        </p>
+                    </article>
+                </div>
             </div>
         </section>
 
-        <!-- Featured project carousel -->
-        <section class="section projects-section" id="projects">
+        <!-- PROJECTS -->
+        <section class="section section--light" id="projects">
             <div class="container">
-                <p class="eyebrow">SELECTED PROJECTS</p>
-                <h2>Built with data. Designed for insight.</h2>
+                <div class="section-head reveal">
+                    <p class="kicker">Selected projects</p>
+                    <h2>Built with data. Designed for insight.</h2>
+                    <p class="lead">
+                        Explore the architecture, engineering decisions,
+                        transformations, and analytics behind each project.
+                    </p>
+                </div>
 
-                <p class="section-description">
-                    Explore the architecture, engineering decisions,
-                    transformations, and analytics behind each project.
-                </p>
-
-                <div class="project-carousel"
+                <div class="carousel reveal"
+                     aria-roledescription="carousel"
                      aria-label="Featured data engineering projects">
 
-                    <!-- Slide 1: Energy -->
-                    <article class="project-slide active">
-                        <div class="slide-copy">
-                            <p class="project-category">
-                                MICROSOFT FABRIC · PROJECT 01
-                            </p>
-
-                            <h3>Energy Data Lakehouse.</h3>
-
-                            <p>
-                                Explore energy generation, CO₂ measures,
-                                prices, geography, and energy-source patterns
-                                through an interactive analytics report.
-                            </p>
-
-                            <div class="tags">
-                                <span>Microsoft Fabric</span>
-                                <span>PySpark</span>
-                                <span>Power BI</span>
-                            </div>
-
-                            <a class="button button-secondary"
-                               href="case-studies/energy-data-lakehouse.html">
-                                Explore case study ↗
-                            </a>
-                        </div>
-
-                        <a class="slide-image-link"
-                           href="case-studies/energy-data-lakehouse.html"
-                           aria-label="Open Energy Data Lakehouse case study">
-                            <img class="slide-image"
-                                 src="images/energy-dashboard.png"
-                                 alt="Microsoft Fabric energy dashboard showing generation, CO2, average price, energy sources, countries, and year filters"
-                                 loading="eager">
-                        </a>
-                    </article>
-
-                    <!-- Slide 2: Oil and Gas -->
-                    <article class="project-slide" hidden>
-                        <div class="slide-copy">
-                            <p class="project-category">
-                                FABRIC ANALYTICS · PROJECT 02
-                            </p>
-
-                            <h3>Oil &amp; Gas Analytics.</h3>
-
-                            <p>
-                                Explore production trends, oil prices,
-                                inventory indicators, suppliers, destination
-                                countries, and shipping-delay analysis.
-                            </p>
-
-                            <div class="tags">
-                                <span>Microsoft Fabric</span>
-                                <span>Power BI</span>
-                                <span>Data Analytics</span>
-                            </div>
-
-                                <a class="button button-secondary"
-                                href="#contact">
-                                    Project details coming soon ↗
-                                </a>
-                        </div>
-
-                        <a class="slide-image-link"
-                           href="projects/oil-gas-analytics.html"
-                           aria-label="Open Oil and Gas Analytics project details">
-                            <img class="slide-image"
-                                 src="images/oil-gas-dashboard.png"
-                                 alt="Microsoft Fabric oil and gas report showing production, average oil price, inventory, suppliers, and shipping delays"
-                                 loading="lazy">
-                        </a>
-                    </article>
-
-                    <!-- Slide 3: NYC Taxi -->
-                    <article class="project-slide"
-                            aria-roledescription="slide"
-                            aria-label="3 of 3"
-                            hidden>
-
-                        <div class="slide-visual taxi-visual taxi-image-visual">
-
-                            <div class="visual-topline">
-                                <span>PROJECT 03</span>
-                                <span>AZURE DATA PLATFORM</span>
-                            </div>
-
-                            <div class="taxi-image-container">
-                                <img
-                                    src="images/nyc-taxi.png"
-                                    alt="NYC Taxi Analytics project dashboard"
-                                    class="project-screenshot"
-                                    loading="lazy"
-                                >
-                            </div>
-
-                            <span class="visual-footnote">
-                                NYC Taxi Analytics · Project dashboard
-                            </span>
-
-                        </div>
-
-                        <div class="slide-details">
+                    <div class="carousel-stage">
+                        <!-- Project 1: Energy -->
+                        <article class="slide is-active" aria-roledescription="slide" aria-label="1 of 3">
                             <div class="slide-copy">
-                                <p class="project-category">
-                                    DATA PIPELINES · 03 / 03
+                                <p class="kicker">Microsoft Fabric</p>
+                                <h3>Energy Data Lakehouse</h3>
+                                <p>
+                                    Explore energy generation, CO₂ measures, prices,
+                                    geography, and energy-source patterns through an
+                                    interactive analytics report.
                                 </p>
+                                <ul class="tag-list" role="list">
+                                    <li>Microsoft Fabric</li>
+                                    <li>PySpark</li>
+                                    <li>Power BI</li>
+                                </ul>
+                                <a class="btn btn-primary" href="case-studies/energy-data-lakehouse.html">
+                                    Read the case study
+                                </a>
+                            </div>
 
+                            <a class="slide-media" href="case-studies/energy-data-lakehouse.html"
+                               data-cursor="view" aria-label="Open the Energy Data Lakehouse case study">
+                                <figure class="browser" data-tilt>
+                                    <div class="browser-bar" aria-hidden="true">
+                                        <i></i><i></i><i></i><span>Energy dashboard</span>
+                                    </div>
+                                    <img src="images/energy-dashboard.png"
+                                         alt="Microsoft Fabric energy dashboard showing generation, CO2, average price, energy sources, countries, and year filters"
+                                         loading="eager">
+                                </figure>
+                            </a>
+                        </article>
+
+                        <!-- Project 2: Oil and gas -->
+                        <article class="slide" aria-roledescription="slide" aria-label="2 of 3">
+                            <div class="slide-copy">
+                                <p class="kicker">Fabric analytics</p>
+                                <h3>Oil &amp; Gas Analytics</h3>
+                                <p>
+                                    Explore production trends, oil prices, inventory
+                                    indicators, suppliers, destination countries, and
+                                    shipping-delay analysis.
+                                </p>
+                                <ul class="tag-list" role="list">
+                                    <li>Microsoft Fabric</li>
+                                    <li>Power BI</li>
+                                    <li>Data analytics</li>
+                                </ul>
+                                <!-- When this case study exists, swap the span for:
+                                     <a class="btn btn-primary" href="case-studies/oil-gas-analytics.html">Read the case study</a>
+                                     and wrap the image in a link with data-cursor="view". -->
+                                <span class="btn btn-secondary is-disabled" aria-disabled="true">
+                                    Case study coming soon
+                                </span>
+                            </div>
+
+                            <div class="slide-media">
+                                <figure class="browser" data-tilt>
+                                    <div class="browser-bar" aria-hidden="true">
+                                        <i></i><i></i><i></i><span>Oil and gas report</span>
+                                    </div>
+                                    <img src="images/oil-gas-dashboard.png"
+                                         alt="Microsoft Fabric oil and gas report showing production, average oil price, inventory, suppliers, and shipping delays"
+                                         loading="lazy">
+                                </figure>
+                            </div>
+                        </article>
+
+                        <!-- Project 3: NYC Taxi -->
+                        <article class="slide" aria-roledescription="slide" aria-label="3 of 3">
+                            <div class="slide-copy">
+                                <p class="kicker">Azure data platform</p>
                                 <h3>NYC Taxi Analytics</h3>
-
                                 <p>
                                     Explore taxi trip data through cloud ingestion,
-                                    data storage, and SQL analytics. This project
-                                    demonstrates how raw trip records can be prepared
-                                    for analysis and reporting.
+                                    data storage, and SQL analytics. See how raw trip
+                                    records are prepared for analysis and reporting.
                                 </p>
-
-                                <div class="tags">
-                                    <span>Azure Data Factory</span>
-                                    <span>ADLS Gen2</span>
-                                    <span>Synapse Analytics</span>
-                                    <span>SQL</span>
-                                </div>
+                                <ul class="tag-list" role="list">
+                                    <li>Azure Data Factory</li>
+                                    <li>ADLS Gen2</li>
+                                    <li>Synapse Analytics</li>
+                                    <li>SQL</li>
+                                </ul>
+                                <a class="btn btn-primary" href="case-studies/nyc-taxi.html">
+                                    Read the case study
+                                </a>
                             </div>
 
-                            <a class="text-link" href="case-studies/nyc-taxi.html">
-                                        Explore the case study ↗
+                            <a class="slide-media" href="case-studies/nyc-taxi.html"
+                               data-cursor="view" aria-label="Open the NYC Taxi Analytics case study">
+                                <figure class="browser" data-tilt>
+                                    <div class="browser-bar" aria-hidden="true">
+                                        <i></i><i></i><i></i><span>NYC taxi dashboard</span>
+                                    </div>
+                                    <img src="images/nyc-taxi.png"
+                                         alt="NYC Taxi Analytics project dashboard"
+                                         loading="lazy">
+                                </figure>
                             </a>
-                        </div>
+                        </article>
 
-                    </article>
-                    <!-- Carousel controls -->
+                        <!-- MineGuard: copy one of the slides above, update the text and
+                             image, paste it here, and update the aria-labels to "4 of 4".
+                             Then add a fourth .carousel-dot button below. -->
+                    </div>
+
                     <div class="carousel-controls">
-                        <div class="carousel-dots"
-                             aria-label="Choose a project">
-                            <button class="carousel-dot active"
-                                    type="button"
-                                    data-go-to="0"
-                                    aria-label="Show Energy Data Lakehouse"
-                                    aria-current="true"></button>
-
-                            <button class="carousel-dot"
-                                    type="button"
-                                    data-go-to="1"
+                        <div class="carousel-dots" aria-label="Choose a project">
+                            <button class="carousel-dot is-active" type="button"
+                                    aria-label="Show Energy Data Lakehouse" aria-current="true"></button>
+                            <button class="carousel-dot" type="button"
                                     aria-label="Show Oil and Gas Analytics"></button>
-
-                            <button class="carousel-dot"
-                                    type="button"
-                                    data-go-to="2"
+                            <button class="carousel-dot" type="button"
                                     aria-label="Show NYC Taxi Analytics"></button>
                         </div>
 
-                        <p class="carousel-counter" aria-live="polite">
-                            01 / 03
-                        </p>
+                        <p class="carousel-counter" aria-live="polite">01 / 03</p>
 
                         <div class="carousel-arrows">
-                            <button class="carousel-arrow"
-                                    type="button"
-                                    data-direction="-1"
-                                    aria-label="Previous project">
-                                ←
-                            </button>
-
-                            <button class="carousel-arrow"
-                                    type="button"
-                                    data-direction="1"
-                                    aria-label="Next project">
-                                →
-                            </button>
+                            <button class="carousel-arrow" type="button"
+                                    data-direction="-1" aria-label="Previous project">←</button>
+                            <button class="carousel-arrow" type="button"
+                                    data-direction="1" aria-label="Next project">→</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- How I approach projects -->
-        <section class="section container" id="approach">
-            <p class="eyebrow">BEYOND THE CODE</p>
-            <h2>Every project tells a story.</h2>
-
-            <p class="section-description">
-                I want to show more than a list of technologies. Each
-                case study explains the problem, architecture, engineering
-                choices, analytical findings, and limitations.
-            </p>
-
-            <div class="principles">
-                <article class="principle">
-                    <span class="principle-number">01</span>
-                    <h3>The problem</h3>
-                    <p>
-                        Understand the source data, analytical questions,
-                        and project requirements.
+        <!-- APPROACH -->
+        <section class="section" id="approach">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">Beyond the code</p>
+                    <h2>Every project tells a story.</h2>
+                    <p class="lead">
+                        Each case study explains the problem, the architecture,
+                        the engineering choices, the findings, and the limitations,
+                        so you see more than a list of tools.
                     </p>
-                </article>
+                </div>
 
-                <article class="principle">
-                    <span class="principle-number">02</span>
-                    <h3>The engineering</h3>
-                    <p>
-                        Explain architecture, transformations, data quality,
-                        and important technical trade-offs.
-                    </p>
-                </article>
+                <div class="steps" data-stagger>
+                    <article class="card step">
+                        <h3>The problem</h3>
+                        <p>
+                            Understand the source data, the analytical questions,
+                            and the project requirements.
+                        </p>
+                    </article>
 
-                <article class="principle">
-                    <span class="principle-number">03</span>
-                    <h3>The findings</h3>
-                    <p>
-                        Present dashboard evidence, observations,
-                        limitations, and potential business uses.
-                    </p>
-                </article>
+                    <article class="card step">
+                        <h3>The engineering</h3>
+                        <p>
+                            Explain architecture, transformations, data quality,
+                            and the important technical trade-offs.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>The findings</h3>
+                        <p>
+                            Present dashboard evidence, observations,
+                            limitations, and potential business uses.
+                        </p>
+                    </article>
+                </div>
             </div>
         </section>
 
-        <!-- Contact -->
-        <section class="section container" id="contact">
-            <p class="eyebrow">LET'S CONNECT</p>
-            <h2>Let's build something meaningful with data.</h2>
+        <!-- CONTACT CTA -->
+        <section class="section cta" id="contact">
+            <div class="container">
+                <h2 class="reveal">Let's build something meaningful with data.</h2>
+                <p class="lead reveal">
+                    Explore my code, follow my work, or get in touch
+                    about data engineering and cloud analytics.
+                </p>
 
-            <p class="section-description">
-                Explore my code, follow my work, or connect with me
-                about data engineering and cloud analytics.
-            </p>
-
-            <div class="hero-actions">
-                <a class="button button-primary"
-                   href="https://github.com/edutanvir"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    Explore GitHub ↗
-                </a>
-
-                <a class="button button-secondary"
-                   href="https://www.linkedin.com/in/tanvir-de/"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    Connect on LinkedIn ↗
-                </a>
+                <div class="hero-actions reveal">
+                    <a class="btn btn-primary" href="contact.html" data-magnetic>Contact me</a>
+                    <a class="btn btn-secondary" href="https://github.com/edutanvir"
+                       target="_blank" rel="noopener noreferrer" data-magnetic>GitHub</a>
+                    <a class="btn btn-secondary" href="https://www.linkedin.com/in/tanvir-de/"
+                       target="_blank" rel="noopener noreferrer" data-magnetic>LinkedIn</a>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <p>© 2026 Md Tanvir Ahmed</p>
             <a href="#home">Back to top ↑</a>
-            <p>Built with HTML, CSS &amp; GitHub Pages.</p>
+            <p>Built with HTML, CSS and GitHub Pages.</p>
         </div>
     </footer>
 
-    <!-- Carousel and cursor image behavior -->
     <script src="script.js"></script>
 </body>
 </html>

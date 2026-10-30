@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,167 +5,224 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>NYC Taxi Analytics | Md Tanvir Ahmed</title>
+    <meta name="description"
+          content="A case study on NYC taxi data ingestion with Azure Data Factory, storage in ADLS Gen2, and SQL analytics in Azure Synapse.">
+    <meta name="theme-color" content="#000000">
 
-    <meta
-        name="description"
-        content="A case study exploring NYC taxi data ingestion, Azure data storage, SQL analytics, and reporting."
-    >
-
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
+    <script>document.documentElement.classList.add("js");</script>
 </head>
 
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <header class="site-header">
-        <nav class="navbar container" aria-label="Main navigation">
-            <a class="logo" href="../index.html">
-                TA<span>.</span>
+        <nav class="nav container" aria-label="Main navigation">
+            <a class="logo" href="../index.html" aria-label="Md Tanvir Ahmed, home">
+                <span class="logo-mark" aria-hidden="true">
+                    <img src="../images/profile.jpg" alt="" width="34" height="34">
+                    <svg class="logo-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="3"/><path d="M5 5.5v13c0 1.7 3.1 3 7 3s7-1.3 7-3v-13"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>
+                </span>
+                <span class="logo-text">Tanvir Ahmed</span>
             </a>
 
             <div class="nav-links">
                 <a href="../index.html#about">About</a>
                 <a href="../index.html#projects">Projects</a>
-                <a href="../index.html#contact">Contact</a>
+                <a href="../index.html#approach">Approach</a>
             </div>
 
-            <a class="nav-button"
-               href="https://github.com/edutanvir"
-               target="_blank"
-               rel="noopener noreferrer">
-                GitHub ↗
-            </a>
+            <div class="nav-actions">
+                <a class="nav-ext" href="https://github.com/edutanvir"
+                   target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a class="btn btn-primary btn-small" href="../contact.html">Contact</a>
+            </div>
         </nav>
+        <div class="scroll-progress" aria-hidden="true"></div>
     </header>
 
-    <main>
-        <section class="hero container">
-            <p class="eyebrow">PROJECT CASE STUDY · AZURE</p>
+    <main id="main">
+        <!-- HERO -->
+        <section class="hero">
+            <div class="container">
+                <p class="kicker">Case study · Azure</p>
 
-            <h1>
-                NYC Taxi<br>
-                <span>Analytics.</span>
-            </h1>
+                <h1 class="display display--sm">
+                    <span class="line">NYC Taxi</span>
+                    <span class="line gradient-text">Analytics.</span>
+                </h1>
 
-            <p class="hero-description">
-                Exploring how taxi trip data can move from source
-                files into cloud storage and SQL-based analytics.
-            </p>
+                <p class="lead">
+                    How taxi trip data moves from source files into cloud
+                    storage and SQL-based analytics.
+                </p>
 
-            <div class="tags">
-                <span>Azure Data Factory</span>
-                <span>Azure Data Lake Storage</span>
-                <span>Azure Synapse Analytics</span>
-                <span>SQL</span>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="#evidence" data-magnetic>See the results</a>
+                    <a class="btn btn-secondary" href="../index.html#projects" data-magnetic>All projects</a>
+                </div>
+
+                <ul class="tag-list" role="list">
+                    <li>Azure Data Factory</li>
+                    <li>Azure Data Lake Storage</li>
+                    <li>Azure Synapse Analytics</li>
+                    <li>SQL</li>
+                </ul>
             </div>
         </section>
 
-        <section class="section container">
-            <p class="eyebrow">01 · THE OBJECTIVE</p>
-            <h2>From trip records to useful analysis.</h2>
-
-            <p class="section-description">
-                The project explores a data workflow for NYC taxi
-                trip records. The objective is to organize source
-                data, make it accessible for SQL analysis, and
-                prepare it for analytical questions about trips,
-                fares, distances, and payment types.
-            </p>
-        </section>
-
-        <section class="section projects-section">
+        <!-- OBJECTIVE -->
+        <section class="section">
             <div class="container">
-                <p class="eyebrow">02 · PROJECT EVIDENCE</p>
-                <h2>Dashboard and results.</h2>
-
-                <p class="section-description">
-                    Add your own project screenshots below to
-                    demonstrate the implementation and analysis.
-                </p>
-
-                <div class="case-study-image">
-                    <img
-                        src="../images/nyc-taxi.png"
-                        alt="NYC Taxi Analytics project screenshot"
-                        class="project-screenshot"
-                        loading="lazy"
-                    >
+                <div class="section-head reveal">
+                    <p class="kicker">The objective</p>
+                    <h2>From trip records to useful analysis.</h2>
+                    <p class="lead">
+                        The project builds a data workflow for NYC taxi trip
+                        records. The goal is to organize the source data, make
+                        it available for SQL analysis, and prepare it for
+                        questions about trips, fares, distances, and payment types.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <section class="section container">
-            <p class="eyebrow">03 · ARCHITECTURE</p>
-            <h2>How the data flows.</h2>
-
-            <div class="principles">
-                <article class="principle">
-                    <span class="principle-number">01</span>
-                    <h3>Ingest</h3>
-                    <p>
-                        Use Azure Data Factory to orchestrate
-                        the ingestion workflow.
+        <!-- EVIDENCE -->
+        <section class="section section--light" id="evidence">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">Project evidence</p>
+                    <h2>Dashboard and results.</h2>
+                    <p class="lead">
+                        A look at the output built on the prepared trip data.
                     </p>
-                </article>
+                </div>
 
-                <article class="principle">
-                    <span class="principle-number">02</span>
-                    <h3>Store and prepare</h3>
-                    <p>
-                        Organize source data in Azure Data Lake
-                        Storage for downstream access.
-                    </p>
-                </article>
-
-                <article class="principle">
-                    <span class="principle-number">03</span>
-                    <h3>Analyze</h3>
-                    <p>
-                        Use Synapse SQL to query the data and
-                        explore analytical patterns.
-                    </p>
-                </article>
+                <div class="reveal">
+                    <figure class="browser" data-tilt>
+                        <div class="browser-bar" aria-hidden="true">
+                            <i></i><i></i><i></i><span>NYC taxi dashboard</span>
+                        </div>
+                        <img src="../images/nyc-taxi.png"
+                             alt="NYC Taxi Analytics project dashboard"
+                             loading="lazy">
+                    </figure>
+                </div>
             </div>
         </section>
 
-        <section class="section container">
-            <p class="eyebrow">04 · WHAT I EXPLORED</p>
-            <h2>Analytical questions.</h2>
+        <!-- ARCHITECTURE -->
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">Architecture</p>
+                    <h2>How the data flows.</h2>
+                </div>
 
-            <ul>
-                <li>How do trip counts vary by payment type?</li>
-                <li>What are the total fares and tips by category?</li>
-                <li>How can trip duration and distance be analyzed?</li>
-                <li>How can SQL queries support reporting requirements?</li>
-            </ul>
+                <!-- TODO: add specifics (pipeline names, container layout, file
+                     formats, Synapse serverless vs dedicated pool). -->
+                <div class="steps" data-stagger>
+                    <article class="card step">
+                        <h3>Ingest</h3>
+                        <p>
+                            Azure Data Factory orchestrates the ingestion
+                            workflow.
+                        </p>
+                    </article>
 
-            <p class="section-description">
-                Replace or refine these questions to match the
-                queries and results you actually completed.
-            </p>
+                    <article class="card step">
+                        <h3>Store and prepare</h3>
+                        <p>
+                            Source data is organized in Azure Data Lake Storage
+                            for downstream access.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>Analyze</h3>
+                        <p>
+                            Synapse SQL queries the data to explore analytical
+                            patterns.
+                        </p>
+                    </article>
+                </div>
+            </div>
         </section>
 
-        <section class="section container">
-            <p class="eyebrow">05 · REFLECTION</p>
-            <h2>Engineering decisions and next steps.</h2>
+        <!-- QUESTIONS -->
+        <section class="section section--light">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">What I explored</p>
+                    <h2>Analytical questions.</h2>
+                </div>
 
-            <p class="section-description">
-                Document the technical choices you made, the
-                challenges you encountered, and what you would
-                improve in a future iteration. Add measured
-                performance results only when you have evidence.
-            </p>
+                <!-- TODO: keep only the questions you answered with real queries. -->
+                <div class="grid-2" data-stagger>
+                    <article class="card">
+                        <h3>Payment types</h3>
+                        <p>How do trip counts vary by payment type?</p>
+                    </article>
 
-            <a class="button button-primary" href="../index.html#projects">
-                ← Back to all projects
-            </a>
+                    <article class="card">
+                        <h3>Fares and tips</h3>
+                        <p>What are the total fares and tips by category?</p>
+                    </article>
+
+                    <article class="card">
+                        <h3>Duration and distance</h3>
+                        <p>How can trip duration and distance be analyzed?</p>
+                    </article>
+
+                    <article class="card">
+                        <h3>Reporting</h3>
+                        <p>How can SQL queries support reporting requirements?</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- REFLECTION -->
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">Reflection</p>
+                    <h2>Engineering decisions and next steps.</h2>
+                    <!-- TODO: replace with your real decisions, challenges, and
+                         measured results (run times, row counts, cost). -->
+                    <p class="lead">
+                        This project moves raw trip records into a queryable
+                        analytical layer on Azure. Future iterations could add
+                        automated data-quality checks, performance tuning for
+                        larger trip volumes, and scheduled refreshes.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEXT CASE STUDY -->
+        <section class="section section--light">
+            <div class="container">
+                <a class="card next-case reveal" href="energy-data-lakehouse.html">
+                    <small>Next case study</small>
+                    <strong>Energy Data Lakehouse <span class="link-arrow"></span></strong>
+                </a>
+            </div>
         </section>
     </main>
 
     <footer class="site-footer">
         <div class="container footer-inner">
             <p>© 2026 Md Tanvir Ahmed</p>
-            <a href="../index.html#home">Back to top ↑</a>
-            <p>Built with HTML, CSS &amp; GitHub Pages.</p>
+            <a href="../index.html#projects">All projects</a>
+            <p>Built with HTML, CSS and GitHub Pages.</p>
         </div>
     </footer>
+
+    <script src="../script.js"></script>
 </body>
 </html>

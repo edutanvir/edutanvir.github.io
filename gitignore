@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Secrets and credentials: never commit these
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+secrets.*
+credentials.*
+local.settings.json
+
+# Dependencies and build output
+node_modules/
+dist/
+.cache/
+
+# Logs and temporary files
+*.log
+*.tmp
+npm-debug.log*
+
+# Private drafts and downloads: keep these on your computer only
+drafts/
+private/
+*.zip
