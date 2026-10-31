@@ -6,7 +6,7 @@
 
     <title>Md Tanvir Ahmed | Azure Data Engineer</title>
     <meta name="description"
-          content="Md Tanvir Ahmed is an Azure data engineer. Explore cloud data pipelines, Microsoft Fabric dashboards, lakehouse architectures, and technical case studies.">
+          content="Md Tanvir Ahmed is an Azure data engineer. Explore cloud data pipelines, Microsoft Fabric dashboards, lakehouse architectures, and plain-English project write-ups.">
     <meta name="theme-color" content="#000000">
 
     <!-- Link previews (LinkedIn, Slack, etc.).
@@ -18,8 +18,10 @@
     <meta property="og:image" content="https://edutanvir.github.io/images/energy-dashboard.png">
     <meta name="twitter:card" content="summary_large_image">
 
+    <!-- Site icon (the ?v=2 makes browsers fetch the new version) -->
     <link rel="icon" type="image/png" href="images/favicon.png?v=2">
     <link rel="apple-touch-icon" href="images/favicon.png?v=2">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -57,20 +59,32 @@
 
     <main id="main">
         <!-- HERO -->
-        <section class="hero" id="home">
+        <section class="hero" id="home" data-rail="Home">
+            <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+            <!-- Floating icons: they drift with your mouse and as you scroll -->
+            <div class="float-icons" aria-hidden="true">
+                <span class="fi" style="--x:76%;--y:10%;--d:1.2;--c:#2997ff"><span class="fi-tile" style="--s:66px;--t:7s"><svg class="ico"><use href="#i-db"/></svg></span></span>
+                <span class="fi" style="--x:90%;--y:30%;--d:0.8;--c:#8f7bff"><span class="fi-tile" style="--s:54px;--t:8s"><svg class="ico"><use href="#i-cloud"/></svg></span></span>
+                <span class="fi" style="--x:66%;--y:40%;--d:1.5;--c:#ffb340"><span class="fi-tile" style="--s:58px;--t:6s"><svg class="ico"><use href="#i-chart"/></svg></span></span>
+                <span class="fi" style="--x:82%;--y:56%;--d:1;--c:#ff7ab8"><span class="fi-tile" style="--s:48px;--t:9s"><svg class="ico"><use href="#i-bolt"/></svg></span></span>
+                <span class="fi" style="--x:63%;--y:14%;--d:0.7;--c:#30d158"><span class="fi-tile" style="--s:44px;--t:7.5s"><svg class="ico"><use href="#i-layers"/></svg></span></span>
+                <span class="fi" style="--x:92%;--y:8%;--d:1.4;--c:#40d9ff"><span class="fi-tile" style="--s:42px;--t:6.5s"><svg class="ico"><use href="#i-table"/></svg></span></span>
+                <span class="fi" style="--x:72%;--y:60%;--d:0.9;--c:#ff6b5e"><span class="fi-tile" style="--s:50px;--t:8.5s"><svg class="ico"><use href="#i-code"/></svg></span></span>
+            </div>
+
             <div class="container">
                 <p class="kicker">Azure data engineering and cloud analytics</p>
 
+                <!-- Typewriter: data-type types the text out.
+                     data-words makes it backspace and retype these words.
+                     Delete data-words to keep "decisions." fixed. -->
                 <h1 class="display">
-                    <span class="line">Data into</span>
-                    <span class="line gradient-text">decisions.</span>
+                    <span class="line" data-type>Data into</span>
+                    <span class="line gradient-text" data-type data-words="insights.|impact.|results.">decisions.</span>
                 </h1>
 
-                <p class="lead">
-                    I'm Md Tanvir Ahmed. I build cloud data pipelines, lakehouses,
-                    and analytics platforms with Microsoft Azure, Fabric,
-                    Databricks, Python, and SQL.
-                </p>
+                <p class="lead" data-type>I'm Md Tanvir Ahmed. I build cloud data pipelines, lakehouses, and analytics platforms with Microsoft Azure, Fabric, Databricks, Python, and SQL.</p>
 
                 <div class="hero-actions">
                     <a class="btn btn-primary" href="#projects" data-magnetic>View projects</a>
@@ -81,20 +95,23 @@
                     </a>
                 </div>
 
-                <!-- Signature moment: data moving from source to dashboard -->
-                <div class="flow" role="img"
+                <!-- Data moving from source to dashboard -->
+                <div class="flow" data-flow role="img"
                      aria-label="Data flows from raw sources, through a lakehouse, to dashboards">
-                    <div class="flow-node">
+                    <div class="flow-node" style="--c1:#2997ff;--c2:#40d9ff">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-cloud"/></svg></span>
                         <strong>Raw data</strong>
                         <span>Azure Data Factory, ADLS Gen2</span>
                     </div>
                     <div class="flow-link"></div>
-                    <div class="flow-node">
+                    <div class="flow-node" style="--c1:#8f7bff;--c2:#ff7ab8">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-layers"/></svg></span>
                         <strong>Lakehouse</strong>
                         <span>Databricks, PySpark, SQL</span>
                     </div>
                     <div class="flow-link"></div>
-                    <div class="flow-node">
+                    <div class="flow-node" style="--c1:#ffb340;--c2:#ff6b5e">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-chart"/></svg></span>
                         <strong>Dashboards</strong>
                         <span>Microsoft Fabric, Power BI</span>
                     </div>
@@ -102,41 +119,69 @@
             </div>
         </section>
 
+        <!-- TECH STACK STRIP -->
+        <div class="marquee" aria-label="Tools I work with">
+            <div class="marquee-inner">
+                <ul class="marquee-track" role="list">
+                    <li class="chip">Azure Data Factory</li>
+                    <li class="chip">Databricks</li>
+                    <li class="chip">PySpark</li>
+                    <li class="chip">Spark SQL</li>
+                    <li class="chip">SQL</li>
+                    <li class="chip">ADLS Gen2</li>
+                    <li class="chip">Azure Synapse</li>
+                    <li class="chip">Azure SQL</li>
+                    <li class="chip">Microsoft Fabric</li>
+                    <li class="chip">Power BI</li>
+                    <li class="chip">Python</li>
+                    <li class="chip">Azure DevOps CI/CD</li>
+                    <li class="chip">Key Vault</li>
+                    <li class="chip">Managed Identities</li>
+                </ul>
+            </div>
+        </div>
+
         <!-- ABOUT -->
-        <section class="section" id="about">
+        <section class="section section--tint" id="about" data-rail="About">
             <div class="container">
                 <div class="section-head reveal">
                     <p class="kicker">About my work</p>
                     <h2>Engineering data for better decisions.</h2>
                     <p class="lead">
-                        My projects show how raw information becomes trusted,
-                        analytics-ready data. I focus on ingestion, transformation,
-                        lakehouse architecture, data quality, and business intelligence.
+                        Most data starts out messy: files in odd formats, columns that
+                        don't match, numbers nobody quite trusts. I like the part of the
+                        job where that mess turns into something a person can actually
+                        use to make a decision.
                     </p>
                 </div>
 
                 <div class="grid-3" data-stagger>
                     <article class="card">
-                        <h3>Build reliable pipelines</h3>
+                        <span class="icon-tile"><svg class="ico"><use href="#i-shield"/></svg></span>
+                        <h3>Pipelines I can trust</h3>
                         <p>
-                            Ingest, transform, validate, and organize data
-                            using cloud engineering tools.
+                            I move data from where it starts to where it's useful, with
+                            checks along the way so problems show up early instead of in
+                            a meeting.
                         </p>
                     </article>
 
                     <article class="card">
-                        <h3>Design clear architectures</h3>
+                        <span class="icon-tile"><svg class="ico"><use href="#i-layers"/></svg></span>
+                        <h3>Architecture you can follow</h3>
                         <p>
-                            Document data flows, storage layers, transformations,
-                            and analytical serving patterns.
+                            I map the route the data takes, from raw files to reports,
+                            and explain why each layer exists, so the next person never
+                            has to guess.
                         </p>
                     </article>
 
                     <article class="card">
-                        <h3>Connect data to decisions</h3>
+                        <span class="icon-tile"><svg class="ico"><use href="#i-search"/></svg></span>
+                        <h3>Answers, not just charts</h3>
                         <p>
-                            Explain analytical findings, engineering trade-offs,
-                            and potential business uses.
+                            A dashboard should answer a question. I write up what it
+                            shows, what it can't tell you, and where the numbers came from.
                         </p>
                     </article>
                 </div>
@@ -144,14 +189,14 @@
         </section>
 
         <!-- PROJECTS -->
-        <section class="section section--light" id="projects">
+        <section class="section section--light" id="projects" data-rail="Projects">
             <div class="container">
                 <div class="section-head reveal">
                     <p class="kicker">Selected projects</p>
                     <h2>Built with data. Designed for insight.</h2>
                     <p class="lead">
-                        Explore the architecture, engineering decisions,
-                        transformations, and analytics behind each project.
+                        Each project comes with a short write-up in plain language:
+                        the problem, how the data moves, and what I'd do next.
                     </p>
                 </div>
 
@@ -161,14 +206,16 @@
 
                     <div class="carousel-stage">
                         <!-- Project 1: Energy -->
-                        <article class="slide is-active" aria-roledescription="slide" aria-label="1 of 3">
+                        <article class="slide is-active" aria-roledescription="slide" aria-label="1 of 3"
+                                 style="--c1:#30d158;--c2:#40d9ff;--ck:#14803c">
                             <div class="slide-copy">
                                 <p class="kicker">Microsoft Fabric</p>
                                 <h3>Energy Data Lakehouse</h3>
                                 <p>
-                                    Explore energy generation, CO₂ measures, prices,
-                                    geography, and energy-source patterns through an
-                                    interactive analytics report.
+                                    Where does a country's electricity come from, and how
+                                    does that connect to CO₂ and price? Click through
+                                    generation, emissions and prices by country, year and
+                                    energy source.
                                 </p>
                                 <ul class="tag-list" role="list">
                                     <li>Microsoft Fabric</li>
@@ -176,12 +223,12 @@
                                     <li>Power BI</li>
                                 </ul>
                                 <a class="btn btn-primary" href="case-studies/energy-data-lakehouse.html">
-                                    Read the case study
+                                    Read the full story
                                 </a>
                             </div>
 
                             <a class="slide-media" href="case-studies/energy-data-lakehouse.html"
-                               data-cursor="view" aria-label="Open the Energy Data Lakehouse case study">
+                               data-cursor="view" aria-label="Open the Energy Data Lakehouse write-up">
                                 <figure class="browser" data-tilt>
                                     <div class="browser-bar" aria-hidden="true">
                                         <i></i><i></i><i></i><span>Energy dashboard</span>
@@ -194,25 +241,27 @@
                         </article>
 
                         <!-- Project 2: Oil and gas -->
-                        <article class="slide" aria-roledescription="slide" aria-label="2 of 3">
+                        <article class="slide" aria-roledescription="slide" aria-label="2 of 3"
+                                 style="--c1:#ffb340;--c2:#ff6b5e;--ck:#b45309">
                             <div class="slide-copy">
                                 <p class="kicker">Fabric analytics</p>
                                 <h3>Oil &amp; Gas Analytics</h3>
                                 <p>
-                                    Explore production trends, oil prices, inventory
-                                    indicators, suppliers, destination countries, and
-                                    shipping-delay analysis.
+                                    Follow oil from supplier to destination. One report
+                                    brings together production trends, prices, inventory
+                                    and shipping delays, so you can see how the pieces
+                                    connect.
                                 </p>
                                 <ul class="tag-list" role="list">
                                     <li>Microsoft Fabric</li>
                                     <li>Power BI</li>
                                     <li>Data analytics</li>
                                 </ul>
-                                <!-- When this case study exists, swap the span for:
-                                     <a class="btn btn-primary" href="case-studies/oil-gas-analytics.html">Read the case study</a>
+                                <!-- When this write-up exists, swap the span for:
+                                     <a class="btn btn-primary" href="case-studies/oil-gas-analytics.html">Read the full story</a>
                                      and wrap the image in a link with data-cursor="view". -->
                                 <span class="btn btn-secondary is-disabled" aria-disabled="true">
-                                    Case study coming soon
+                                    Write-up coming soon
                                 </span>
                             </div>
 
@@ -229,14 +278,16 @@
                         </article>
 
                         <!-- Project 3: NYC Taxi -->
-                        <article class="slide" aria-roledescription="slide" aria-label="3 of 3">
+                        <article class="slide" aria-roledescription="slide" aria-label="3 of 3"
+                                 style="--c1:#8f7bff;--c2:#ff7ab8;--ck:#5b4bdb">
                             <div class="slide-copy">
                                 <p class="kicker">Azure data platform</p>
                                 <h3>NYC Taxi Analytics</h3>
                                 <p>
-                                    Explore taxi trip data through cloud ingestion,
-                                    data storage, and SQL analytics. See how raw trip
-                                    records are prepared for analysis and reporting.
+                                    Raw taxi trip files go in, answers come out. I built
+                                    the Azure pipeline that stores NYC taxi data in the
+                                    cloud, then used SQL to explore fares, tips, distances
+                                    and payment types.
                                 </p>
                                 <ul class="tag-list" role="list">
                                     <li>Azure Data Factory</li>
@@ -245,12 +296,12 @@
                                     <li>SQL</li>
                                 </ul>
                                 <a class="btn btn-primary" href="case-studies/nyc-taxi.html">
-                                    Read the case study
+                                    Read the full story
                                 </a>
                             </div>
 
                             <a class="slide-media" href="case-studies/nyc-taxi.html"
-                               data-cursor="view" aria-label="Open the NYC Taxi Analytics case study">
+                               data-cursor="view" aria-label="Open the NYC Taxi Analytics write-up">
                                 <figure class="browser" data-tilt>
                                     <div class="browser-bar" aria-hidden="true">
                                         <i></i><i></i><i></i><span>NYC taxi dashboard</span>
@@ -262,8 +313,8 @@
                             </a>
                         </article>
 
-                        <!-- MineGuard: copy one of the slides above, update the text and
-                             image, paste it here, and update the aria-labels to "4 of 4".
+                        <!-- MineGuard: copy one of the slides above, update the text, image
+                             and colours, paste it here, and change the aria-labels to "4 of 4".
                              Then add a fourth .carousel-dot button below. -->
                     </div>
 
@@ -291,15 +342,15 @@
         </section>
 
         <!-- APPROACH -->
-        <section class="section" id="approach">
+        <section class="section" id="approach" data-rail="Approach">
             <div class="container">
                 <div class="section-head reveal">
                     <p class="kicker">Beyond the code</p>
                     <h2>Every project tells a story.</h2>
                     <p class="lead">
-                        Each case study explains the problem, the architecture,
-                        the engineering choices, the findings, and the limitations,
-                        so you see more than a list of tools.
+                        I write each project up like a short blog post: what I was
+                        trying to solve, how the data moves, what the dashboard shows,
+                        and what I'd improve. Plain language first, jargon second.
                     </p>
                 </div>
 
@@ -307,24 +358,24 @@
                     <article class="card step">
                         <h3>The problem</h3>
                         <p>
-                            Understand the source data, the analytical questions,
-                            and the project requirements.
+                            What question was I trying to answer, and what did the raw
+                            data look like when I started?
                         </p>
                     </article>
 
                     <article class="card step">
                         <h3>The engineering</h3>
                         <p>
-                            Explain architecture, transformations, data quality,
-                            and the important technical trade-offs.
+                            How the data travels from source to report, and why I made
+                            each choice along the way.
                         </p>
                     </article>
 
                     <article class="card step">
                         <h3>The findings</h3>
                         <p>
-                            Present dashboard evidence, observations,
-                            limitations, and potential business uses.
+                            What the dashboard shows, what it can't tell you, and what
+                            I'd do next.
                         </p>
                     </article>
                 </div>
@@ -332,7 +383,14 @@
         </section>
 
         <!-- CONTACT CTA -->
-        <section class="section cta" id="contact">
+        <section class="section cta" id="contact" data-rail="Contact">
+            <div class="float-icons" aria-hidden="true">
+                <span class="fi" style="--x:7%;--y:18%;--d:1.2;--c:#8f7bff"><span class="fi-tile" style="--s:58px;--t:7s"><svg class="ico"><use href="#i-mail"/></svg></span></span>
+                <span class="fi" style="--x:88%;--y:22%;--d:0.9;--c:#ff7ab8"><span class="fi-tile" style="--s:52px;--t:8s"><svg class="ico"><use href="#i-spark"/></svg></span></span>
+                <span class="fi" style="--x:13%;--y:74%;--d:1.4;--c:#2997ff"><span class="fi-tile" style="--s:48px;--t:6.5s"><svg class="ico"><use href="#i-db"/></svg></span></span>
+                <span class="fi" style="--x:84%;--y:72%;--d:1;--c:#ffb340"><span class="fi-tile" style="--s:56px;--t:9s"><svg class="ico"><use href="#i-chart"/></svg></span></span>
+            </div>
+
             <div class="container">
                 <h2 class="reveal">Let's build something meaningful with data.</h2>
                 <p class="lead reveal">

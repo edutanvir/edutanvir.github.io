@@ -6,12 +6,13 @@
 
     <title>NYC Taxi Analytics | Md Tanvir Ahmed</title>
     <meta name="description"
-          content="A case study on NYC taxi data ingestion with Azure Data Factory, storage in ADLS Gen2, and SQL analytics in Azure Synapse.">
+          content="A plain-English write-up of an NYC taxi data project: ingestion with Azure Data Factory, storage in ADLS Gen2, and SQL analytics in Azure Synapse.">
     <meta name="theme-color" content="#000000">
 
-    <link rel="icon" href="../favicon.ico" sizes="48x48">
-    <link rel="icon" href="../favicon-96x96.png" type="image/png" sizes="96x96">
-    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <!-- Site icon (the ?v=2 makes browsers fetch the new version) -->
+    <link rel="icon" type="image/png" href="../images/favicon.png?v=2">
+    <link rel="apple-touch-icon" href="../images/favicon.png?v=2">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -47,11 +48,19 @@
         <div class="scroll-progress" aria-hidden="true"></div>
     </header>
 
-    <main id="main">
+    <main id="main" data-post>
         <!-- HERO -->
-        <section class="hero">
+        <section class="hero" id="top" data-rail="Intro">
+            <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <div class="float-icons" aria-hidden="true">
+                <span class="fi" style="--x:78%;--y:14%;--d:1.2;--c:#ffb340"><span class="fi-tile" style="--s:62px;--t:7s"><svg class="ico"><use href="#i-table"/></svg></span></span>
+                <span class="fi" style="--x:90%;--y:40%;--d:0.8;--c:#2997ff"><span class="fi-tile" style="--s:52px;--t:8s"><svg class="ico"><use href="#i-cloud"/></svg></span></span>
+                <span class="fi" style="--x:70%;--y:52%;--d:1.4;--c:#8f7bff"><span class="fi-tile" style="--s:56px;--t:6s"><svg class="ico"><use href="#i-db"/></svg></span></span>
+                <span class="fi" style="--x:86%;--y:66%;--d:1;--c:#ff7ab8"><span class="fi-tile" style="--s:46px;--t:9s"><svg class="ico"><use href="#i-search"/></svg></span></span>
+            </div>
+
             <div class="container">
-                <p class="kicker">Case study · Azure</p>
+                <p class="kicker">Project write-up · Azure</p>
 
                 <h1 class="display display--sm">
                     <span class="line">NYC Taxi</span>
@@ -59,14 +68,25 @@
                 </h1>
 
                 <p class="lead">
-                    How taxi trip data moves from source files into cloud
-                    storage and SQL-based analytics.
+                    A plain-English story of how I moved raw NYC taxi trip files into
+                    the cloud and turned them into something you can ask questions with SQL.
                 </p>
 
-                <div class="hero-actions">
-                    <a class="btn btn-primary" href="#evidence" data-magnetic>See the results</a>
-                    <a class="btn btn-secondary" href="../index.html#projects" data-magnetic>All projects</a>
+                <div class="byline">
+                    <img src="../images/profile.jpg" alt="Md Tanvir Ahmed" width="38" height="38">
+                    <span><strong>Md Tanvir Ahmed</strong></span>
+                    <span aria-hidden="true">·</span>
+                    <span data-reading-time>A few minutes to read</span>
                 </div>
+
+                <nav class="toc" aria-label="In this write-up">
+                    <a href="#story">The short version</a>
+                    <a href="#why">The problem</a>
+                    <a href="#journey">The pipeline</a>
+                    <a href="#evidence">The results</a>
+                    <a href="#questions">Questions</a>
+                    <a href="#next">What's next</a>
+                </nav>
 
                 <ul class="tag-list" role="list">
                     <li>Azure Data Factory</li>
@@ -77,24 +97,122 @@
             </div>
         </section>
 
-        <!-- OBJECTIVE -->
-        <section class="section">
+        <!-- THE SHORT VERSION -->
+        <section class="section section--tight" id="story" data-rail="The short version">
             <div class="container">
-                <div class="section-head reveal">
-                    <p class="kicker">The objective</p>
-                    <h2>From trip records to useful analysis.</h2>
-                    <p class="lead">
-                        The project builds a data workflow for NYC taxi trip
-                        records. The goal is to organize the source data, make
-                        it available for SQL analysis, and prepare it for
-                        questions about trips, fares, distances, and payment types.
+                <div class="prose reveal">
+                    <p class="kicker">The short version</p>
+                    <h2>From trip records to useful answers.</h2>
+                    <p>
+                        NYC publishes taxi trip records as big data files. On their own,
+                        they're just rows. I built a small <strong>Azure pipeline</strong>
+                        that brings those files in, stores them in the cloud, and lets me
+                        ask questions about trips, fares, distances and payment types
+                        using plain <strong>SQL</strong>.
+                    </p>
+                    <p>
+                        Below you'll find how the pieces fit together, what the results
+                        look like, and what I'd improve next. No jargon without an
+                        explanation.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- EVIDENCE -->
-        <section class="section section--light" id="evidence">
+        <!-- THE PROBLEM -->
+        <section class="section section--tight" id="why" data-rail="The problem">
+            <div class="container">
+                <div class="prose reveal">
+                    <p class="kicker">Why this was worth building</p>
+                    <h2>Raw files aren't much use on their own.</h2>
+                    <p>
+                        Before anyone can analyse trip data, someone has to bring the files
+                        in, keep them organised, and make them easy to query. That plumbing
+                        isn't glamorous, but everything else depends on it. It's the part of
+                        data engineering I enjoy most.
+                    </p>
+
+                    <aside class="callout" style="--c1:#ffb340;--c2:#ff6b5e">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-spark"/></svg></span>
+                        <div>
+                            <strong>In plain English: three services, three jobs</strong>
+                            <p>
+                                <strong>Azure Data Factory</strong> is the delivery truck: it moves
+                                the files. <strong>Data Lake Storage</strong> is the shelving: it keeps
+                                them organised. <strong>Synapse</strong> is the front desk: it's where
+                                you ask questions in SQL.
+                            </p>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE PIPELINE -->
+        <section class="section section--light" id="journey" data-rail="The pipeline">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">How the data flows</p>
+                    <h2>From source files to SQL.</h2>
+                    <p class="lead">
+                        Three stops, left to right. Watch the glowing dot: that's the data
+                        moving.
+                    </p>
+                </div>
+
+                <!-- TODO: add specifics (pipeline names, container layout, file formats,
+                     serverless vs dedicated SQL pool). -->
+                <div class="flow flow--wide reveal" data-flow role="img"
+                     aria-label="Data flows from Azure Data Factory, into Azure Data Lake Storage, and on to Synapse SQL">
+                    <div class="flow-node" style="--c1:#2997ff;--c2:#40d9ff">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-cloud"/></svg></span>
+                        <strong>Azure Data Factory</strong>
+                        <span>Orchestrates the ingestion</span>
+                    </div>
+                    <div class="flow-link"></div>
+                    <div class="flow-node" style="--c1:#8f7bff;--c2:#ff7ab8">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-db"/></svg></span>
+                        <strong>ADLS Gen2</strong>
+                        <span>Organises the source data</span>
+                    </div>
+                    <div class="flow-link"></div>
+                    <div class="flow-node" style="--c1:#ffb340;--c2:#ff6b5e">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-search"/></svg></span>
+                        <strong>Synapse SQL</strong>
+                        <span>Query and explore</span>
+                    </div>
+                </div>
+
+                <div class="steps" data-stagger style="margin-top: 36px;">
+                    <article class="card step">
+                        <h3>Bring it in</h3>
+                        <p>
+                            Azure Data Factory runs the ingestion workflow, so the files
+                            arrive the same way every time.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>Keep it organised</h3>
+                        <p>
+                            The source data sits in Azure Data Lake Storage, ready for
+                            whatever needs it next.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>Ask questions</h3>
+                        <p>
+                            Synapse SQL queries the data so I can explore patterns in
+                            trips, fares and tips.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE RESULTS -->
+        <section class="section" id="evidence" data-rail="The results">
             <div class="container">
                 <div class="section-head reveal">
                     <p class="kicker">Project evidence</p>
@@ -117,100 +235,91 @@
             </div>
         </section>
 
-        <!-- ARCHITECTURE -->
-        <section class="section">
-            <div class="container">
-                <div class="section-head reveal">
-                    <p class="kicker">Architecture</p>
-                    <h2>How the data flows.</h2>
-                </div>
-
-                <!-- TODO: add specifics (pipeline names, container layout, file
-                     formats, Synapse serverless vs dedicated pool). -->
-                <div class="steps" data-stagger>
-                    <article class="card step">
-                        <h3>Ingest</h3>
-                        <p>
-                            Azure Data Factory orchestrates the ingestion
-                            workflow.
-                        </p>
-                    </article>
-
-                    <article class="card step">
-                        <h3>Store and prepare</h3>
-                        <p>
-                            Source data is organized in Azure Data Lake Storage
-                            for downstream access.
-                        </p>
-                    </article>
-
-                    <article class="card step">
-                        <h3>Analyze</h3>
-                        <p>
-                            Synapse SQL queries the data to explore analytical
-                            patterns.
-                        </p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
         <!-- QUESTIONS -->
-        <section class="section section--light">
+        <section class="section section--light" id="questions" data-rail="Questions">
             <div class="container">
                 <div class="section-head reveal">
                     <p class="kicker">What I explored</p>
-                    <h2>Analytical questions.</h2>
+                    <h2>Questions I asked the data.</h2>
                 </div>
 
                 <!-- TODO: keep only the questions you answered with real queries. -->
                 <div class="grid-2" data-stagger>
                     <article class="card">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-chart"/></svg></span>
                         <h3>Payment types</h3>
                         <p>How do trip counts vary by payment type?</p>
                     </article>
 
                     <article class="card">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-table"/></svg></span>
                         <h3>Fares and tips</h3>
-                        <p>What are the total fares and tips by category?</p>
+                        <p>What are the total fares and tips in each category?</p>
                     </article>
 
                     <article class="card">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-compass"/></svg></span>
                         <h3>Duration and distance</h3>
-                        <p>How can trip duration and distance be analyzed?</p>
+                        <p>How can trip duration and distance be analysed?</p>
                     </article>
 
                     <article class="card">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-code"/></svg></span>
                         <h3>Reporting</h3>
-                        <p>How can SQL queries support reporting requirements?</p>
+                        <p>How can SQL queries support the reporting someone would actually need?</p>
                     </article>
                 </div>
-            </div>
-        </section>
 
-        <!-- REFLECTION -->
-        <section class="section">
-            <div class="container">
-                <div class="section-head reveal">
-                    <p class="kicker">Reflection</p>
-                    <h2>Engineering decisions and next steps.</h2>
-                    <!-- TODO: replace with your real decisions, challenges, and
-                         measured results (run times, row counts, cost). -->
-                    <p class="lead">
-                        This project moves raw trip records into a queryable
-                        analytical layer on Azure. Future iterations could add
-                        automated data-quality checks, performance tuning for
-                        larger trip volumes, and scheduled refreshes.
+                <div class="code-wrap reveal">
+                    <!-- TODO: replace this with one of your real queries. The names below are illustrative. -->
+                    <p class="code-note">
+                        A simplified example of the kind of question I asked (table and column
+                        names are illustrative):
                     </p>
+<pre class="code"><code><span class="k">SELECT</span> payment_type,
+       <span class="f">COUNT</span>(*)         <span class="k">AS</span> trips,
+       <span class="f">SUM</span>(fare_amount) <span class="k">AS</span> total_fares,
+       <span class="f">SUM</span>(tip_amount)  <span class="k">AS</span> total_tips
+<span class="k">FROM</span>   trips
+<span class="k">GROUP BY</span> payment_type
+<span class="k">ORDER BY</span> trips <span class="k">DESC</span>;</code></pre>
                 </div>
             </div>
         </section>
 
-        <!-- NEXT CASE STUDY -->
-        <section class="section section--light">
+        <!-- WHAT'S NEXT -->
+        <section class="section" id="next" data-rail="What's next">
             <div class="container">
+                <div class="prose reveal">
+                    <p class="kicker">Reflection</p>
+                    <h2>What I'd improve next.</h2>
+                    <p>
+                        This project turns raw trip records into a layer of data that
+                        anyone comfortable with SQL can query. With more time, I'd add:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Automated data-quality checks,</strong> so bad or missing
+                            records are caught before they reach a report.
+                        </li>
+                        <li>
+                            <strong>Performance tuning</strong> for larger volumes of trips.
+                        </li>
+                        <li>
+                            <strong>Scheduled refreshes,</strong> so the data stays up to date
+                            without anyone pressing a button.
+                        </li>
+                    </ul>
+                    <!-- TODO: add measured results (run times, row counts, cost) and the biggest
+                         challenge you hit, if you have them. -->
+
+                    <blockquote class="pullquote">
+                        The most useful pipeline is the one nobody has to think about.
+                    </blockquote>
+                </div>
+
                 <a class="card next-case reveal" href="energy-data-lakehouse.html">
-                    <small>Next case study</small>
+                    <small>Next project write-up</small>
                     <strong>Energy Data Lakehouse <span class="link-arrow"></span></strong>
                 </a>
             </div>

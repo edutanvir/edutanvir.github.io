@@ -9,9 +9,10 @@
           content="Get in touch with Md Tanvir Ahmed about Azure data engineering roles, projects, and collaborations.">
     <meta name="theme-color" content="#000000">
 
-    <link rel="icon" href="favicon.ico" sizes="48x48">
-    <link rel="icon" href="favicon-96x96.png" type="image/png" sizes="96x96">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Site icon (the ?v=2 makes browsers fetch the new version) -->
+    <link rel="icon" type="image/png" href="images/favicon.png?v=2">
+    <link rel="apple-touch-icon" href="images/favicon.png?v=2">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -49,6 +50,13 @@
 
     <main id="main">
         <section class="hero">
+            <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <div class="float-icons" aria-hidden="true">
+                <span class="fi" style="--x:76%;--y:18%;--d:1.2;--c:#8f7bff"><span class="fi-tile" style="--s:64px;--t:7s"><svg class="ico"><use href="#i-mail"/></svg></span></span>
+                <span class="fi" style="--x:90%;--y:44%;--d:0.8;--c:#ff7ab8"><span class="fi-tile" style="--s:50px;--t:8s"><svg class="ico"><use href="#i-spark"/></svg></span></span>
+                <span class="fi" style="--x:68%;--y:56%;--d:1.4;--c:#2997ff"><span class="fi-tile" style="--s:54px;--t:6s"><svg class="ico"><use href="#i-link"/></svg></span></span>
+            </div>
+
             <div class="container">
                 <p class="kicker">Contact</p>
 
@@ -64,12 +72,13 @@
             </div>
         </section>
 
-        <section class="section" style="padding-top: 0;">
+        <section class="section section--flush">
             <div class="container contact-grid">
 
                 <!-- Contact details -->
                 <div class="contact-list" data-stagger>
                     <div class="card contact-item">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-mail"/></svg></span>
                         <small>Message</small>
                         <strong>Use the form and it goes straight to my inbox.</strong>
                     </div>
@@ -77,6 +86,7 @@
                     <a class="card contact-item"
                        href="https://www.linkedin.com/in/tanvir-de/"
                        target="_blank" rel="noopener noreferrer">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-link"/></svg></span>
                         <small>LinkedIn</small>
                         <strong class="link-arrow">linkedin.com/in/tanvir-de</strong>
                     </a>
@@ -84,6 +94,7 @@
                     <a class="card contact-item"
                        href="https://github.com/edutanvir"
                        target="_blank" rel="noopener noreferrer">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-code"/></svg></span>
                         <small>GitHub</small>
                         <strong class="link-arrow">github.com/edutanvir</strong>
                     </a>

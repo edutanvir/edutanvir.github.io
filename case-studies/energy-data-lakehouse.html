@@ -6,12 +6,13 @@
 
     <title>Energy Data Lakehouse | Md Tanvir Ahmed</title>
     <meta name="description"
-          content="A case study on an energy data lakehouse built with Microsoft Fabric, PySpark, and Power BI to prepare energy data for analytics.">
+          content="A plain-English write-up of an energy data lakehouse built with Microsoft Fabric, PySpark, and Power BI to prepare energy data for analytics.">
     <meta name="theme-color" content="#000000">
 
-    <link rel="icon" href="../favicon.ico" sizes="48x48">
-    <link rel="icon" href="../favicon-96x96.png" type="image/png" sizes="96x96">
-    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <!-- Site icon (the ?v=2 makes browsers fetch the new version) -->
+    <link rel="icon" type="image/png" href="../images/favicon.png?v=2">
+    <link rel="apple-touch-icon" href="../images/favicon.png?v=2">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -47,11 +48,19 @@
         <div class="scroll-progress" aria-hidden="true"></div>
     </header>
 
-    <main id="main">
+    <main id="main" data-post>
         <!-- HERO -->
-        <section class="hero">
+        <section class="hero" id="top" data-rail="Intro">
+            <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <div class="float-icons" aria-hidden="true">
+                <span class="fi" style="--x:78%;--y:14%;--d:1.2;--c:#30d158"><span class="fi-tile" style="--s:62px;--t:7s"><svg class="ico"><use href="#i-bolt"/></svg></span></span>
+                <span class="fi" style="--x:90%;--y:40%;--d:0.8;--c:#40d9ff"><span class="fi-tile" style="--s:52px;--t:8s"><svg class="ico"><use href="#i-globe"/></svg></span></span>
+                <span class="fi" style="--x:70%;--y:52%;--d:1.4;--c:#ffb340"><span class="fi-tile" style="--s:56px;--t:6s"><svg class="ico"><use href="#i-chart"/></svg></span></span>
+                <span class="fi" style="--x:86%;--y:66%;--d:1;--c:#8f7bff"><span class="fi-tile" style="--s:46px;--t:9s"><svg class="ico"><use href="#i-layers"/></svg></span></span>
+            </div>
+
             <div class="container">
-                <p class="kicker">Case study · Microsoft Fabric</p>
+                <p class="kicker">Project write-up · Microsoft Fabric</p>
 
                 <h1 class="display display--sm">
                     <span class="line">Energy data.</span>
@@ -59,15 +68,25 @@
                 </h1>
 
                 <p class="lead">
-                    How energy-sector datasets can be organized, transformed,
-                    and presented through a Microsoft Fabric lakehouse and a
-                    Power BI report.
+                    A plain-English story of how I turned scattered energy datasets
+                    into one Microsoft Fabric lakehouse and an interactive Power BI report.
                 </p>
 
-                <div class="hero-actions">
-                    <a class="btn btn-primary" href="#dashboard" data-magnetic>See the dashboard</a>
-                    <a class="btn btn-secondary" href="../index.html#projects" data-magnetic>All projects</a>
+                <div class="byline">
+                    <img src="../images/profile.jpg" alt="Md Tanvir Ahmed" width="38" height="38">
+                    <span><strong>Md Tanvir Ahmed</strong></span>
+                    <span aria-hidden="true">·</span>
+                    <span data-reading-time>A few minutes to read</span>
                 </div>
+
+                <nav class="toc" aria-label="In this write-up">
+                    <a href="#story">The short version</a>
+                    <a href="#why">The problem</a>
+                    <a href="#journey">The pipeline</a>
+                    <a href="#dashboard">The dashboard</a>
+                    <a href="#questions">Questions</a>
+                    <a href="#next">What's next</a>
+                </nav>
 
                 <ul class="tag-list" role="list">
                     <li>Microsoft Fabric</li>
@@ -78,112 +97,159 @@
             </div>
         </section>
 
-        <!-- OVERVIEW -->
-        <section class="section">
+        <!-- THE SHORT VERSION -->
+        <section class="section section--tight" id="story" data-rail="The short version">
             <div class="container">
-                <div class="section-head reveal">
-                    <p class="kicker">Project overview</p>
-                    <h2>Making energy data easier to analyze.</h2>
-                    <p class="lead">
-                        Energy information comes from different sources, uses
-                        different structures, and measures different parts of
-                        the sector. This project brings selected datasets into
-                        one analytical environment and presents them in an
-                        interactive dashboard.
+                <div class="prose reveal">
+                    <p class="kicker">The short version</p>
+                    <h2>One dashboard, many energy datasets.</h2>
+                    <p>
+                        I took a handful of public energy datasets, cleaned them up in a
+                        <strong>Microsoft Fabric lakehouse</strong> using <strong>PySpark</strong>,
+                        and built a <strong>Power BI</strong> report on top. The result is a
+                        dashboard where you can click through energy generation, CO₂ and
+                        prices by country, year and energy source.
                     </p>
-                </div>
-
-                <div class="grid-3" data-stagger>
-                    <article class="card">
-                        <h3>The challenge</h3>
-                        <p>
-                            Prepare energy-related data for consistent
-                            exploration, comparison, and reporting.
-                        </p>
-                    </article>
-
-                    <article class="card">
-                        <h3>The engineering</h3>
-                        <p>
-                            Use Fabric and PySpark to organize and transform
-                            datasets for analytical use.
-                        </p>
-                    </article>
-
-                    <article class="card">
-                        <h3>The outcome</h3>
-                        <p>
-                            Present energy generation, emissions, and pricing
-                            measures in a report built for exploration.
-                        </p>
-                    </article>
+                    <p>
+                        This write-up follows the data on its journey, in the order it
+                        travels. You don't need to be a data engineer to read it. I'll
+                        explain the jargon as we go.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <!-- ARCHITECTURE -->
-        <section class="section section--light">
+        <!-- THE PROBLEM -->
+        <section class="section section--tight" id="why" data-rail="The problem">
             <div class="container">
-                <div class="section-head reveal">
-                    <p class="kicker">Data architecture</p>
-                    <h2>From source data to reporting.</h2>
-                    <p class="lead">
-                        A high-level view of how data moves from public energy
-                        sources to an interactive report.
+                <div class="prose reveal">
+                    <p class="kicker">Why this was worth building</p>
+                    <h2>Energy data is trickier than it looks.</h2>
+                    <p>
+                        You'd think putting energy numbers side by side would be simple.
+                        It isn't. Different sources name the same country in different
+                        ways, measure in different units, and cover different years.
+                        Combine them without fixing that, and you get a chart that looks
+                        convincing but quietly misleads.
                     </p>
-                </div>
+                    <p>
+                        So most of the real work happens <strong>before</strong> anyone opens
+                        a dashboard: making sure dates, country names, energy-source labels
+                        and units all mean the same thing everywhere.
+                    </p>
 
-                <!-- TODO: edit these four steps so they match your exact Fabric
-                     workflow (for example: dataset names, notebook or pipeline
-                     names, Bronze/Silver/Gold tables). -->
-                <div class="steps" data-stagger>
-                    <article class="card step">
-                        <h3>Data sources</h3>
-                        <p>Selected energy datasets from public information sources.</p>
-                    </article>
-
-                    <article class="card step">
-                        <h3>Data preparation</h3>
-                        <p>
-                            Inspect, clean, standardize, and transform the data
-                            with PySpark in Fabric.
-                        </p>
-                    </article>
-
-                    <article class="card step">
-                        <h3>Lakehouse</h3>
-                        <p>
-                            Organize prepared datasets for reuse and
-                            analytical queries.
-                        </p>
-                    </article>
-
-                    <article class="card step">
-                        <h3>Power BI</h3>
-                        <p>
-                            Explore measures, trends, geographic comparisons,
-                            and report filters.
-                        </p>
-                    </article>
+                    <aside class="callout" style="--c1:#8f7bff;--c2:#ff7ab8">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-spark"/></svg></span>
+                        <div>
+                            <strong>In plain English: what's a lakehouse?</strong>
+                            <p>
+                                Picture a lake and a warehouse side by side. The lake holds raw
+                                files exactly as they arrived. The warehouse holds tidy, checked
+                                tables that people actually query. A lakehouse keeps both in one
+                                place, so nobody has to copy data between systems just to
+                                analyse it.
+                            </p>
+                        </div>
+                    </aside>
                 </div>
             </div>
         </section>
 
-        <!-- DASHBOARD -->
-        <section class="section" id="dashboard">
+        <!-- THE PIPELINE -->
+        <section class="section section--light" id="journey" data-rail="The pipeline">
             <div class="container">
                 <div class="section-head reveal">
-                    <p class="kicker">Dashboard walkthrough</p>
-                    <h2>Explore the energy dashboard.</h2>
+                    <p class="kicker">How the data travels</p>
+                    <h2>From public sources to a report.</h2>
                     <p class="lead">
-                        The report brings several energy indicators together
-                        so you can explore generation, emissions, pricing,
-                        and geographic patterns.
+                        Four stops, left to right. Watch the glowing dot: that's the data
+                        moving.
+                    </p>
+                </div>
+
+                <!-- TODO: edit the four stops below so they match your exact Fabric workflow
+                     (dataset names, notebook or pipeline names, table names). -->
+                <div class="flow flow--wide reveal" data-flow role="img"
+                     aria-label="Data flows from public sources, through PySpark in Fabric, into a lakehouse, and on to a Power BI report">
+                    <div class="flow-node" style="--c1:#2997ff;--c2:#40d9ff">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-globe"/></svg></span>
+                        <strong>Public sources</strong>
+                        <span>Selected energy datasets</span>
+                    </div>
+                    <div class="flow-link"></div>
+                    <div class="flow-node" style="--c1:#8f7bff;--c2:#ff7ab8">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-code"/></svg></span>
+                        <strong>PySpark in Fabric</strong>
+                        <span>Inspect, clean, standardise</span>
+                    </div>
+                    <div class="flow-link"></div>
+                    <div class="flow-node" style="--c1:#ffb340;--c2:#ff6b5e">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-layers"/></svg></span>
+                        <strong>Lakehouse</strong>
+                        <span>Tidy tables, ready to query</span>
+                    </div>
+                    <div class="flow-link"></div>
+                    <div class="flow-node" style="--c1:#30d158;--c2:#40d9ff">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-chart"/></svg></span>
+                        <strong>Power BI</strong>
+                        <span>Interactive report</span>
+                    </div>
+                </div>
+
+                <div class="steps" data-stagger style="margin-top: 36px;">
+                    <article class="card step">
+                        <h3>Collect</h3>
+                        <p>
+                            I start with selected energy datasets from public sources and
+                            look at what each one actually contains.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>Clean</h3>
+                        <p>
+                            In Fabric, PySpark checks for missing values, odd records and
+                            mismatched data types, then standardises dates, names, labels
+                            and units.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>Store</h3>
+                        <p>
+                            The cleaned tables live in the lakehouse, organised so they're
+                            easy to reuse and query.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>Show</h3>
+                        <p>
+                            Power BI reads those tables and turns them into the report you
+                            can explore below.
+                        </p>
+                    </article>
+                </div>
+                <!-- TODO: add the specific problems you ran into while cleaning (for example
+                     mismatched country names or missing years) and how you fixed them.
+                     Real examples make this section much stronger. -->
+            </div>
+        </section>
+
+        <!-- THE DASHBOARD -->
+        <section class="section" id="dashboard" data-rail="The dashboard">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">The result</p>
+                    <h2>Meet the dashboard.</h2>
+                    <p class="lead">
+                        Here's the finished report. Try the year and country filters
+                        and watch the whole picture change.
                     </p>
                 </div>
 
                 <div class="figure-wrap reveal">
-                    <figure class="browser">
+                    <figure class="browser" data-tilt>
                         <div class="browser-bar" aria-hidden="true">
                             <i></i><i></i><i></i><span>Energy dashboard</span>
                         </div>
@@ -196,167 +262,117 @@
                     </figure>
                 </div>
 
+                <p class="kicker reveal">Three things worth a look</p>
                 <div class="grid-3" data-stagger>
                     <article class="card">
-                        <h3>Key performance indicators</h3>
+                        <span class="icon-tile"><svg class="ico"><use href="#i-chart"/></svg></span>
+                        <h3>The headline numbers</h3>
                         <p>
-                            Summary cards show the CO₂ measure, total
-                            generation, and average price.
+                            Cards at the top show the CO₂ measure, total generation and
+                            average price at a glance.
                         </p>
                     </article>
 
                     <article class="card">
-                        <h3>Generation by geography</h3>
+                        <span class="icon-tile"><svg class="ico"><use href="#i-globe"/></svg></span>
+                        <h3>Country by country</h3>
                         <p>
-                            Country-level comparisons show how reported
-                            generation differs across locations.
+                            A country-level comparison shows how reported generation
+                            differs from place to place.
                         </p>
                     </article>
 
                     <article class="card">
-                        <h3>Energy-source breakdown</h3>
+                        <span class="icon-tile"><svg class="ico"><use href="#i-bolt"/></svg></span>
+                        <h3>What the power comes from</h3>
                         <p>
-                            Source categories show the composition of the
-                            generation represented in the report.
+                            The energy-source breakdown shows the mix behind the
+                            generation in the report.
                         </p>
                     </article>
                 </div>
             </div>
         </section>
 
-        <!-- ANALYTICAL QUESTIONS -->
-        <section class="section section--light">
+        <!-- QUESTIONS -->
+        <section class="section section--light" id="questions" data-rail="Questions">
             <div class="container">
                 <div class="section-head reveal">
-                    <p class="kicker">Analytical questions</p>
-                    <h2>What the report helps explore.</h2>
+                    <p class="kicker">What it's for</p>
+                    <h2>Questions you can ask it.</h2>
                 </div>
 
                 <div class="grid-3" data-stagger>
                     <article class="card">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-search"/></svg></span>
                         <h3>Generation patterns</h3>
                         <p>
-                            How does reported energy generation vary across
-                            years and geographic areas?
+                            How does reported energy generation vary across years and
+                            across countries?
                         </p>
                     </article>
 
                     <article class="card">
-                        <h3>Energy-source mix</h3>
+                        <span class="icon-tile"><svg class="ico"><use href="#i-layers"/></svg></span>
+                        <h3>The energy mix</h3>
                         <p>
-                            What share of the displayed generation comes from
-                            each source category?
+                            What share of the displayed generation comes from each
+                            energy source?
                         </p>
                     </article>
 
                     <article class="card">
-                        <h3>Emissions and pricing</h3>
+                        <span class="icon-tile"><svg class="ico"><use href="#i-compass"/></svg></span>
+                        <h3>Emissions and price</h3>
                         <p>
-                            How do the available emissions and price measures
-                            change across the selected data?
+                            How do the available CO₂ and price measures change across
+                            the data you select?
                         </p>
                     </article>
                 </div>
 
                 <p class="note">
-                    These are questions for exploration, not conclusions about
-                    causation. Read each measure with its source, units, date
-                    range, and data coverage in mind.
+                    These are questions to explore, not proof of cause and effect.
+                    Always read a number alongside its source, units, date range
+                    and coverage.
                 </p>
             </div>
         </section>
 
-        <!-- ENGINEERING DECISIONS -->
-        <section class="section">
+        <!-- WHAT'S NEXT -->
+        <section class="section" id="next" data-rail="What's next">
             <div class="container">
-                <div class="section-head reveal">
-                    <p class="kicker">Engineering decisions</p>
-                    <h2>Why the data workflow matters.</h2>
-                </div>
-
-                <!-- TODO: add the specific checks and transformations you actually
-                     implemented (null handling, type casts, joins, deduplication). -->
-                <div class="grid-3" data-stagger>
-                    <article class="card">
-                        <h3>Data consistency</h3>
-                        <p>
-                            Before energy figures can be compared, dates,
-                            geographic names, energy-source labels, and units
-                            need one consistent representation. Different
-                            source definitions can otherwise produce misleading
-                            comparisons.
-                        </p>
-                    </article>
-
-                    <article class="card">
-                        <h3>Transformation and validation</h3>
-                        <p>
-                            Data preparation should keep transformations
-                            traceable and flag missing values, unexpected
-                            records, and incompatible data types.
-                        </p>
-                    </article>
-
-                    <article class="card">
-                        <h3>Analytics-ready reporting</h3>
-                        <p>
-                            A well-structured analytical dataset makes report
-                            measures easier to maintain and interpret. The
-                            dashboard states what each measure represents and
-                            the period and geography it covers.
-                        </p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- LIMITATIONS -->
-        <section class="section section--light">
-            <div class="container">
-                <div class="section-head reveal">
+                <div class="prose reveal">
                     <p class="kicker">Limitations and next steps</p>
-                    <h2>Good analysis starts with context.</h2>
-                    <p class="lead">
-                        Energy datasets differ in reporting periods, geographic
-                        coverage, measurement units, and definitions. These
-                        differences should be checked before drawing
-                        conclusions from comparisons.
+                    <h2>No data project is ever finished.</h2>
+                    <p>
+                        Energy datasets differ in reporting periods, coverage, units and
+                        definitions, so any comparison needs a second look before you
+                        trust it. If I kept going, I'd do three things:
                     </p>
+                    <ul>
+                        <li>
+                            <strong>Document the sources.</strong> Write down each dataset's
+                            name, publisher, the date I downloaded it, and what its columns mean.
+                        </li>
+                        <li>
+                            <strong>Double-check the measures.</strong> Confirm the units, how
+                            numbers are added up, which periods are missing, and what each
+                            headline number really represents.
+                        </li>
+                        <li>
+                            <strong>Make it repeatable.</strong> Write down the transformation
+                            steps and add data-quality checks that run the same way every time.
+                        </li>
+                    </ul>
+
+                    <blockquote class="pullquote">
+                        A dashboard is only as trustworthy as the data work underneath it.
+                    </blockquote>
                 </div>
 
-                <div class="grid-3" data-stagger>
-                    <article class="card">
-                        <h3>Document the sources</h3>
-                        <p>
-                            Record the dataset name, publisher, retrieval
-                            date, and relevant definitions.
-                        </p>
-                    </article>
-
-                    <article class="card">
-                        <h3>Validate the measures</h3>
-                        <p>
-                            Confirm units, aggregation rules, missing periods,
-                            and the meaning of each KPI.
-                        </p>
-                    </article>
-
-                    <article class="card">
-                        <h3>Improve reproducibility</h3>
-                        <p>
-                            Document the transformation workflow and add
-                            repeatable data-quality checks.
-                        </p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- NEXT CASE STUDY -->
-        <section class="section">
-            <div class="container">
                 <a class="card next-case reveal" href="nyc-taxi.html">
-                    <small>Next case study</small>
+                    <small>Next project write-up</small>
                     <strong>NYC Taxi Analytics <span class="link-arrow"></span></strong>
                 </a>
             </div>
