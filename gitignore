@@ -4,6 +4,10 @@
 .LSOverride
 ._*
 
+# Windows
+Thumbs.db
+Desktop.ini
+
 # Editors
 .vscode/
 .idea/
@@ -24,12 +28,20 @@ node_modules/
 dist/
 .cache/
 
+# Python (the blog builder in _tools/)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
 # Logs and temporary files
 *.log
 *.tmp
 npm-debug.log*
 
-# Private drafts and downloads: keep these on your computer only
+# Private drafts and downloads: keep these on your computer only.
+# Write unfinished blog posts in drafts/, then move them to _posts-src/ when ready.
+# Commit _posts-src/ and _tools/ (they are the source of the blog).
 drafts/
 private/
 *.zip

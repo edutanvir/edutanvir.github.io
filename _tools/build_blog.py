@@ -25,6 +25,18 @@ Front matter (the block at the top of each post):
     tags: Azure, Databricks
     draft: true                  # optional: true = not built yet
     ---
+
+Using an infographic (any shape) as the post's main picture:
+
+    image: my-infographic.webp   # shown in full, never cropped, click to open full size
+    image_layout: natural
+    preview: my-infographic-preview.jpg   # 1200 x 627 picture for the blog list and LinkedIn
+
+The home page (index.html) shows your 3 newest posts between the BLOG-LATEST markers.
+The build refreshes that block for you; everything outside the markers is yours to edit.
+
+Files whose names start with an underscore (for example _formatting-guide.md)
+are ignored by the build, so you can keep notes and templates there.
 """
 
 import datetime as dt
@@ -98,6 +110,8 @@ def parse_post(path):
         "description": meta["description"],
         "image": meta.get("image") or DEFAULT_COVER,
         "image_alt": meta.get("image_alt") or meta["title"],
+        "layout": "natural" if meta.get("image_layout", "").lower() == "natural" else "cover",
+        "preview": meta.get("preview") or "",
         "tags": tags,
         "draft": meta.get("draft", "").lower() in ("true", "yes", "1"),
         "body_md": body,
@@ -128,7 +142,9 @@ def render_body(post):
     text = markdown.markdown(
         post["body_md"], extensions=["fenced_code", "tables", "sane_lists"], output_format="html5"
     )
-    text = re.sub(r"<(/?)h1\b", r"<\1h2", text)             # the page already has one h1
+    text = re.sub(r"<(/?)h1\b", r"<\1h2", text)
+    # Wide tables scroll sideways inside their own box instead of stretching the page on phones
+    text = text.replace("<table>", '<div class="table-wrap"><table>').replace("</table>", "</table></div>")             # the page already has one h1
 
     def fix_src(src):
         if re.match(r"^(https?:)?//", src) or src.startswith("/") or src.startswith("images/"):
@@ -168,7 +184,7 @@ THEME_SCRIPT = """    <script>
     </script>"""
 
 
-def head(title, description, url, image_url, kind="website", extra="", og_title=None):
+def head(title, description, url, image_url, kind="website", extra="", og_title=None, image_size_px=(1200, 627)):
     og_title = og_title or title
     return f"""<!DOCTYPE html>
 {MARK}
@@ -189,8 +205,8 @@ def head(title, description, url, image_url, kind="website", extra="", og_title=
     <meta property="og:description" content="{esc(description)}">
     <meta property="og:url" content="{esc(url)}">
     <meta property="og:image" content="{esc(image_url)}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="627">
+    <meta property="og:image:width" content="{image_size_px[0]}">
+    <meta property="og:image:height" content="{image_size_px[1]}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{esc(og_title)}">
     <meta name="twitter:description" content="{esc(description)}">
@@ -279,8 +295,10 @@ def tag_list(tags):
 
 def post_page(post, body_html):
     url = f"{SITE_URL}/blog/{post['slug']}.html"
-    image_url = f"{SITE_URL}/blog/images/{post['image']}"
+    share_image = post["card_image"]
+    image_url = f"{SITE_URL}/blog/images/{share_image}"
     w, h = image_size(post["image"])
+    sw, sh = image_size(share_image)
 
     ld = json.dumps({
         "@context": "https://schema.org",
@@ -300,8 +318,27 @@ def post_page(post, body_html):
     linkedin = "https://www.linkedin.com/sharing/share-offsite/?url=" + re.sub(
         r"[^A-Za-z0-9_.~-]", lambda m: "%%%02X" % ord(m.group(0)), url)
 
+    if post["layout"] == "natural":
+        orientation = "is-portrait" if h > w else "is-landscape"
+        cover_html = (
+            f'<figure class="post-cover post-cover--natural {orientation}" style="--ratio:{w} / {h}">\n'
+            f'                <a class="post-cover-frame" href="images/{esc(post["image"])}" target="_blank" rel="noopener" '
+            f'aria-label="Open the picture at full size">\n'
+            f'                    <img src="images/{esc(post["image"])}" alt="{esc(post["image_alt"])}" width="{w}" height="{h}">\n'
+            f'                </a>\n'
+            f'                <figcaption>Click the picture to open it at full size.</figcaption>\n'
+            f'            </figure>')
+    else:
+        cover_html = (
+            f'<figure class="post-cover" data-parallax>\n'
+            f'                <div class="post-cover-frame">\n'
+            f'                    <img src="images/{esc(post["image"])}" alt="{esc(post["image_alt"])}" width="{w}" height="{h}">\n'
+            f'                </div>\n'
+            f'            </figure>')
+
     return (
-        head(f"{post['title']} | {AUTHOR}", post["description"], url, image_url, "article", extra, og_title=post["title"])
+        head(f"{post['title']} | {AUTHOR}", post["description"], url, image_url, "article", extra,
+             og_title=post["title"], image_size_px=(sw, sh))
         + HEADER
         + f"""
     <main id="main" data-post>
@@ -327,11 +364,7 @@ def post_page(post, body_html):
         </section>
 
         <div class="container">
-            <figure class="post-cover" data-parallax>
-                <div class="post-cover-frame">
-                    <img src="images/{esc(post['image'])}" alt="{esc(post['image_alt'])}" width="{w}" height="{h}">
-                </div>
-            </figure>
+            {cover_html}
         </div>
 
         <section class="section section--tight post-section">
@@ -370,11 +403,12 @@ def post_page(post, body_html):
     )
 
 
-def card(post):
+def card(post, prefix=""):
+    """One post card. prefix is "blog/" when the card sits on the home page."""
     c1, c2 = ("#0071e3", "#8f7bff")
-    return f"""                <a class="card post-card" href="{post['slug']}.html">
+    return f"""                <a class="card post-card" href="{prefix}{post['slug']}.html">
                     <div class="thumb" style="--c1:{c1};--c2:{c2}">
-                        <img src="images/{esc(post['image'])}" alt="{esc(post['image_alt'])}" width="1200" height="627" loading="lazy">
+                        <img src="{prefix}images/{esc(post['card_image'])}" alt="" width="1200" height="627" loading="lazy">
                     </div>
                     <div class="post-card-body">
                         <p class="meta">{nice_date(post['date'])} · {minutes(post)} min read</p>
@@ -423,6 +457,45 @@ def index_page(posts):
     )
 
 
+# ------------------------------------------------- home page: latest posts ----
+HOME = ROOT / "index.html"
+HOME_START = "<!-- BLOG-LATEST:START"
+HOME_END = "<!-- BLOG-LATEST:END -->"
+HOME_COUNT = 3                                   # how many posts the home page shows
+
+
+def home_block(posts):
+    latest = posts[:HOME_COUNT]
+    if latest:
+        cards = "\n".join(card(p, "blog/") for p in latest)
+        grid = f'<div class="blog-grid blog-grid--home" data-stagger>\n{cards}\n                </div>'
+    else:
+        grid = '<p class="blog-empty">New posts are on the way. Check back soon.</p>'
+    return (
+        f"{HOME_START} generated by _tools/build_blog.py. Do not edit between these markers. -->\n"
+        f"                {grid}\n"
+        '                <p class="blog-more reveal"><a class="btn btn-secondary" href="blog/">See all posts</a></p>\n'
+        f"                {HOME_END}"
+    )
+
+
+def update_home(posts):
+    """Refreshes the 'From the blog' cards in index.html (only between the two markers)."""
+    if not HOME.exists():
+        return
+    text = HOME.read_text(encoding="utf-8")
+    start, end = text.find(HOME_START), text.find(HOME_END)
+    if start == -1 or end == -1 or end < start:
+        print("  note:    index.html has no BLOG-LATEST markers, so its post list was left alone")
+        return
+    new = text[:start] + home_block(posts) + text[end + len(HOME_END):]
+    if new != text:
+        HOME.write_text(new, encoding="utf-8")
+        print(f"  updated: index.html  (latest {min(len(posts), HOME_COUNT)} posts)")
+    else:
+        print("  ok:      index.html is already up to date")
+
+
 # ------------------------------------------------------------------ main ----
 def main():
     SRC.mkdir(exist_ok=True)
@@ -431,6 +504,8 @@ def main():
 
     posts, seen = [], set()
     for path in sorted(SRC.glob("*.md")):
+        if path.name.startswith("_"):
+            continue                                        # notes and templates
         post = parse_post(path)
         if post["draft"]:
             print(f"  skipped (draft): {path.name}")
@@ -441,6 +516,11 @@ def main():
         if not (IMAGES / post["image"]).exists():
             print(f"  warning: {path.name} -> blog/images/{post['image']} not found, using the default cover")
             post["image"] = DEFAULT_COVER
+            post["layout"] = "cover"
+        if post["preview"] and not (IMAGES / post["preview"]).exists():
+            print(f"  warning: {path.name} -> blog/images/{post['preview']} not found, falling back to the main image")
+            post["preview"] = ""
+        post["card_image"] = post["preview"] or post["image"]
         posts.append(post)
 
     posts.sort(key=lambda p: p["date"], reverse=True)
@@ -456,6 +536,7 @@ def main():
         print(f"  built:   blog/{post['slug']}.html")
     (OUT / "index.html").write_text(index_page(posts), encoding="utf-8")
     print(f"  built:   blog/index.html  ({len(posts)} post{'s' if len(posts) != 1 else ''})")
+    update_home(posts)
     print("\nDone. Open blog/index.html with Live Server to preview.")
 
 

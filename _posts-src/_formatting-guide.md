@@ -1,13 +1,13 @@
 ---
-title: Hello, world. This is how my blog works
+title: Formatting guide (copy this file to start a new post)
 date: 2026-11-07
-description: A sample post that shows every building block. Replace it with your first real article.
-image: hello-world-cover.jpg
-image_alt: Five colourful icons connected by a line, like a small data pipeline
+description: Every building block you can use in a post. Files starting with an underscore are never published.
+image: default-cover.jpg
+image_alt: A soft gradient background with a dotted grid
 tags: Sample, Blog
 ---
 
-**This is a sample post.** Delete `_posts-src/hello-world.md` (and its cover image) when you publish your first real article.
+**This is a formatting guide, not a post.** The underscore at the start of the file name tells the build script to skip it. Copy it to a new name such as `my-post.md` to start writing.
 
 ## Write in plain text
 

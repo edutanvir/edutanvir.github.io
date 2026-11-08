@@ -23,7 +23,7 @@ A static site built with plain HTML, CSS, and JavaScript and hosted on GitHub Pa
 - Apple-style design with a **dark and light theme** (the visitor's choice is remembered)
 - Project carousel with keyboard and swipe support
 - **Booking calendar** on the contact page that shows the days I am free, in the visitor's own time zone
-- **Blog** written in Markdown, with cover images, scroll animations, and link previews that look good when shared on LinkedIn
+- **Blog** written in Markdown, with cover images, scroll animations, and link previews that look good when shared on LinkedIn. The home page shows the latest posts automatically
 - Cursor, hover, and scroll effects that switch off for visitors who prefer reduced motion
 - Contact form that delivers messages to my inbox, so my email address is never published on the page
 
@@ -31,7 +31,7 @@ A static site built with plain HTML, CSS, and JavaScript and hosted on GitHub Pa
 
 ```
 edutanvir.github.io/
-├── index.html                 Home page
+├── index.html                 Home page (its "From the blog" cards update automatically)
 ├── contact.html               Booking calendar and contact form
 ├── style.css                  Design system, themes, calendar, and blog styles
 ├── script.js                  Theme switch, effects, carousel, and contact form
@@ -42,15 +42,19 @@ edutanvir.github.io/
 │   └── nyc-taxi.html
 ├── blog/                      Generated pages (do not edit by hand)
 │   ├── index.html
-│   ├── hello-world.html
+│   ├── paradox-to-practice.html
+│   ├── same-logic-different-syntax.html
 │   └── images/                Cover and article images
 ├── _posts-src/                My posts, written in Markdown
 ├── _tools/
 │   └── build_blog.py          Turns the Markdown into blog pages
-└── images/                    Screenshots, profile photo, favicon.png
+├── images/                    Screenshots, profile photo, favicon.png
+├── .gitignore                 Files that stay on my computer
+├── LICENSE
+└── README.md
 ```
 
-Folders that start with an underscore are not published by GitHub Pages.
+Folders that start with an underscore are not published as web pages by GitHub Pages. They are still visible in the GitHub repository if it is public, so unfinished posts go in `drafts/` instead (see below).
 
 ## Update my availability
 
@@ -71,9 +75,9 @@ Edit `availability.json` on GitHub (open the file, click the pencil icon, then *
 
 ## Write a blog post
 
-1. Add a file to `_posts-src/`, for example `my-post.md`, starting with the front matter (title, date, description, image, tags). See `hello-world.md` for every available building block.
-2. Put the cover image (1200 x 627 px is ideal) in `blog/images/`.
-3. One-time setup: `pip3 install markdown`. Then run `python3 _tools/build_blog.py`.
+1. Start the post in `drafts/` (this folder is in `.gitignore`, so it never leaves my computer). Copy `_posts-src/_formatting-guide.md` to begin: it shows every building block. When the post is ready, move the file into `_posts-src/`.
+2. Start the file with the front matter (title, date, description, image, tags) and put the picture in `blog/images/`. A 1200 x 627 px cover works as-is. For an infographic of any other shape, add `image_layout: natural` (shown in full, never cropped) and `preview: your-1200x627-picture.jpg` (used for the blog list, the home page, and the LinkedIn preview).
+3. One-time setup: `pip3 install markdown`. Then run `python3 _tools/build_blog.py`. This builds the post, the blog list, and the three newest cards on the home page.
 4. Commit and push. Share the post link on LinkedIn; the cover image, title, and description appear automatically.
 
 LinkedIn remembers old previews. To refresh one, paste the link into the [Post Inspector](https://www.linkedin.com/post-inspector/).
