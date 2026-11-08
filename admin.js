@@ -167,8 +167,15 @@
 
     function explain(result, doing) {
         const s = result.status;
+        const said = result.data && result.data.message ? ` GitHub said: “${result.data.message}”.` : "";
         if (s === 401) return "GitHub did not accept this token. It may be mistyped or expired. Create a new one and try again.";
-        if (s === 403 || s === 404) return `${doing} failed. Check the repository name, and that the token has Contents: Read and write for it.`;
+        if (doing === "Publishing" && (s === 403 || s === 404)) {
+            if (/protected|rule|review|status check/i.test(said)) {
+                return `GitHub blocked the save (${s}).${said} The branch has a protection rule that does not allow direct commits. Allow it for your account, or use Download file and upload it on GitHub.`;
+            }
+            return `GitHub refused to save (${s}).${said} Reading works for any token on a public repository, so connecting does not prove the token can write. On GitHub, open Settings, Developer settings, Personal access tokens, Fine-grained tokens, and click this token. Set Repository permissions, Contents to “Read and write”, make sure ${state.repo} is the selected repository, and press Update. Then press Publish again. Your edits are still here.`;
+        }
+        if (s === 403 || s === 404) return `${doing} failed (${s}).${said} Check the repository name, and that the token can access that repository.`;
         if (s === 409 || s === 422) return "The file changed on GitHub since you loaded it. Press Connect and load again, then redo your edit.";
         return `${doing} failed (${s || "no connection"}). ${(result.data && result.data.message) || "Check your internet connection and try again."}`;
     }
