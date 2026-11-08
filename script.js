@@ -48,6 +48,17 @@
             "i-mail": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
             "i-link": '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
             "i-compass": '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+            "i-sun": '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>',
+            "i-moon": '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+            "i-check": '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+            "i-calendar": '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+            "i-clock": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+            "i-share": '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
+            "i-copy": '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',
+            "i-chev-l": '<path d="m15 5-7 7 7 7"/>',
+            "i-chev-r": '<path d="m9 5 7 7-7 7"/>',
+            "i-arrow": '<path d="M5 12h14M13 6l6 6-6 6"/>',
+            "i-pen": '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
         };
 
         const symbols = Object.entries(ICONS)
@@ -58,6 +69,58 @@
             "afterbegin",
             `<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>${symbols}</defs></svg>`
         );
+    });
+
+    /* 0b. Light / dark theme toggle -----------------------------------------
+       The saved choice is applied by a tiny script in each page's <head>, so
+       there is no flash. This adds the button behaviour and a circular reveal. */
+    run("theme", () => {
+        const button = $("[data-theme-toggle]");
+        if (!button) return;
+
+        const root = document.documentElement;
+        const current = () => (root.dataset.theme === "light" ? "light" : "dark");
+
+        function paint() {
+            const isLight = current() === "light";
+            button.setAttribute("aria-label", isLight ? "Switch to dark theme" : "Switch to light theme");
+            button.setAttribute("aria-pressed", String(isLight));
+
+            const meta = $('meta[name="theme-color"]');
+            if (meta) meta.setAttribute("content", isLight ? "#ffffff" : "#000000");
+        }
+
+        function apply(theme) {
+            root.dataset.theme = theme;
+            try {
+                localStorage.setItem("theme", theme);
+            } catch (error) { /* private window: the choice just won't be remembered */ }
+            paint();
+        }
+
+        button.addEventListener("click", () => {
+            const next = current() === "dark" ? "light" : "dark";
+
+            if (!document.startViewTransition || reduceMotion) {
+                apply(next);
+                return;
+            }
+
+            const rect = button.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+            const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+
+            const transition = document.startViewTransition(() => apply(next));
+            transition.ready.then(() => {
+                root.animate(
+                    { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+                    { duration: 700, easing: "cubic-bezier(0.22, 1, 0.36, 1)", pseudoElement: "::view-transition-new(root)" }
+                );
+            }).catch(() => {});
+        });
+
+        paint();
     });
 
     /* 1. Typewriter with backspacing ---------------------------------------
@@ -228,6 +291,11 @@
                 child.classList.add("reveal");
                 child.style.setProperty("--d", `${i * 90}ms`);
             });
+        });
+
+        // Blog posts: every block in the article fades in as you reach it
+        $$("[data-reveal-children]").forEach((group) => {
+            Array.from(group.children).forEach((child) => child.classList.add("reveal"));
         });
 
         const items = $$(".reveal");
@@ -459,6 +527,50 @@
         const words = post.textContent.trim().split(/\s+/).length;
         const minutes = Math.max(1, Math.round(words / 210));
         outputs.forEach((el) => (el.textContent = `${minutes} min read`));
+    });
+
+    /* 11b. Parallax on blog cover images --------------------------------- */
+    run("parallax", () => {
+        const items = $$("[data-parallax]");
+        if (!items.length || reduceMotion) return;
+
+        scrollHandlers.push(() => {
+            items.forEach((el) => {
+                const rect = el.getBoundingClientRect();
+                if (rect.bottom < -100 || rect.top > window.innerHeight + 100) return;
+                const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * -0.07;
+                el.style.setProperty("--py", `${offset.toFixed(1)}px`);
+            });
+        });
+        onScrollFrame();
+    });
+
+    /* 11c. "Copy link" buttons on blog posts ------------------------------- */
+    run("copy-link", () => {
+        $$("[data-copy-link]").forEach((button) => {
+            const tip = $(".share-tip", button);
+            const original = tip ? tip.textContent : "";
+
+            button.addEventListener("click", async () => {
+                const url = button.dataset.url || window.location.href.split("#")[0];
+                let ok = true;
+
+                try {
+                    await navigator.clipboard.writeText(url);
+                } catch (error) {
+                    ok = false;
+                }
+
+                button.classList.add("is-done");
+                button.classList.toggle("is-failed", !ok);
+                if (tip) tip.textContent = ok ? "Link copied" : "Copy failed";
+
+                setTimeout(() => {
+                    button.classList.remove("is-done", "is-failed");
+                    if (tip) tip.textContent = original;
+                }, 2200);
+            });
+        });
     });
 
     /* 12. Pointer effects (desktop mouse only, off for reduced motion) ------ */

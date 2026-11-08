@@ -6,7 +6,7 @@
 
     <title>Contact | Md Tanvir Ahmed</title>
     <meta name="description"
-          content="Get in touch with Md Tanvir Ahmed about Azure data engineering roles, projects, and collaborations.">
+          content="Book a call with Md Tanvir Ahmed or send a message about Azure data engineering roles, projects, and collaborations.">
     <meta name="theme-color" content="#000000">
 
     <!-- Site icon (the ?v=2 makes browsers fetch the new version) -->
@@ -17,7 +17,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script>document.documentElement.classList.add("js");</script>
+    <script>
+        /* Applies the saved theme before the page paints (no flash). First visit = dark.
+           To follow the visitor's system setting on a first visit, replace "dark" with:
+           (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") */
+        (function () {
+            var root = document.documentElement, theme = null;
+            root.classList.add("js");
+            try { theme = localStorage.getItem("theme"); } catch (e) {}
+            if (theme !== "light" && theme !== "dark") theme = "dark";
+            root.dataset.theme = theme;
+        })();
+    </script>
 </head>
 
 <body>
@@ -34,14 +45,19 @@
             </a>
 
             <div class="nav-links">
-                <a href="index.html#about">About</a>
+                <a class="nav-hide-sm" href="index.html#about">About</a>
                 <a href="index.html#projects">Projects</a>
-                <a href="index.html#approach">Approach</a>
+                <a class="nav-hide-sm" href="index.html#approach">Approach</a>
+                <a href="blog/">Blog</a>
             </div>
 
             <div class="nav-actions">
                 <a class="nav-ext" href="https://github.com/edutanvir"
                    target="_blank" rel="noopener noreferrer">GitHub</a>
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme" aria-pressed="false">
+                    <svg class="ico ico-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+                    <svg class="ico ico-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+                </button>
                 <a class="btn btn-primary btn-small" href="contact.html" aria-current="page">Contact</a>
             </div>
         </nav>
@@ -67,12 +83,78 @@
 
                 <p class="lead">
                     Hiring for a data engineering role, or want to discuss a
-                    project? Send a message and I'll get back to you.
+                    project? Pick a time that suits you, or send a message and
+                    I'll get back to you.
                 </p>
+
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="#book" data-magnetic>Book a call</a>
+                    <a class="btn btn-secondary" href="#send" data-magnetic>Send a message</a>
+                </div>
             </div>
         </section>
 
-        <section class="section section--flush">
+        <!-- BOOK A CALL
+             Times come from availability.json. Open contact.html?demo=1 to preview with example dates. -->
+        <section class="section section--tint" id="book" data-rail="Book a call">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">Book a call</p>
+                    <h2>Pick a day. Let's talk.</h2>
+                    <p class="lead">
+                        Highlighted days are open. Times are shown in your own time zone,
+                        so there is no maths to do. I'll confirm by email.
+                    </p>
+                </div>
+
+                <div data-booking
+                     data-src="availability.json"
+                     data-key="a221fe5f-e10a-46e7-b67c-00ea79abffac"
+                     data-endpoint="https://api.web3forms.com/submit">
+
+                    <div class="booking-stats reveal">
+                        <span class="stat">
+                            <svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg>
+                            <span>Open days in the next 2 weeks: <strong data-stat-count>0</strong></span>
+                        </span>
+                        <button class="chip-btn" type="button" data-next-open hidden>
+                            <svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>
+                            <span></span>
+                        </button>
+                        <span class="demo-note" data-demo-note hidden>Demo mode: example dates</span>
+                    </div>
+
+                    <div class="booking">
+                        <div class="card cal reveal">
+                            <div class="cal-head">
+                                <button class="cal-nav" type="button" data-cal-prev aria-label="Previous month">
+                                    <svg class="ico" aria-hidden="true"><use href="#i-chev-l"/></svg>
+                                </button>
+                                <h3 class="cal-title" data-cal-title aria-live="polite"></h3>
+                                <button class="cal-nav" type="button" data-cal-next aria-label="Next month">
+                                    <svg class="ico" aria-hidden="true"><use href="#i-chev-r"/></svg>
+                                </button>
+                            </div>
+
+                            <div class="cal-week" aria-hidden="true">
+                                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                            </div>
+                            <div class="cal-grid" data-cal-grid></div>
+
+                            <div class="cal-legend" aria-hidden="true">
+                                <span><i class="legend-dot"></i> Open</span>
+                                <span><i class="legend-dot legend-dot--today"></i> Today</span>
+                            </div>
+                        </div>
+
+                        <aside class="card booking-panel reveal" data-panel aria-live="polite"></aside>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MESSAGE: goes through Web3Forms, so your email address never appears on the site. -->
+        <section class="section section--light" id="send" data-rail="Message">
             <div class="container contact-grid">
 
                 <!-- Contact details -->
@@ -150,5 +232,6 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="booking.js"></script>
 </body>
 </html>

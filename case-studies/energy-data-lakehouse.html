@@ -17,7 +17,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
-    <script>document.documentElement.classList.add("js");</script>
+    <script>
+        /* Applies the saved theme before the page paints (no flash). First visit = dark.
+           To follow the visitor's system setting on a first visit, replace "dark" with:
+           (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") */
+        (function () {
+            var root = document.documentElement, theme = null;
+            root.classList.add("js");
+            try { theme = localStorage.getItem("theme"); } catch (e) {}
+            if (theme !== "light" && theme !== "dark") theme = "dark";
+            root.dataset.theme = theme;
+        })();
+    </script>
 </head>
 
 <body>
@@ -34,14 +45,19 @@
             </a>
 
             <div class="nav-links">
-                <a href="../index.html#about">About</a>
+                <a class="nav-hide-sm" href="../index.html#about">About</a>
                 <a href="../index.html#projects">Projects</a>
-                <a href="../index.html#approach">Approach</a>
+                <a class="nav-hide-sm" href="../index.html#approach">Approach</a>
+                <a href="../blog/">Blog</a>
             </div>
 
             <div class="nav-actions">
                 <a class="nav-ext" href="https://github.com/edutanvir"
                    target="_blank" rel="noopener noreferrer">GitHub</a>
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme" aria-pressed="false">
+                    <svg class="ico ico-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+                    <svg class="ico ico-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+                </button>
                 <a class="btn btn-primary btn-small" href="../contact.html">Contact</a>
             </div>
         </nav>
