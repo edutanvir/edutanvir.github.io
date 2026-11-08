@@ -43,6 +43,9 @@
         }
     })();
 
+    // How many months ahead visitors can look (months with no openings simply show as empty)
+    const MONTHS_AHEAD = Math.max(1, parseInt(root.dataset.monthsAhead, 10) || 12);
+
     const state = {
         owner: { tz: "America/Toronto", slotMinutes: 30, minNoticeHours: 12 },
         slots: [],              // [{ utc, dayKey }]
@@ -227,11 +230,19 @@
         els.next.disabled = index >= state.maxMonth;
     }
 
+    function monthHasOpenings() {
+        const prefix = `${state.view.y}-${pad(state.view.m + 1)}-`;
+        for (const key of state.byDay.keys()) if (key.startsWith(prefix)) return true;
+        return false;
+    }
+
     function shiftMonth(delta) {
         const index = state.view.y * 12 + state.view.m + delta;
         if (index < state.minMonth || index > state.maxMonth) return;
         state.view = { y: Math.floor(index / 12), m: index % 12 };
         renderCalendar(delta);
+        // Only swap the side panel if the visitor is not in the middle of choosing a time
+        if (els.panel.querySelector(".panel-empty")) renderEmptyPanel();
     }
 
     // Highlight the chosen day without redrawing the whole month (no flicker)
@@ -270,15 +281,30 @@
 
     function renderEmptyPanel() {
         const hasSlots = state.slots.length > 0;
+        const monthOpen = hasSlots && monthHasOpenings();
+        const monthName = new Date(state.view.y, state.view.m, 1).toLocaleDateString(undefined, { month: "long" });
+
+        let title, text, action = "";
+        if (!hasSlots) {
+            title = "No times open right now";
+            text = "I haven't posted new times yet. Send me a message and we'll find one together.";
+            action = '<a class="btn btn-primary btn-small" href="#send">Send a message</a>';
+        } else if (!monthOpen) {
+            title = `Nothing open in ${monthName} yet`;
+            text = "I add new times as I plan my calendar, so check back soon. If it's urgent, send me a message and we'll find a time.";
+            action = '<a class="btn btn-secondary btn-small" href="#send">Send a message</a>';
+        } else {
+            title = "Pick a day";
+            text = "Choose a highlighted day on the calendar to see the times I'm free.";
+        }
+
         setPanel(`
             <div class="panel-empty">
                 <span class="empty-icon">${icon("i-calendar")}</span>
-                <h3 class="panel-title">${hasSlots ? "Pick a day" : "No times open right now"}</h3>
-                <p>${hasSlots
-                    ? "Choose a highlighted day on the calendar to see the times I'm free."
-                    : "I haven't posted new times yet. Send me a message and we'll find one together."}</p>
-                ${hasSlots ? "" : '<a class="btn btn-primary btn-small" href="#send">Send a message</a>'}
-                ${hasSlots ? `<p class="panel-tz">${icon("i-globe")} Times are shown in <strong>${visitorTz.replace(/_/g, " ")}</strong></p>` : ""}
+                <h3 class="panel-title">${title}</h3>
+                <p>${text}</p>
+                ${action}
+                ${monthOpen ? `<p class="panel-tz">${icon("i-globe")} Times are shown in <strong>${visitorTz.replace(/_/g, " ")}</strong></p>` : ""}
             </div>`);
     }
 
@@ -509,7 +535,7 @@
 
         const today = dayKeyOf(Date.now(), visitorTz).split("-").map(Number);
         state.minMonth = today[0] * 12 + today[1] - 1;
-        state.maxMonth = state.minMonth;
+        state.maxMonth = state.minMonth + MONTHS_AHEAD;     // browse ahead, even where nothing is open yet
         state.slots.forEach((slot) => {
             const [y, m] = slot.dayKey.split("-").map(Number);
             state.maxMonth = Math.max(state.maxMonth, y * 12 + m - 1);
@@ -529,7 +555,8 @@
         console.warn("[booking] could not load availability.json:", error);
         els.grid.classList.remove("is-loading");
         const today = new Date();
-        state.minMonth = state.maxMonth = today.getFullYear() * 12 + today.getMonth();
+        state.minMonth = today.getFullYear() * 12 + today.getMonth();
+        state.maxMonth = state.minMonth + MONTHS_AHEAD;
         state.view = { y: today.getFullYear(), m: today.getMonth() };
         renderCalendar(0);
         els.count.textContent = "0";

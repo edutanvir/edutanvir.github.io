@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Availability editor | Md Tanvir Ahmed</title>
+    <meta name="description" content="Private page for updating booking availability.">
+    <!-- Keep search engines away from this page. It is not linked anywhere on the site. -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#000000">
+
+    <link rel="icon" type="image/png" href="images/favicon.png?v=2">
+    <link rel="apple-touch-icon" href="images/favicon.png?v=2">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        /* Applies the saved theme before the page paints (no flash). First visit = dark. */
+        (function () {
+            var root = document.documentElement, theme = null;
+            root.classList.add("js");
+            try { theme = localStorage.getItem("theme"); } catch (e) {}
+            if (theme !== "light" && theme !== "dark") theme = "dark";
+            root.dataset.theme = theme;
+        })();
+    </script>
+
+    <style>
+        .admin-top { padding: calc(var(--nav-h) + 48px) 0 28px; }
+        .admin-top h1 { margin: 6px 0 14px; font-size: clamp(2rem, 5vw, 3.2rem); letter-spacing: -0.04em; line-height: 1.08; }
+        .admin-wrap { padding-bottom: 120px; }
+        .admin-card { padding: 26px; margin-bottom: 24px; }
+        .admin-card h2 { margin: 0 0 6px; font-size: 1.3rem; letter-spacing: -0.02em; }
+        .admin-card > p { color: var(--muted); margin: 0 0 18px; }
+
+        .a-row { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; }
+        .a-field { display: grid; gap: 6px; }
+        .a-field label, .a-label { font-size: 0.86rem; font-weight: 600; }
+        .a-field input[type="text"], .a-field input[type="password"], .a-field input[type="date"], .a-field select {
+            width: 100%; min-height: 46px; padding: 0 14px; border: 1px solid var(--line); border-radius: 12px;
+            background: var(--field-bg); color: var(--text); font: inherit; font-size: 0.97rem;
+        }
+        .a-field input:focus-visible, .a-field select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .a-check { display: inline-flex; align-items: center; gap: 8px; font-size: 0.92rem; }
+        .a-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 18px; }
+        .a-note { color: var(--muted); font-size: 0.88rem; }
+
+        .a-help { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 14px; }
+        .a-help summary { cursor: pointer; font-weight: 600; }
+        .a-help ol { margin: 12px 0 0; padding-left: 1.3em; color: var(--muted); }
+        .a-help li { margin: 6px 0; }
+        .a-help code { padding: 1px 6px; border-radius: 6px; background: rgba(127, 127, 127, 0.16); }
+
+        .a-status { min-height: 1.4em; margin-top: 14px; font-size: 0.93rem; }
+        .a-status.is-ok { color: #30d158; font-weight: 600; }
+        .a-status.is-warn { color: var(--amber); }
+        .a-status.is-error { color: #ff6961; font-weight: 600; }
+
+        .a-connected { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+            padding: 14px 18px; margin-bottom: 24px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+        .a-connected strong { font-weight: 650; }
+
+        .admin-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 24px; align-items: start; }
+        .admin-grid[hidden], .a-connected[hidden], #connect-card[hidden], .a-save[hidden] { display: none; }
+
+        .admin-cal .cal-grid .cal-day { --o: 1; color: var(--text); font-weight: 600; cursor: pointer; }
+        .admin-cal .cal-grid .cal-day:disabled { --o: 0.25; cursor: default; font-weight: 500; }
+        .admin-cal .cal-grid .cal-day:not(:disabled):not(.is-selected):hover { background: rgba(127, 127, 127, 0.16); transform: translateY(-2px); }
+        .admin-cal .cal-grid .cal-day.is-free:not(.is-selected) { background: color-mix(in srgb, var(--accent) 16%, transparent); }
+        .admin-cal .cal-grid.no-anim .cal-day { animation: none; }
+        .admin-cal .cal-grid.no-anim .cal-day.is-selected { animation: grad-shift 6s ease-in-out infinite; }
+        .a-quick { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+        .a-quick .chip-btn { min-height: 34px; font-size: 0.82rem; }
+
+        .a-panel h2 { margin: 0; font-size: 1.35rem; letter-spacing: -0.025em; }
+        .a-panel .a-sub { margin: 6px 0 18px; color: var(--muted); font-size: 0.92rem; }
+        .a-ranges { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 0; list-style: none; }
+        .a-ranges li { display: inline-flex; align-items: center; gap: 4px; padding: 6px 6px 6px 14px; border-radius: 999px;
+            background: color-mix(in srgb, var(--accent) 14%, transparent); font-size: 0.9rem; font-weight: 600; animation: slot-in 0.4s var(--ease) backwards; }
+        .a-ranges button { width: 26px; height: 26px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%;
+            background: transparent; color: inherit; font-size: 18px; line-height: 1; cursor: pointer; }
+        .a-ranges button:hover { background: rgba(127, 127, 127, 0.25); }
+        .a-times { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .a-presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+        .a-ops { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+        .a-ops .btn { justify-content: center; }
+        .a-ops .btn[disabled] { opacity: 0.4; pointer-events: none; }
+        .a-fill { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 14px; }
+        .a-fill summary { cursor: pointer; font-weight: 600; }
+        .a-weekdays { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 14px 0; }
+        .a-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+
+        .a-save { position: sticky; bottom: 16px; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 18px;
+            padding: 14px 18px; margin-top: 24px; border: 1px solid var(--line); border-radius: 18px;
+            background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px -24px rgba(0, 0, 0, 0.6); }
+        .a-save .a-state { font-weight: 650; display: inline-flex; align-items: center; gap: 8px; }
+        .a-save .a-state::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #30d158; }
+        .a-save.is-dirty .a-state::before { background: var(--amber); animation: ring 1.8s ease-out infinite; }
+        .a-save .a-btns { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .a-save .btn[disabled] { opacity: 0.4; pointer-events: none; }
+
+        @media (max-width: 900px) {
+            .admin-grid, .a-row { grid-template-columns: minmax(0, 1fr); }
+        }
+    </style>
+</head>
+
+<body data-no-trail>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <nav class="nav container" aria-label="Main navigation">
+            <a class="logo" href="index.html" aria-label="Md Tanvir Ahmed, home">
+                <span class="logo-mark" aria-hidden="true">
+                    <img src="images/profile.jpg" alt="" width="34" height="34">
+                    <svg class="logo-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="3"/><path d="M5 5.5v13c0 1.7 3.1 3 7 3s7-1.3 7-3v-13"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>
+                </span>
+                <span class="logo-text">Tanvir Ahmed</span>
+            </a>
+            <div class="nav-links"></div>
+            <div class="nav-actions">
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme" aria-pressed="false">
+                    <svg class="ico ico-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+                    <svg class="ico ico-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+                </button>
+                <a class="btn btn-secondary btn-small" href="contact.html#book">View booking page</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main">
+        <section class="admin-top">
+            <div class="container">
+                <p class="kicker">Private</p>
+                <h1>Availability editor</h1>
+                <p class="lead">Pick days, choose hours, press Publish. Your booking calendar updates about a minute later.</p>
+            </div>
+        </section>
+
+        <div class="container admin-wrap">
+
+            <!-- 1. Connect -->
+            <section class="card admin-card" id="connect-card">
+                <h2>Connect to GitHub</h2>
+                <p>Publishing saves <code>availability.json</code> in your GitHub repository. The key stays in this browser only.</p>
+
+                <div class="a-row">
+                    <div class="a-field">
+                        <label for="token">GitHub access token</label>
+                        <input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+                    </div>
+                    <div class="a-field">
+                        <label for="repo">Repository</label>
+                        <input id="repo" type="text" autocomplete="off" spellcheck="false" value="edutanvir/edutanvir.github.io">
+                    </div>
+                </div>
+
+                <div class="a-actions">
+                    <button class="btn btn-primary" type="button" id="btn-connect">Connect and load</button>
+                    <label class="a-check"><input type="checkbox" id="remember" checked> Remember on this device</label>
+                    <button class="chip-btn" type="button" id="btn-local">Edit without a token</button>
+                </div>
+                <p class="a-note" style="margin-top:12px">"Edit without a token" loads the live file so you can download your changes and upload them to GitHub yourself.</p>
+                <div class="a-status" id="connect-status" role="status" aria-live="polite"></div>
+
+                <details class="a-help">
+                    <summary>How do I get a token? (one time, about 2 minutes)</summary>
+                    <ol>
+                        <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">github.com/settings/personal-access-tokens/new</a> while signed in.</li>
+                        <li>Name it <code>Availability editor</code> and choose an expiry date (90 days is a good start).</li>
+                        <li>Under <strong>Repository access</strong>, choose <strong>Only select repositories</strong> and pick <code>edutanvir.github.io</code>.</li>
+                        <li>Under <strong>Repository permissions</strong>, set <strong>Contents</strong> to <strong>Read and write</strong>.</li>
+                        <li>Click <strong>Generate token</strong>, copy it, and paste it above. You will not see it again, so keep it in a password manager.</li>
+                    </ol>
+                    <p class="a-note" style="margin-top:12px">The token can only touch this one repository, and you can delete it on GitHub at any time.</p>
+                </details>
+            </section>
+
+            <div class="a-connected" id="connected-bar" hidden>
+                <span id="connected-text"></span>
+                <button class="chip-btn" type="button" id="btn-disconnect">Disconnect</button>
+            </div>
+
+            <!-- 2. Editor -->
+            <div class="admin-grid" id="editor" hidden>
+                <div class="card cal admin-cal">
+                    <div class="cal-head">
+                        <button class="cal-nav" type="button" data-a-prev aria-label="Previous month">
+                            <svg class="ico" aria-hidden="true"><use href="#i-chev-l"/></svg>
+                        </button>
+                        <h2 class="cal-title" data-a-title aria-live="polite"></h2>
+                        <button class="cal-nav" type="button" data-a-next aria-label="Next month">
+                            <svg class="ico" aria-hidden="true"><use href="#i-chev-r"/></svg>
+                        </button>
+                    </div>
+
+                    <div class="cal-week" aria-hidden="true">
+                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                    </div>
+                    <div class="cal-grid" data-a-grid></div>
+
+                    <div class="a-quick">
+                        <button class="chip-btn" type="button" data-sel="weekdays">Select weekdays</button>
+                        <button class="chip-btn" type="button" data-sel="all">Select all days</button>
+                        <button class="chip-btn" type="button" data-sel="none">Clear selection</button>
+                    </div>
+                    <div class="cal-legend" aria-hidden="true">
+                        <span><i class="legend-dot"></i> Has times</span>
+                        <span><i class="legend-dot legend-dot--today"></i> Today</span>
+                        <span>Click a day. Hold Shift to select a range.</span>
+                    </div>
+                </div>
+
+                <aside class="card admin-card a-panel" aria-live="polite">
+                    <h2 id="sel-title">Select days</h2>
+                    <p class="a-sub" id="sel-sub"></p>
+                    <ul class="a-ranges" id="range-list" aria-label="Times set for this day"></ul>
+
+                    <div class="a-times">
+                        <div class="a-field"><label for="t-from">From</label><select id="t-from"></select></div>
+                        <div class="a-field"><label for="t-to">To</label><select id="t-to"></select></div>
+                    </div>
+
+                    <div class="a-presets" aria-label="Quick hours">
+                        <button class="chip-btn" type="button" data-preset="09:00-12:00">Morning</button>
+                        <button class="chip-btn" type="button" data-preset="13:00-17:00">Afternoon</button>
+                        <button class="chip-btn" type="button" data-preset="18:00-21:00">Evening</button>
+                        <button class="chip-btn" type="button" data-preset="09:00-17:00">9 to 5</button>
+                    </div>
+
+                    <div class="a-ops">
+                        <button class="btn btn-primary btn-small" type="button" data-op="set">Set these hours</button>
+                        <button class="btn btn-secondary btn-small" type="button" data-op="add">Add hours</button>
+                        <button class="btn btn-secondary btn-small" type="button" data-op="block">Block this time</button>
+                        <button class="btn btn-secondary btn-small" type="button" data-op="clear">Clear the day</button>
+                    </div>
+                    <p class="a-note" style="margin-top:12px"><strong>Set</strong> replaces the day's hours. <strong>Add</strong> keeps what is there. After someone books, use <strong>Block this time</strong> with their slot.</p>
+                    <div class="a-status" id="op-status" role="status" aria-live="polite"></div>
+
+                    <details class="a-fill">
+                        <summary>Fill several weeks at once</summary>
+                        <p class="a-note" style="margin-top:10px">Uses the From and To times above.</p>
+                        <div class="a-weekdays" role="group" aria-label="Days of the week">
+                            <label class="a-check"><input type="checkbox" name="wd" value="1" checked> Mon</label>
+                            <label class="a-check"><input type="checkbox" name="wd" value="2" checked> Tue</label>
+                            <label class="a-check"><input type="checkbox" name="wd" value="3" checked> Wed</label>
+                            <label class="a-check"><input type="checkbox" name="wd" value="4" checked> Thu</label>
+                            <label class="a-check"><input type="checkbox" name="wd" value="5" checked> Fri</label>
+                            <label class="a-check"><input type="checkbox" name="wd" value="6"> Sat</label>
+                            <label class="a-check"><input type="checkbox" name="wd" value="0"> Sun</label>
+                        </div>
+                        <div class="a-dates">
+                            <div class="a-field"><label for="f-from">From date</label><input id="f-from" type="date"></div>
+                            <div class="a-field"><label for="f-to">To date</label><input id="f-to" type="date"></div>
+                        </div>
+                        <button class="btn btn-secondary btn-small" type="button" id="btn-fill">Add to these days</button>
+                    </details>
+                </aside>
+            </div>
+
+            <!-- 3. Publish -->
+            <div class="a-save" id="savebar" hidden>
+                <span class="a-state" id="dirty-text">Everything is published</span>
+                <div class="a-btns">
+                    <label class="a-check"><input type="checkbox" id="prune" checked> Remove past days</label>
+                    <button class="chip-btn" type="button" data-act="copy">Copy JSON</button>
+                    <button class="chip-btn" type="button" data-act="download">Download file</button>
+                    <button class="btn btn-primary btn-small" type="button" id="btn-publish" disabled>Publish to website</button>
+                </div>
+                <div class="a-status" id="save-status" role="status" aria-live="polite" style="width:100%;margin:0"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
