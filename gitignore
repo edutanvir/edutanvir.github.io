@@ -22,6 +22,11 @@ Desktop.ini
 secrets.*
 credentials.*
 local.settings.json
+# GitHub access tokens (for the availability editor) and any notes that hold them
+github_pat_*
+ghp_*
+*token*.txt
+*.token
 
 # Dependencies and build output
 node_modules/
@@ -37,11 +42,24 @@ venv/
 # Logs and temporary files
 *.log
 *.tmp
+*.bak
+*.orig
 npm-debug.log*
+
+# Private tools: these stay on my computer and are never published.
+# The availability editor runs from my own computer (open admin.html with Live Server).
+admin.html
+admin.js
 
 # Private drafts and downloads: keep these on your computer only.
 # Write unfinished blog posts in drafts/, then move them to _posts-src/ when ready.
 # Commit _posts-src/ and _tools/ (they are the source of the blog).
 drafts/
 private/
+notes/
+scratch/
 *.zip
+# Backup copies saved from the availability editor, such as "availability (1).json".
+# (availability.json itself is NOT ignored: the booking calendar needs it.)
+availability (*).json
+availability-*.json

@@ -23,7 +23,7 @@ A static site built with plain HTML, CSS, and JavaScript and hosted on GitHub Pa
 - Apple-style design with a **dark and light theme** (the visitor's choice is remembered)
 - Project carousel with keyboard and swipe support
 - **Booking calendar** on the contact page that shows the days I am free, in the visitor's own time zone. Visitors can browse 12 months ahead; months with no times say so
-- **Private availability editor** (`admin.html`): pick days and hours, press Publish, and the calendar updates. No database needed
+- **Private availability editor** (`admin.html`, kept on my computer and never published): pick days and hours, press Publish, and the calendar updates. No database needed
 - **Blog** written in Markdown, with cover images, scroll animations, and link previews that look good when shared on LinkedIn. The home page shows the latest posts automatically
 - Cursor, hover, and scroll effects that switch off for visitors who prefer reduced motion
 - Contact form that delivers messages to my inbox, so my email address is never published on the page
@@ -38,8 +38,8 @@ edutanvir.github.io/
 ├── script.js                  Theme switch, effects, carousel, and contact form
 ├── booking.js                 Booking calendar
 ├── availability.json          The days and times I am free (the editor below updates this)
-├── admin.html                 Private availability editor (not linked from the site)
-├── admin.js                   Logic for the editor
+├── admin.html                 Private availability editor (in .gitignore: stays on my computer)
+├── admin.js                   Logic for the editor (in .gitignore too)
 ├── case-studies/
 │   ├── energy-data-lakehouse.html
 │   └── nyc-taxi.html
@@ -65,7 +65,7 @@ The site has no database. The file `availability.json` in this repository is the
 
 ### The easy way: the availability editor
 
-Open **https://edutanvir.github.io/admin.html** (the page is not linked anywhere and is marked `noindex`).
+The editor is not part of the published site. `admin.html` and `admin.js` are listed in `.gitignore`, so they stay on my computer. Open the project folder in VS Code, start Live Server, and visit `http://127.0.0.1:5500/admin.html` (the port may differ). It still saves to GitHub through the token below, so the live site updates as usual.
 
 1. Click a day to select it (hold **Shift** and click to select a range, or use **Select weekdays**).
 2. Choose the hours, then click **Set these hours** (replace the day), **Add hours** (keep what is there), **Block this time** (remove one slot after someone books it), or **Clear the day**.
