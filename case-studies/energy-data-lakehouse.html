@@ -7,7 +7,7 @@
     <title>Energy Data Lakehouse | Md Tanvir Ahmed</title>
     <meta name="description"
           content="A plain-English write-up of an energy data lakehouse built with Microsoft Fabric, PySpark, and Power BI to prepare energy data for analytics.">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#fefefe">
 
     <!-- Site icon (the ?v=2 makes browsers fetch the new version) -->
     <link rel="icon" type="image/png" href="../images/favicon.png?v=2">
@@ -15,17 +15,17 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
     <script>
-        /* Applies the saved theme before the page paints (no flash). First visit = dark.
+        /* Applies the saved theme before the page paints (no flash). First visit = light.
            To follow the visitor's system setting on a first visit, replace "dark" with:
            (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") */
         (function () {
             var root = document.documentElement, theme = null;
             root.classList.add("js");
             try { theme = localStorage.getItem("theme"); } catch (e) {}
-            if (theme !== "light" && theme !== "dark") theme = "dark";
+            if (theme !== "light" && theme !== "dark") theme = "light";
             root.dataset.theme = theme;
         })();
     </script>
@@ -69,10 +69,10 @@
         <section class="hero" id="top" data-rail="Intro">
             <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
             <div class="float-icons" aria-hidden="true">
-                <span class="fi" style="--x:78%;--y:14%;--d:1.2;--c:#30d158"><span class="fi-tile" style="--s:62px;--t:7s"><svg class="ico"><use href="#i-bolt"/></svg></span></span>
-                <span class="fi" style="--x:90%;--y:40%;--d:0.8;--c:#40d9ff"><span class="fi-tile" style="--s:52px;--t:8s"><svg class="ico"><use href="#i-globe"/></svg></span></span>
-                <span class="fi" style="--x:70%;--y:52%;--d:1.4;--c:#ffb340"><span class="fi-tile" style="--s:56px;--t:6s"><svg class="ico"><use href="#i-chart"/></svg></span></span>
-                <span class="fi" style="--x:86%;--y:66%;--d:1;--c:#8f7bff"><span class="fi-tile" style="--s:46px;--t:9s"><svg class="ico"><use href="#i-layers"/></svg></span></span>
+                <span class="fi" style="--x:6%;--y:16%;--d:1.2;--c:#9ccf8a"><span class="fi-tile" style="--s:62px;--t:7s"><svg class="ico"><use href="#i-bolt"/></svg></span></span>
+                <span class="fi" style="--x:89%;--y:12%;--d:0.8;--c:#a9cde6"><span class="fi-tile" style="--s:52px;--t:8s"><svg class="ico"><use href="#i-globe"/></svg></span></span>
+                <span class="fi" style="--x:91%;--y:46%;--d:1.4;--c:#e8c066"><span class="fi-tile" style="--s:56px;--t:6s"><svg class="ico"><use href="#i-chart"/></svg></span></span>
+                <span class="fi" style="--x:10%;--y:48%;--d:1;--c:#b3a6ee"><span class="fi-tile" style="--s:46px;--t:9s"><svg class="ico"><use href="#i-layers"/></svg></span></span>
             </div>
 
             <div class="container">
@@ -154,7 +154,7 @@
                         and units all mean the same thing everywhere.
                     </p>
 
-                    <aside class="callout" style="--c1:#8f7bff;--c2:#ff7ab8">
+                    <aside class="callout" style="--c1:#b3a6ee;--c2:#e49cd0">
                         <span class="icon-tile"><svg class="ico"><use href="#i-spark"/></svg></span>
                         <div>
                             <strong>In plain English: what's a lakehouse?</strong>
@@ -187,25 +187,25 @@
                      (dataset names, notebook or pipeline names, table names). -->
                 <div class="flow flow--wide reveal" data-flow role="img"
                      aria-label="Data flows from public sources, through PySpark in Fabric, into a lakehouse, and on to a Power BI report">
-                    <div class="flow-node" style="--c1:#2997ff;--c2:#40d9ff">
+                    <div class="flow-node" style="--c1:#81accc;--c2:#a9cde6">
                         <span class="flow-ico"><svg class="ico"><use href="#i-globe"/></svg></span>
                         <strong>Public sources</strong>
                         <span>Selected energy datasets</span>
                     </div>
                     <div class="flow-link"></div>
-                    <div class="flow-node" style="--c1:#8f7bff;--c2:#ff7ab8">
+                    <div class="flow-node" style="--c1:#b3a6ee;--c2:#e49cd0">
                         <span class="flow-ico"><svg class="ico"><use href="#i-code"/></svg></span>
                         <strong>PySpark in Fabric</strong>
                         <span>Inspect, clean, standardise</span>
                     </div>
                     <div class="flow-link"></div>
-                    <div class="flow-node" style="--c1:#ffb340;--c2:#ff6b5e">
+                    <div class="flow-node" style="--c1:#e8c066;--c2:#e49aa0">
                         <span class="flow-ico"><svg class="ico"><use href="#i-layers"/></svg></span>
                         <strong>Lakehouse</strong>
                         <span>Tidy tables, ready to query</span>
                     </div>
                     <div class="flow-link"></div>
-                    <div class="flow-node" style="--c1:#30d158;--c2:#40d9ff">
+                    <div class="flow-node" style="--c1:#9ccf8a;--c2:#a9cde6">
                         <span class="flow-ico"><svg class="ico"><use href="#i-chart"/></svg></span>
                         <strong>Power BI</strong>
                         <span>Interactive report</span>

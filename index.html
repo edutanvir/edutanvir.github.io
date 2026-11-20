@@ -7,7 +7,7 @@
     <title>Md Tanvir Ahmed | Azure Data Engineer</title>
     <meta name="description"
           content="Md Tanvir Ahmed is an Azure data engineer. Explore cloud data pipelines, Microsoft Fabric dashboards, lakehouse architectures, and plain-English project write-ups.">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#fefefe">
 
     <!-- Link previews (LinkedIn, Slack, etc.).
          Confirm this is your live address; previews need a full URL. -->
@@ -24,17 +24,17 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script>
-        /* Applies the saved theme before the page paints (no flash). First visit = dark.
-           To follow the visitor's system setting on a first visit, replace "dark" with:
+        /* Applies the saved theme before the page paints (no flash). First visit = light.
+           To follow the visitor's system setting on a first visit, replace "light" with:
            (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") */
         (function () {
             var root = document.documentElement, theme = null;
             root.classList.add("js");
             try { theme = localStorage.getItem("theme"); } catch (e) {}
-            if (theme !== "light" && theme !== "dark") theme = "dark";
+            if (theme !== "light" && theme !== "dark") theme = "light";
             root.dataset.theme = theme;
         })();
     </script>
@@ -80,17 +80,17 @@
 
             <!-- Floating icons: they drift with your mouse and as you scroll -->
             <div class="float-icons" aria-hidden="true">
-                <span class="fi" style="--x:76%;--y:10%;--d:1.2;--c:#2997ff"><span class="fi-tile" style="--s:66px;--t:7s"><svg class="ico"><use href="#i-db"/></svg></span></span>
-                <span class="fi" style="--x:90%;--y:30%;--d:0.8;--c:#8f7bff"><span class="fi-tile" style="--s:54px;--t:8s"><svg class="ico"><use href="#i-cloud"/></svg></span></span>
-                <span class="fi" style="--x:66%;--y:40%;--d:1.5;--c:#ffb340"><span class="fi-tile" style="--s:58px;--t:6s"><svg class="ico"><use href="#i-chart"/></svg></span></span>
-                <span class="fi" style="--x:82%;--y:56%;--d:1;--c:#ff7ab8"><span class="fi-tile" style="--s:48px;--t:9s"><svg class="ico"><use href="#i-bolt"/></svg></span></span>
-                <span class="fi" style="--x:63%;--y:14%;--d:0.7;--c:#30d158"><span class="fi-tile" style="--s:44px;--t:7.5s"><svg class="ico"><use href="#i-layers"/></svg></span></span>
-                <span class="fi" style="--x:92%;--y:8%;--d:1.4;--c:#40d9ff"><span class="fi-tile" style="--s:42px;--t:6.5s"><svg class="ico"><use href="#i-table"/></svg></span></span>
-                <span class="fi" style="--x:72%;--y:60%;--d:0.9;--c:#ff6b5e"><span class="fi-tile" style="--s:50px;--t:8.5s"><svg class="ico"><use href="#i-code"/></svg></span></span>
+                <span class="fi" style="--x:6%;--y:16%;--d:1.2;--c:#81accc"><span class="fi-tile" style="--s:66px;--t:7s"><svg class="ico"><use href="#i-db"/></svg></span></span>
+                <span class="fi" style="--x:89%;--y:12%;--d:0.8;--c:#b3a6ee"><span class="fi-tile" style="--s:54px;--t:8s"><svg class="ico"><use href="#i-cloud"/></svg></span></span>
+                <span class="fi" style="--x:91%;--y:46%;--d:1.5;--c:#e8c066"><span class="fi-tile" style="--s:58px;--t:6s"><svg class="ico"><use href="#i-chart"/></svg></span></span>
+                <span class="fi" style="--x:16%;--y:46%;--d:1;--c:#e49cd0"><span class="fi-tile" style="--s:48px;--t:9s"><svg class="ico"><use href="#i-bolt"/></svg></span></span>
+                <span class="fi" style="--x:20%;--y:6%;--d:0.7;--c:#9ccf8a"><span class="fi-tile" style="--s:44px;--t:7.5s"><svg class="ico"><use href="#i-layers"/></svg></span></span>
+                <span class="fi" style="--x:80%;--y:6%;--d:1.4;--c:#a9cde6"><span class="fi-tile" style="--s:42px;--t:6.5s"><svg class="ico"><use href="#i-table"/></svg></span></span>
+                <span class="fi" style="--x:4%;--y:70%;--d:0.9;--c:#e49aa0"><span class="fi-tile" style="--s:50px;--t:8.5s"><svg class="ico"><use href="#i-code"/></svg></span></span>
             </div>
 
             <div class="container">
-                <p class="kicker">Azure data engineering and cloud analytics</p>
+                <p class="kicker">Azure data engineering <i class="leader" aria-hidden="true"></i> cloud analytics</p>
 
                 <!-- Typewriter: data-type types the text out.
                      data-words makes it backspace and retype these words.
@@ -114,19 +114,19 @@
                 <!-- Data moving from source to dashboard -->
                 <div class="flow" data-flow role="img"
                      aria-label="Data flows from raw sources, through a lakehouse, to dashboards">
-                    <div class="flow-node" style="--c1:#2997ff;--c2:#40d9ff">
+                    <div class="flow-node" style="--c1:#81accc;--c2:#a9cde6">
                         <span class="flow-ico"><svg class="ico"><use href="#i-cloud"/></svg></span>
                         <strong>Raw data</strong>
                         <span>Azure Data Factory, ADLS Gen2</span>
                     </div>
                     <div class="flow-link"></div>
-                    <div class="flow-node" style="--c1:#8f7bff;--c2:#ff7ab8">
+                    <div class="flow-node" style="--c1:#b3a6ee;--c2:#e49cd0">
                         <span class="flow-ico"><svg class="ico"><use href="#i-layers"/></svg></span>
                         <strong>Lakehouse</strong>
                         <span>Databricks, PySpark, SQL</span>
                     </div>
                     <div class="flow-link"></div>
-                    <div class="flow-node" style="--c1:#ffb340;--c2:#ff6b5e">
+                    <div class="flow-node" style="--c1:#e8c066;--c2:#e49aa0">
                         <span class="flow-ico"><svg class="ico"><use href="#i-chart"/></svg></span>
                         <strong>Dashboards</strong>
                         <span>Microsoft Fabric, Power BI</span>
@@ -223,7 +223,7 @@
                     <div class="carousel-stage">
                         <!-- Project 1: Energy -->
                         <article class="slide is-active" aria-roledescription="slide" aria-label="1 of 3"
-                                 style="--c1:#30d158;--c2:#40d9ff;--ck:#14803c">
+                                 style="--c1:#9ccf8a;--c2:#a9cde6;--ck:#14803c">
                             <div class="slide-copy">
                                 <p class="kicker">Microsoft Fabric</p>
                                 <h3>Energy Data Lakehouse</h3>
@@ -258,7 +258,7 @@
 
                         <!-- Project 2: Oil and gas -->
                         <article class="slide" aria-roledescription="slide" aria-label="2 of 3"
-                                 style="--c1:#ffb340;--c2:#ff6b5e;--ck:#b45309">
+                                 style="--c1:#e8c066;--c2:#e49aa0;--ck:#b45309">
                             <div class="slide-copy">
                                 <p class="kicker">Fabric analytics</p>
                                 <h3>Oil &amp; Gas Analytics</h3>
@@ -295,7 +295,7 @@
 
                         <!-- Project 3: NYC Taxi -->
                         <article class="slide" aria-roledescription="slide" aria-label="3 of 3"
-                                 style="--c1:#8f7bff;--c2:#ff7ab8;--ck:#5b4bdb">
+                                 style="--c1:#b3a6ee;--c2:#e49cd0;--ck:#5b4bdb">
                             <div class="slide-copy">
                                 <p class="kicker">Azure data platform</p>
                                 <h3>NYC Taxi Analytics</h3>
@@ -400,11 +400,17 @@
 
         <!-- CONTACT CTA -->
         <section class="section cta" id="contact" data-rail="Contact">
+            <div class="cube" aria-hidden="true">
+                <div class="cube-spin">
+                    <div class="cube-box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    <div class="cube-box cube-box--in"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+            </div>
             <div class="float-icons" aria-hidden="true">
-                <span class="fi" style="--x:7%;--y:18%;--d:1.2;--c:#8f7bff"><span class="fi-tile" style="--s:58px;--t:7s"><svg class="ico"><use href="#i-mail"/></svg></span></span>
-                <span class="fi" style="--x:88%;--y:22%;--d:0.9;--c:#ff7ab8"><span class="fi-tile" style="--s:52px;--t:8s"><svg class="ico"><use href="#i-spark"/></svg></span></span>
-                <span class="fi" style="--x:13%;--y:74%;--d:1.4;--c:#2997ff"><span class="fi-tile" style="--s:48px;--t:6.5s"><svg class="ico"><use href="#i-db"/></svg></span></span>
-                <span class="fi" style="--x:84%;--y:72%;--d:1;--c:#ffb340"><span class="fi-tile" style="--s:56px;--t:9s"><svg class="ico"><use href="#i-chart"/></svg></span></span>
+                <span class="fi" style="--x:7%;--y:18%;--d:1.2;--c:#b3a6ee"><span class="fi-tile" style="--s:58px;--t:7s"><svg class="ico"><use href="#i-mail"/></svg></span></span>
+                <span class="fi" style="--x:88%;--y:22%;--d:0.9;--c:#e49cd0"><span class="fi-tile" style="--s:52px;--t:8s"><svg class="ico"><use href="#i-spark"/></svg></span></span>
+                <span class="fi" style="--x:13%;--y:74%;--d:1.4;--c:#81accc"><span class="fi-tile" style="--s:48px;--t:6.5s"><svg class="ico"><use href="#i-db"/></svg></span></span>
+                <span class="fi" style="--x:84%;--y:72%;--d:1;--c:#e8c066"><span class="fi-tile" style="--s:56px;--t:9s"><svg class="ico"><use href="#i-chart"/></svg></span></span>
             </div>
 
             <div class="container">

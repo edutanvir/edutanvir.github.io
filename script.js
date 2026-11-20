@@ -10,6 +10,7 @@
     3  Active nav link       10  Tech-stack marquee
     4  Scroll reveal        11  Reading time
     5  Project carousel     12  Pointer effects: ring, trail, burst, tilt
+   14  Window titles + dithered graphics (hero sky, pink desktop)
    ========================================================================== */
 (() => {
     "use strict";
@@ -87,7 +88,7 @@
             button.setAttribute("aria-pressed", String(isLight));
 
             const meta = $('meta[name="theme-color"]');
-            if (meta) meta.setAttribute("content", isLight ? "#ffffff" : "#000000");
+            if (meta) meta.setAttribute("content", isLight ? "#fefefe" : "#1e1e1e");
         }
 
         function apply(theme) {
@@ -613,7 +614,7 @@
 
         // Trail of little data bits and icons, and a burst on click.
         // To switch the trail off, add the attribute data-no-trail to <body>.
-        const COLORS = ["#2997ff", "#40d9ff", "#8f7bff", "#ff7ab8", "#ffb340", "#30d158"];
+        const COLORS = ["#81accc", "#e9a6d6", "#d478cd", "#917ee3", "#e48ba1", "#3b62a2"];
         const ICON_IDS = ["i-bolt", "i-db", "i-chart", "i-cloud", "i-layers", "i-spark"];
         let live = 0;
 
@@ -725,6 +726,218 @@
 
             requestAnimationFrame(loop);
         })();
+    });
+
+    /* 14. Window titles + dithered graphics ----------------------------------
+       Every card and slide gets a title-bar label taken from its heading
+       (add data-title="..." to any of them to write your own). The hero sky
+       and the pink desktop are drawn on small canvases with ordered
+       dithering, then scaled up with hard pixels. Colours are read from the
+       CSS tokens (--cloud-*), so light and dark redraw themselves.            */
+    run("window-titles", () => {
+        const slug = (text) => text.toLowerCase().replace(/&/g, "and")
+            .replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "").slice(0, 40);
+
+        $$(".card, .slide").forEach((el) => {
+            if (el.dataset.title) return;
+            let name = "";
+            if (el.classList.contains("cal")) name = "calendar";
+            else if (el.classList.contains("booking-panel")) name = "details";
+            else if (el.classList.contains("form")) name = "message";
+            else if (el.classList.contains("next-case")) name = "up_next";
+            else {
+                const heading = $("h3, .panel-title, small, strong", el);
+                if (heading) name = slug(heading.textContent);
+            }
+            el.dataset.title = (name || "window") + (el.classList.contains("slide") ? ".app" : ".txt");
+        });
+    });
+
+    run("dither", () => {
+        const PIXEL = 3;                                   // one canvas pixel = 3 CSS pixels
+
+        // 8 x 8 Bayer matrix, scaled to 0..1
+        const bayer = (n) => {
+            if (n === 1) return [[0]];
+            const m = bayer(n / 2), s = n / 2;
+            return Array.from({ length: n }, (_, y) => Array.from({ length: n }, (_, x) =>
+                m[y % s][x % s] * 4 + (y < s ? (x < s ? 0 : 2) : (x < s ? 3 : 1))));
+        };
+        const BAYER = bayer(8).map((row) => row.map((v) => (v + 0.5) / 64));
+
+        // Small value-noise helpers (deterministic, so redraws look identical)
+        const hash = (x, y) => {
+            let h = Math.imul(x | 0, 374761393) + Math.imul(y | 0, 668265263);
+            h = Math.imul(h ^ (h >>> 13), 1274126177);
+            return ((h ^ (h >>> 16)) >>> 0) / 4294967295;
+        };
+        const smooth = (t) => t * t * (3 - 2 * t);
+        const step = (a, b, x) => smooth(Math.min(1, Math.max(0, (x - a) / (b - a))));
+        const vnoise = (x, y) => {
+            const xi = Math.floor(x), yi = Math.floor(y), u = smooth(x - xi), v = smooth(y - yi);
+            const a = hash(xi, yi), b = hash(xi + 1, yi), c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
+            return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+        };
+        const fbm = (x, y) => {
+            let sum = 0, amp = 0.5, freq = 1;
+            for (let i = 0; i < 5; i++) { sum += amp * vnoise(x * freq, y * freq); freq *= 2; amp *= 0.5; }
+            return sum / 0.97;
+        };
+        const bump = (u, centre, spread) => Math.exp(-(((u - centre) / spread) ** 2));
+
+        const rgb = (hex) => {
+            let s = hex.trim().replace("#", "");
+            if (s.length === 3) s = s.split("").map((c) => c + c).join("");
+            const n = parseInt(s, 16);
+            return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+        };
+        const token = (el, name, fallback) =>
+            getComputedStyle(el).getPropertyValue(name).trim() || fallback;
+
+        function size(canvas, host) {
+            canvas.width = Math.max(1, Math.ceil(host.clientWidth / PIXEL));
+            canvas.height = Math.max(1, Math.ceil(host.clientHeight / PIXEL));
+            return [canvas.width, canvas.height];
+        }
+
+        // Hero sky: sky blue on top, pink / magenta / violet clouds at the sides,
+        // fading out to the page colour at the bottom.
+        function drawClouds(canvas, host) {
+            const [w, h] = size(canvas, host);
+            const ctx = canvas.getContext("2d");
+            const img = ctx.createImageData(w, h);
+            const out = img.data;
+            const colour = {
+                paper: rgb(token(host, "--cloud-paper", "#fefefe")),
+                pale: rgb(token(host, "--cloud-sky-pale", "#cde0ee")),
+                sky: rgb(token(host, "--cloud-sky", "#81accc")),
+                blush: rgb(token(host, "--cloud-blush", "#e9a6d6")),
+                magenta: rgb(token(host, "--cloud-magenta", "#d478cd")),
+                violet: rgb(token(host, "--cloud-violet", "#917ee3")),
+            };
+            const aspect = w / h;
+            const wide = Math.min(aspect, 2.2);
+            const side = aspect < 0.9 ? 0.55 : 1;              // phones: narrower clouds
+            const fadeA = aspect < 0.9 ? 0.1 : 0.2, fadeB = aspect < 0.9 ? 0.5 : 0.7;   // phones: the sky clears sooner, so the intro text stays readable
+
+            for (let y = 0; y < h; y++) {
+                const v = y / h;
+                for (let x = 0; x < w; x++) {
+                    const u = x / w;
+                    const t = BAYER[y & 7][x & 7] * 0.7 + hash(x * 7 + 3, y * 13 + 1) * 0.3;
+                    const t2 = hash(x * 5 + 101, y * 3 + 7);
+                    const nx = u * wide * 1.6, ny = v * 1.6;
+                    const n = fbm(nx + 4.1, ny + 1.3);
+                    const n2 = fbm(nx * 1.9 + 9.7, ny * 1.9 + 3.1);
+
+                    // 1 at the top (sky), 0 at the bottom (page colour)
+                    const cover = 1 - step(fadeA, fadeB, v + (n - 0.5) * 0.3);
+                    let c;
+                    if (cover <= t) {
+                        c = colour.paper;
+                    } else {
+                        const near = 1 - step(0.4, 0.9, v);
+                        const body = Math.max(
+                            bump(u, 0.04, 0.30 * side), bump(u, 0.98, 0.27 * side),
+                            0.7 * bump(u, 0.30, 0.13 * side) * bump(v, 0.3, 0.3),
+                            0.6 * bump(u, 0.73, 0.12 * side) * bump(v, 0.22, 0.25));
+                        const cloud = body * near * 1.45 + (n2 - 0.5) * 0.95 - 0.12;
+                        if (cloud + (t2 - 0.5) * 0.3 > 0.5) {
+                            const tone = fbm(nx * 1.4 + 20, ny * 1.4 + 8) + (u - 0.5) * 0.4 + (t2 - 0.5) * 0.18;
+                            c = tone > 0.66 ? colour.violet : tone > 0.46 ? colour.magenta : colour.blush;
+                        } else {
+                            c = hash(x * 11 + 5, y * 17 + 9) < 0.14 + 0.3 * (1 - cover) ? colour.pale : colour.sky;
+                        }
+                    }
+                    const i = (y * w + x) * 4;
+                    out[i] = c[0]; out[i + 1] = c[1]; out[i + 2] = c[2]; out[i + 3] = 255;
+                }
+            }
+            ctx.putImageData(img, 0, 0);
+        }
+
+        // Pink desktop: big halftone discs at the edges, in ink on a transparent canvas
+        function drawBlobs(canvas, host) {
+            const [w, h] = size(canvas, host);
+            const ctx = canvas.getContext("2d");
+            if (host.clientWidth < 760) { ctx.clearRect(0, 0, w, h); return; }   // phones: just the dot grid
+
+            const img = ctx.createImageData(w, h);
+            const out = img.data;
+            const ink = rgb(token(host, "--c-ink", "#1e1e1e"));
+            const discs = [
+                { x: 0.0, y: 0.1, r: 0.2 },
+                { x: 1.0, y: 0.5, r: 0.17 },
+                { x: 0.08, y: 1.0, r: 0.2 },
+                { x: 0.62, y: 1.06, r: 0.24 },
+            ].map((d) => ({ x: d.x * w, y: d.y * h, r: d.r * w }));
+
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    let level = 0;
+                    for (const d of discs) {
+                        const f = 1 - Math.hypot(x - d.x, y - d.y) / d.r;
+                        if (f > level) level = f;
+                    }
+                    if (level <= 0) continue;
+                    const grain = 0.8 + 0.4 * fbm(x * 0.06, y * 0.06);
+                    const t = BAYER[y & 7][x & 7] * 0.8 + hash(x * 3 + 1, y * 5 + 2) * 0.2;
+                    if (smooth(level) * grain > t) {
+                        const i = (y * w + x) * 4;
+                        out[i] = ink[0]; out[i + 1] = ink[1]; out[i + 2] = ink[2]; out[i + 3] = 235;
+                    }
+                }
+            }
+            ctx.putImageData(img, 0, 0);
+        }
+
+        const jobs = [];
+        function mount(host, parent, kind, first) {
+            const canvas = document.createElement("canvas");
+            canvas.className = `dither dither--${kind}`;
+            canvas.setAttribute("aria-hidden", "true");
+            if (first) parent.prepend(canvas); else parent.appendChild(canvas);
+            jobs.push({ host, canvas, kind, w: 0, h: 0 });
+        }
+
+        $$(".hero").forEach((hero) => {
+            const sky = $(".aurora", hero);
+            if (sky) mount(hero, sky, "clouds", false);
+        });
+        $$(".section--light").forEach((section) => mount(section, section, "blobs", true));
+        if (!jobs.length) return;
+
+        function paint(job) {
+            const w = job.host.clientWidth, h = job.host.clientHeight;
+            if (!w || !h) return;
+            job.w = w; job.h = h;
+            (job.kind === "clouds" ? drawClouds : drawBlobs)(job.canvas, job.host);
+        }
+        const paintAll = () => jobs.forEach(paint);
+
+        paintAll();
+
+        // Redraw when a section changes size (fonts loading, window resizing) ...
+        let timer = 0;
+        if ("ResizeObserver" in window) {
+            const watcher = new ResizeObserver(() => {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    jobs.forEach((job) => {
+                        if (Math.abs(job.host.clientWidth - job.w) > 6 || Math.abs(job.host.clientHeight - job.h) > 24) paint(job);
+                    });
+                }, 140);
+            });
+            jobs.forEach((job) => watcher.observe(job.host));
+        }
+
+        // ... and when the theme switches
+        new MutationObserver(paintAll).observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["data-theme"],
+        });
+
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(paintAll);
     });
 
     /* 13. Contact form: validates, then sends through the mail service ------ */

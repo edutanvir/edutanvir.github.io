@@ -173,12 +173,12 @@ def render_body(post):
 
 # ------------------------------------------------------------- templates ----
 THEME_SCRIPT = """    <script>
-        /* Applies the saved theme before the page paints (no flash). First visit = dark. */
+        /* Applies the saved theme before the page paints (no flash). First visit = light. */
         (function () {
             var root = document.documentElement, theme = null;
             root.classList.add("js");
             try { theme = localStorage.getItem("theme"); } catch (e) {}
-            if (theme !== "light" && theme !== "dark") theme = "dark";
+            if (theme !== "light" && theme !== "dark") theme = "light";
             root.dataset.theme = theme;
         })();
     </script>"""
@@ -195,7 +195,7 @@ def head(title, description, url, image_url, kind="website", extra="", og_title=
 
     <title>{esc(title)}</title>
     <meta name="description" content="{esc(description)}">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#fefefe">
     <link rel="canonical" href="{esc(url)}">
 
     <!-- Link preview: what LinkedIn, Slack and WhatsApp show when the link is pasted -->
@@ -217,7 +217,7 @@ def head(title, description, url, image_url, kind="website", extra="", og_title=
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
 {THEME_SCRIPT}
 </head>
@@ -276,9 +276,9 @@ AURORA = '<div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></d
 
 
 def floaters(*items):
-    positions = [("78%", "16%", "1.2", "#8f7bff", "64px", "7s"),
-                 ("90%", "42%", "0.8", "#ff7ab8", "50px", "8s"),
-                 ("70%", "58%", "1.4", "#2997ff", "54px", "6s")]
+    positions = [("6%", "16%", "1.2", "#b3a6ee", "64px", "7s"),
+                 ("89%", "12%", "0.8", "#e49cd0", "50px", "8s"),
+                 ("91%", "46%", "1.4", "#81accc", "54px", "6s")]
     out = []
     for icon, (x, y, d, c, s, t) in zip(items, positions):
         out.append(
@@ -388,6 +388,12 @@ def post_page(post, body_html):
         </section>
 
         <section class="section cta">
+            <div class="cube" aria-hidden="true">
+                <div class="cube-spin">
+                    <div class="cube-box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    <div class="cube-box cube-box--in"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+            </div>
             <div class="container">
                 <h2 class="reveal">Enjoyed this? Let's talk data.</h2>
                 <p class="lead reveal">Book a time that suits you, or browse more posts.</p>
@@ -405,7 +411,7 @@ def post_page(post, body_html):
 
 def card(post, prefix=""):
     """One post card. prefix is "blog/" when the card sits on the home page."""
-    c1, c2 = ("#0071e3", "#8f7bff")
+    c1, c2 = ("#81accc", "#b3a6ee")
     return f"""                <a class="card post-card" href="{prefix}{post['slug']}.html">
                     <div class="thumb" style="--c1:{c1};--c2:{c2}">
                         <img src="{prefix}images/{esc(post['card_image'])}" alt="" width="1200" height="627" loading="lazy">

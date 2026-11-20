@@ -469,7 +469,7 @@
     }
 
     function renderDone({ visitorWhen, email }) {
-        const colors = ["#2997ff", "#40d9ff", "#8f7bff", "#ff7ab8", "#ffb340", "#30d158"];
+        const colors = ["#81accc", "#e9a6d6", "#d478cd", "#917ee3", "#e48ba1", "#3b62a2"];
         const confetti = reduceMotion ? "" : Array.from({ length: 22 }, (_, i) =>
             `<i style="--a:${Math.round((i / 22) * 360)}deg;--d:${50 + (i % 4) * 14}px;--c:${colors[i % colors.length]};--t:${(i % 5) * 40}ms"></i>`
         ).join("");
