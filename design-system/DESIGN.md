@@ -77,3 +77,18 @@ stack falls back to Inter / Helvetica and the system monospace.
 - `style.css`: section 1 (tokens), section 24 (retro skin), section 25 (polish).
 - `script.js`: section 14 (window titles and dithered graphics).
 - `_tools/build_blog.py`: the blog pages use the same tokens. Re-run it after editing the blog template.
+
+## Desktop and project charts
+
+Two set pieces built from the same tokens (`style.css` section 26, `script.js` sections 14 to 16).
+
+- **Desktop** (`#desk`): a pink dithered frame with overlapping windows. The three layer windows reuse the
+  hero's wording (raw data, lakehouse, dashboards). The big window lists the projects and links to their
+  write-ups. The portrait is the profile photo, dithered to 1-bit with the same Bayer matrix as the sky. The
+  clock shows the visitor's own date and time. Under 900px the windows stack instead of overlapping.
+- **Project charts** (`[data-evidence]`): a tool-by-project matrix and a bar chart of how many projects use each
+  tool. Both are counted from the tags on the project cards at load time, restricted to the tools listed in the
+  tech strip, so they never disagree with the cards. Add a project card (and a `data-short` name on its
+  `<article>`) and both charts update on their own.
+- To show other facts in the charts later (rows processed, runtime), add the numbers to the project cards or
+  give the chart code a data object. Do not type in numbers that are not real.

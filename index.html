@@ -157,6 +157,124 @@
             </div>
         </div>
 
+        <!-- DESKTOP: the workspace, drawn as a retro desktop -->
+        <section class="section section--light desk-section" id="desk" aria-labelledby="desk-title">
+            <div class="container">
+                <div class="desk-stack">
+                    <div class="desk-head reveal">
+                        <h2 id="desk-title">Raw data in. Answers out.</h2>
+                        <p class="lead">
+                            My workspace: the tools I use at each step, and the projects they built.
+                        </p>
+                    </div>
+
+                    <div class="desk-wrap reveal">
+                        <div class="desk">
+                            <span class="desk-tag" aria-hidden="true">tanvir.os</span>
+
+                            <article class="win win--raw">
+                                <h3 class="win-bar">raw_data.app</h3>
+                                <div class="win-body">
+                                    <p class="win-name">raw data</p>
+                                    <p class="win-text">files land in cloud storage</p>
+                                    <ul class="win-tags" role="list">
+                                        <li>data factory</li>
+                                        <li>adls gen2</li>
+                                    </ul>
+                                </div>
+                            </article>
+
+                            <article class="win win--lake">
+                                <h3 class="win-bar">lakehouse.app</h3>
+                                <div class="win-body">
+                                    <p class="win-name">lakehouse</p>
+                                    <p class="win-text">cleaned and shaped with code</p>
+                                    <ul class="win-tags" role="list">
+                                        <li>databricks</li>
+                                        <li>pyspark</li>
+                                        <li>sql</li>
+                                    </ul>
+                                </div>
+                            </article>
+
+                            <article class="win win--dash">
+                                <h3 class="win-bar">dashboards.app</h3>
+                                <div class="win-body">
+                                    <p class="win-name">dashboards</p>
+                                    <p class="win-text">answers people can click</p>
+                                    <ul class="win-tags" role="list">
+                                        <li>fabric</li>
+                                        <li>power bi</li>
+                                    </ul>
+                                </div>
+                            </article>
+
+                            <article class="win win--main">
+                                <h3 class="win-bar">projects.app</h3>
+                                <div class="win-head">
+                                    <img class="win-portrait" data-portrait src="images/profile.jpg"
+                                         alt="" width="112" height="112" loading="lazy">
+                                    <div>
+                                        <p class="win-name">tanvir</p>
+                                        <p class="win-text">azure data engineer<br>cloud pipelines and dashboards</p>
+                                    </div>
+                                </div>
+                                <ul class="win-list" role="list">
+                                    <li style="--chip:var(--c-blue)">
+                                        <a href="case-studies/energy-data-lakehouse.html">
+                                            <span class="win-pill">Energy Data Lakehouse</span>
+                                            <span class="win-meta">Fabric, PySpark, Power BI</span>
+                                            <span class="win-go">read</span>
+                                        </a>
+                                    </li>
+                                    <li style="--chip:var(--c-green)">
+                                        <a href="#projects">
+                                            <span class="win-pill">Oil &amp; Gas Analytics</span>
+                                            <span class="win-meta">Fabric, Power BI</span>
+                                            <span class="win-go">see</span>
+                                        </a>
+                                    </li>
+                                    <li style="--chip:var(--c-crimson)">
+                                        <a href="case-studies/nyc-taxi.html">
+                                            <span class="win-pill">NYC Taxi Analytics</span>
+                                            <span class="win-meta">Data Factory, ADLS Gen2, Synapse, SQL</span>
+                                            <span class="win-go">read</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="win-foot" aria-hidden="true"></div>
+                            </article>
+
+                            <article class="win win--clock" aria-label="Clock">
+                                <h3 class="win-bar">clock</h3>
+                                <div class="win-body">
+                                    <p data-clock-date></p>
+                                    <p data-clock-time></p>
+                                </div>
+                            </article>
+
+                            <article class="win win--about">
+                                <h3 class="win-bar">tanvir.os</h3>
+                                <div class="win-body">
+                                    <p>Version 1.0</p>
+                                    <p>&copy; 2026 Md Tanvir Ahmed</p>
+                                    <p>Azure data engineer</p>
+                                </div>
+                            </article>
+
+                            <a class="win win--cal" href="contact.html#book">
+                                <span class="win-bar">calendar</span>
+                                <span class="win-body">
+                                    <strong>30-minute call</strong>
+                                    <span class="win-go">pick a time</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ABOUT -->
         <section class="section section--tint" id="about" data-rail="About">
             <div class="container">
@@ -222,7 +340,7 @@
 
                     <div class="carousel-stage">
                         <!-- Project 1: Energy -->
-                        <article class="slide is-active" aria-roledescription="slide" aria-label="1 of 3"
+                        <article data-short="Energy" class="slide is-active" aria-roledescription="slide" aria-label="1 of 3"
                                  style="--c1:#9ccf8a;--c2:#a9cde6;--ck:#14803c">
                             <div class="slide-copy">
                                 <p class="kicker">Microsoft Fabric</p>
@@ -257,7 +375,7 @@
                         </article>
 
                         <!-- Project 2: Oil and gas -->
-                        <article class="slide" aria-roledescription="slide" aria-label="2 of 3"
+                        <article data-short="Oil &amp; gas" class="slide" aria-roledescription="slide" aria-label="2 of 3"
                                  style="--c1:#e8c066;--c2:#e49aa0;--ck:#b45309">
                             <div class="slide-copy">
                                 <p class="kicker">Fabric analytics</p>
@@ -294,7 +412,7 @@
                         </article>
 
                         <!-- Project 3: NYC Taxi -->
-                        <article class="slide" aria-roledescription="slide" aria-label="3 of 3"
+                        <article data-short="NYC taxi" class="slide" aria-roledescription="slide" aria-label="3 of 3"
                                  style="--c1:#b3a6ee;--c2:#e49cd0;--ck:#5b4bdb">
                             <div class="slide-copy">
                                 <p class="kicker">Azure data platform</p>
@@ -352,6 +470,30 @@
                             <button class="carousel-arrow" type="button"
                                     data-direction="1" aria-label="Next project">→</button>
                         </div>
+                    </div>
+                </div>
+
+                <div class="evidence reveal" data-evidence>
+                    <h3 class="evidence-title">What my projects are built with.</h3>
+                    <div class="evidence-grid">
+                        <figure class="evidence-col">
+                            <div class="evidence-field" data-chart="matrix">
+                                <span class="field-tag" aria-hidden="true">tools_by_project</span>
+                            </div>
+                            <figcaption>
+                                <strong>Which tools each project uses</strong>
+                                <span>Read from the project cards above, so it always matches them.</span>
+                            </figcaption>
+                        </figure>
+                        <figure class="evidence-col">
+                            <div class="evidence-field" data-chart="bars">
+                                <span class="field-tag" aria-hidden="true">tool_usage</span>
+                            </div>
+                            <figcaption>
+                                <strong>How often each tool shows up</strong>
+                                <span>The number of projects that use each tool.</span>
+                            </figcaption>
+                        </figure>
                     </div>
                 </div>
             </div>

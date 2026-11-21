@@ -4549,3 +4549,507 @@ h3 {
 .post-card .tag-list {
     justify-content: flex-start;
 }
+
+/* ==========================================================================
+   26. DESKTOP + PROJECT CHARTS
+   A retro desktop that explains the workflow, and two chart windows counted
+   from the project cards. Colours come from the same tokens as everything else.
+   ========================================================================== */
+
+.desk-stack {
+    display: flex;
+    flex-direction: column;
+}
+
+/* The heading comes first in the page for screen readers, and shows under the desktop */
+.desk-head {
+    order: 2;
+    max-width: 46rem;
+    margin: clamp(44px, 6vw, 80px) auto 0;
+    text-align: center;
+}
+
+.desk-head h2 {
+    max-width: 12ch;
+    margin: 0 auto 0.3em;
+    font-size: clamp(2.6rem, 7.5vw, 6rem);
+    font-weight: 800;
+    line-height: 0.94;
+    letter-spacing: -0.06em;
+}
+
+.desk-head .lead {
+    margin-inline: auto;
+}
+
+.desk-wrap {
+    container-type: inline-size;
+}
+
+.desk {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    aspect-ratio: 1316 / 850;
+    border: 2px solid var(--edge);
+    background-color: #e48ba1;
+    background-image: radial-gradient(rgba(30, 30, 30, 0.5) 1px, transparent 1.5px);
+    background-size: 4px 4px;
+    font: 400 12px/1.4 var(--mono);
+    font-size: clamp(10px, 1.18cqw, 15px);
+}
+
+.desk-tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    padding: 0.15em 0.55em 0.2em;
+    background: var(--bar-bg);
+    color: var(--bar-text);
+}
+
+/* ---- A window: black title bar, grey body, hard shadow ------------------------- */
+.win {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    z-index: 1;
+    width: var(--w);
+    border: 2px solid var(--edge);
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0.3em 0.3em 0 var(--edge);
+}
+
+.win .win-bar {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0.15em 2.2em 0.2em 0.6em;
+    overflow: hidden;
+    background: var(--bar-bg);
+    color: var(--bar-text);
+    font: 500 1em/1.5 var(--mono);
+    letter-spacing: 0;
+    text-overflow: ellipsis;
+    text-transform: none;
+    white-space: nowrap;
+}
+
+.win .win-bar::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0.6em;
+    width: 0.65em;
+    height: 0.65em;
+    margin-top: -0.33em;
+    border: 2px solid currentColor;
+}
+
+.win .win-body {
+    display: block;
+    padding: 0.7em 0.8em 0.8em;
+}
+
+.win p {
+    margin: 0;
+    color: var(--text);
+    font: inherit;
+    letter-spacing: 0;
+}
+
+.win .win-name {
+    display: inline-block;
+    margin: 0 0 0.35em;
+    padding: 0.05em 0.4em 0.12em;
+    background: var(--bar-bg);
+    color: var(--bar-text);
+    font: 700 2em/1.1 var(--mono);
+}
+
+.win .win-text {
+    margin-bottom: 0.6em;
+}
+
+.win-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.win-tags li {
+    padding: 0.1em 0.5em 0.15em;
+    background: rgba(30, 30, 30, 0.13);
+}
+
+.win--raw  { --x: 6%;    --y: 8%;  --w: 23%; z-index: 1; }
+.win--lake { --x: 26%;   --y: 22%; --w: 24%; z-index: 2; }
+.win--dash { --x: 47%;   --y: 5%;  --w: 25%; z-index: 1; }
+.win--main { --x: 27%;   --y: 42%; --w: 48%; z-index: 3; }
+.win--clock { --x: 79%;  --y: 6%;  --w: 18%; z-index: 2; }
+.win--about { --x: 2.5%; --y: 80%; --w: 22%; z-index: 2; }
+.win--cal  { --x: 80%;   --y: 80%; --w: 16%; z-index: 2; }
+
+/* The clock needs JavaScript; without it the window stays hidden */
+.win--clock {
+    display: none;
+}
+
+.js .win--clock {
+    display: block;
+}
+
+/* ---- The big window: portrait + project list ------------------------------------- */
+.win-head {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9em;
+    align-items: center;
+    padding: 0.7em 0.8em;
+    border-bottom: 2px solid var(--edge);
+}
+
+.win-portrait {
+    display: block;
+    width: 5.2em;
+    height: 5.2em;
+    border: 2px solid var(--edge);
+    background: #fefefe;
+    image-rendering: pixelated;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.4);    /* only matters if the dithered version can't be made */
+}
+
+canvas.win-portrait {
+    filter: none;
+}
+
+.win-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.win-list li + li {
+    border-top: 1px solid var(--line);
+}
+
+.win-list a {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.8em;
+    align-items: center;
+    padding: 0.65em 0.8em;
+    color: inherit;
+    text-decoration: none;
+}
+
+.win-list a:hover,
+.win-list a:focus-visible {
+    background: var(--hl);
+}
+
+.win-pill {
+    padding: 0.1em 0.5em 0.15em;
+    background: var(--chip, var(--c-blue));
+    color: #fff;
+}
+
+.win-go {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.win-foot {
+    height: 2em;
+    border-top: 2px solid var(--edge);
+    background-color: #fefefe;
+    background-image: radial-gradient(rgba(30, 30, 30, 0.45) 1px, transparent 1.4px);
+    background-size: 4px 4px;
+}
+
+.win a:focus-visible {
+    outline: 3px solid var(--edge);
+    outline-offset: -3px;
+}
+
+/* ---- Calendar window: a link ------------------------------------------------------- */
+a.win--cal {
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+    transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
+}
+
+a.win--cal:hover,
+a.win--cal:focus-visible {
+    box-shadow: 0.5em 0.5em 0 var(--edge);
+    transform: translate(-0.2em, -0.2em);
+}
+
+a.win--cal strong {
+    display: block;
+    margin-bottom: 0.4em;
+    font-weight: 700;
+}
+
+/* ---- Phones: a plain stack, no overlapping ------------------------------------------ */
+@media (max-width: 899px) {
+    .desk {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        aspect-ratio: auto;
+        padding: 40px 14px 18px;
+        font-size: 13px;
+    }
+
+    .win {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: auto;
+    }
+
+    .win--main { order: -1; }
+    .win--clock,
+    .win--about { display: none; }
+
+    .win-list a {
+        grid-template-columns: 1fr auto;
+        row-gap: 0.25em;
+    }
+
+    .win-meta {
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+}
+
+/* ---- Charts: two windows on dotted fields -------------------------------------------- */
+.evidence {
+    display: none;
+    margin-top: clamp(64px, 9vw, 120px);
+}
+
+.js .evidence {
+    display: block;
+}
+
+.evidence-title {
+    max-width: 14ch;
+    margin: 0 0 clamp(28px, 4vw, 48px);
+    font-size: clamp(2.2rem, 5.6vw, 4.2rem);
+    font-weight: 700;
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+    text-align: left;
+}
+
+.evidence-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px;
+}
+
+.evidence-col {
+    margin: 0;
+    min-width: 0;
+}
+
+.evidence-field {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: clamp(52px, 6vw, 72px) clamp(14px, 3vw, 36px) clamp(36px, 5vw, 56px);
+    background-color: #e48ba1;
+    background-image: radial-gradient(rgba(30, 30, 30, 0.55) 1px, transparent 1.5px);
+    background-size: 4px 4px;
+}
+
+.field-tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0.15em 0.6em 0.2em;
+    background: var(--bar-bg);
+    color: var(--bar-text);
+    font: 500 0.8rem/1.6 var(--mono);
+}
+
+.evidence-col figcaption {
+    padding-top: 18px;
+}
+
+.evidence-col figcaption strong {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+.evidence-col figcaption span {
+    display: block;
+    max-width: 34rem;
+    margin-top: 0.35em;
+    color: var(--muted);
+}
+
+@media (min-width: 900px) {
+    .evidence-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+    }
+
+    .evidence-col {
+        padding-inline: clamp(14px, 2vw, 24px);
+    }
+
+    .evidence-col:first-child {
+        padding-left: 0;
+    }
+
+    .evidence-col:last-child {
+        padding-right: 0;
+    }
+
+    .evidence-col + .evidence-col {
+        border-left: 1px solid var(--line);
+    }
+}
+
+.win--chart {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: min(100%, 28rem);
+    background: var(--field-bg);
+    color: #1e1e1e;
+    font: 400 0.76rem/1.35 var(--mono);
+}
+
+.chart-label {
+    display: inline-block;
+    padding: 0.1em 0.5em 0.15em;
+    background: var(--chip, var(--c-blue));
+    color: #fff;
+    white-space: nowrap;
+}
+
+/* Chart 1: which project uses which tool */
+.chart-matrix {
+    display: grid;
+    grid-template-columns: max-content repeat(var(--cols), minmax(0, 1fr));
+    padding: 0.5rem 0.7rem 0.7rem;
+}
+
+.chart-matrix > span {
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 0.3rem;
+    border-bottom: 1px solid rgba(30, 30, 30, 0.22);
+}
+
+.chart-colhead {
+    justify-content: center;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.chart-cell {
+    justify-content: center;
+}
+
+.chart-cell i {
+    display: block;
+    width: 0.95rem;
+    height: 0.95rem;
+    background: #1e1e1e;
+}
+
+.chart-cell i.is-off {
+    background: none;
+    border: 1px dashed rgba(30, 30, 30, 0.35);
+}
+
+/* Chart 2: bars */
+.chart-bars {
+    display: grid;
+    gap: 0.6rem;
+    padding: 0.7rem 0.8rem 0.5rem;
+}
+
+.bar-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.2rem 0.6rem;
+    align-items: center;
+}
+
+.bar-track {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(var(--max), 1fr);
+    height: 0.85rem;
+    border: 1px solid #1e1e1e;
+    background: #e6e6e6;
+}
+
+.bar-track i + i {
+    border-left: 1px solid rgba(30, 30, 30, 0.3);
+}
+
+.bar-track i.on {
+    background: #1e1e1e;
+}
+
+.bar-track i.on + i.on {
+    border-left-color: rgba(254, 254, 254, 0.5);
+}
+
+.chart-axis {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0.2rem;
+    border-top: 1px solid rgba(30, 30, 30, 0.22);
+}
+
+.chart-axis-title {
+    text-align: center;
+    color: rgba(30, 30, 30, 0.75);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    a.win--cal {
+        transition: none;
+    }
+
+    a.win--cal:hover,
+    a.win--cal:focus-visible {
+        transform: none;
+    }
+}
+
+/* Charts: both columns share one height, so the captions line up */
+.evidence-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.evidence-field {
+    flex: 1 1 auto;
+}
+
+/* Leave an empty strip of dither under the charts, so the discs never sit behind text */
+#projects {
+    padding-bottom: clamp(200px, 24vw, 340px);
+}
+
+.desk-head .lead {
+    text-wrap: balance;
+}

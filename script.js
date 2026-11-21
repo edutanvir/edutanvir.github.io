@@ -904,7 +904,42 @@
             const sky = $(".aurora", hero);
             if (sky) mount(hero, sky, "clouds", false);
         });
-        $$(".section--light").forEach((section) => mount(section, section, "blobs", true));
+        $$(".section--light:not(.desk-section)").forEach((section) => mount(section, section, "blobs", true));
+        $$(".desk").forEach((desk) => mount(desk, desk, "blobs", true));
+
+        // 1-bit portrait: the profile photo, dithered with the same Bayer matrix
+        const photo = $("[data-portrait]");
+        if (photo) {
+            const render = () => {
+                try {
+                    const N = 56;
+                    const canvas = document.createElement("canvas");
+                    canvas.width = N; canvas.height = N;
+                    const g = canvas.getContext("2d", { willReadFrequently: true });
+                    const side = Math.min(photo.naturalWidth, photo.naturalHeight);
+                    g.drawImage(photo, (photo.naturalWidth - side) / 2, (photo.naturalHeight - side) / 2, side, side, 0, 0, N, N);
+                    const data = g.getImageData(0, 0, N, N);
+                    const px = data.data;
+                    for (let y = 0; y < N; y++) {
+                        for (let x = 0; x < N; x++) {
+                            const i = (y * N + x) * 4;
+                            let l = (0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2]) / 255;
+                            l = Math.min(1, Math.max(0, (l - 0.5) * 1.4 + 0.55));
+                            const v = l > BAYER[y & 7][x & 7] ? 254 : 30;
+                            px[i] = px[i + 1] = px[i + 2] = v;
+                            px[i + 3] = 255;
+                        }
+                    }
+                    g.putImageData(data, 0, 0);
+                    canvas.className = "win-portrait";
+                    canvas.setAttribute("aria-hidden", "true");
+                    photo.replaceWith(canvas);
+                } catch (error) { /* opened from a file: keep the plain photo */ }
+            };
+            if (photo.complete && photo.naturalWidth) render();
+            else photo.addEventListener("load", render, { once: true });
+        }
+
         if (!jobs.length) return;
 
         function paint(job) {
@@ -938,6 +973,118 @@
         });
 
         if (document.fonts && document.fonts.ready) document.fonts.ready.then(paintAll);
+    });
+
+    /* 15. Desktop clock ------------------------------------------------------
+       Shows the visitor's own date and time inside the clock window.        */
+    run("desk-clock", () => {
+        const dateEl = $("[data-clock-date]"), timeEl = $("[data-clock-time]");
+        if (!dateEl || !timeEl) return;
+        const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const dateFmt = new Intl.DateTimeFormat(undefined, { weekday: "long", month: "short", day: "numeric", year: "numeric" });
+        const timeFmt = new Intl.DateTimeFormat(undefined, calm
+            ? { hour: "numeric", minute: "2-digit" }
+            : { hour: "numeric", minute: "2-digit", second: "2-digit" });
+        const tick = () => {
+            const now = new Date();
+            dateEl.textContent = dateFmt.format(now);
+            timeEl.textContent = timeFmt.format(now);
+        };
+        tick();
+        setInterval(tick, calm ? 15000 : 1000);
+    });
+
+    /* 16. Project charts -------------------------------------------------------
+       Both charts are counted from the tags on the project cards, so they can
+       never disagree with the cards. Add a project card and they update.     */
+    run("evidence", () => {
+        const root = $("[data-evidence]");
+        if (!root) return;
+
+        const known = new Set(Array.from($$(".marquee .chip")).map((chip) => chip.textContent.trim()));
+        const alias = { "Synapse Analytics": "Azure Synapse" };
+        const projects = Array.from($$("#projects .slide")).map((slide) => {
+            const name = $("h3", slide).textContent.trim();
+            const tools = Array.from($$(".tag-list li", slide))
+                .map((li) => li.textContent.trim())
+                .map((tag) => alias[tag] || tag)
+                .filter((tag) => known.has(tag));
+            return { name, short: slide.dataset.short || name, tools: Array.from(new Set(tools)) };
+        }).filter((project) => project.tools.length);
+        if (!projects.length) return;
+
+        const counts = new Map();
+        projects.forEach((project) => project.tools.forEach((tool) => counts.set(tool, (counts.get(tool) || 0) + 1)));
+        const tools = Array.from(counts.keys())
+            .sort((a, b) => counts.get(b) - counts.get(a) || a.localeCompare(b));
+        const palette = ["var(--c-blue)", "var(--c-green)", "var(--c-brown)", "var(--c-crimson)", "#5b4aa6"];
+        const colourOf = (tool) => palette[tools.indexOf(tool) % palette.length];
+
+        const make = (tag, className, text) => {
+            const node = document.createElement(tag);
+            if (className) node.className = className;
+            if (text != null) node.textContent = text;
+            return node;
+        };
+        const label = (tool) => {
+            const chip = make("span", "chart-label", tool);
+            chip.style.setProperty("--chip", colourOf(tool));
+            return chip;
+        };
+        const makeWindow = (host, title, description) => {
+            const win = make("div", "win win--chart");
+            win.setAttribute("role", "img");
+            win.setAttribute("aria-label", description);
+            win.append(make("div", "win-bar", title));
+            host.append(win);
+            return win;
+        };
+
+        // Chart 1: which project uses which tool
+        const matrixHost = $('[data-chart="matrix"]', root);
+        if (matrixHost) {
+            const win = makeWindow(matrixHost, "tools_by_project.map",
+                "Tools used by each project. " + projects.map((p) => `${p.name}: ${p.tools.join(", ")}.`).join(" "));
+            const grid = make("div", "chart-matrix");
+            grid.style.setProperty("--cols", projects.length);
+            grid.setAttribute("aria-hidden", "true");
+            grid.append(make("span"));
+            projects.forEach((project) => grid.append(make("span", "chart-colhead", project.short.replace("&amp;", "&"))));
+            tools.forEach((tool) => {
+                const cell = make("span", "chart-rowhead");
+                cell.append(label(tool));
+                grid.append(cell);
+                projects.forEach((project) => {
+                    const mark = make("span", "chart-cell");
+                    mark.append(make("i", project.tools.includes(tool) ? "" : "is-off"));
+                    grid.append(mark);
+                });
+            });
+            win.append(grid);
+        }
+
+        // Chart 2: how many projects use each tool
+        const barsHost = $('[data-chart="bars"]', root);
+        if (barsHost) {
+            const max = projects.length;
+            const win = makeWindow(barsHost, "tool_usage.chart",
+                `Number of projects that use each tool, out of ${max}. ` + tools.map((t) => `${t}: ${counts.get(t)}.`).join(" "));
+            const list = make("div", "chart-bars");
+            list.setAttribute("aria-hidden", "true");
+            list.style.setProperty("--max", max);
+            tools.forEach((tool) => {
+                const row = make("div", "bar-row");
+                row.append(label(tool), make("span", "bar-value", `${counts.get(tool)} of ${max}`));
+                const track = make("div", "bar-track");
+                for (let i = 0; i < max; i++) track.append(make("i", i < counts.get(tool) ? "on" : ""));
+                row.append(track);
+                list.append(row);
+            });
+            const axis = make("div", "chart-axis");
+            for (let i = 0; i <= max; i++) axis.append(make("span", "", String(i)));
+            list.append(axis, make("div", "chart-axis-title", "number of projects"));
+            win.append(list);
+        }
     });
 
     /* 13. Contact form: validates, then sends through the mail service ------ */
