@@ -5053,3 +5053,29 @@ a.win--cal strong {
 .desk-head .lead {
     text-wrap: balance;
 }
+
+/* Case-study polish: kicker labels inside prose were dark text on a dark label, notes sat
+   on the dither pattern, and the wide flow gave half its width to the dashed connectors. */
+.prose .kicker {
+    margin-bottom: 18px;
+    color: var(--bar-text);
+    -webkit-text-fill-color: currentColor;
+    font-size: 0.74rem;
+    line-height: 1.5;
+}
+
+.section--light .note {
+    padding: 10px 14px;
+    border: 2px solid var(--edge);
+    background: var(--surface);
+    box-shadow: 4px 4px 0 var(--edge);
+    color: var(--text);
+}
+
+@media (min-width: 901px) {
+    .flow--wide .flow-link {
+        flex: 0 0 48px;
+        min-width: 0;
+        margin-inline: 8px;
+    }
+}

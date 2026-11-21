@@ -9,7 +9,7 @@ My portfolio of Azure data engineering projects: cloud pipelines, lakehouse arch
 | Project | What it shows | Stack |
 | --- | --- | --- |
 | **Energy Data Lakehouse** | Energy generation, CO₂, prices, and energy-source patterns in an interactive report. [Case study](https://edutanvir.github.io/case-studies/energy-data-lakehouse.html) | Microsoft Fabric, PySpark, Power BI |
-| **Oil & Gas Analytics** | Production trends, oil prices, inventory, suppliers, and shipping delays. Case study coming soon. | Microsoft Fabric, Power BI |
+| **Oil & Gas Analytics** | Production trends, oil prices, inventory, suppliers, and shipping delays. [Case study](https://edutanvir.github.io/case-studies/oil-gas-analytics.html) | Microsoft Fabric, Power BI |
 | **NYC Taxi Analytics** | Taxi trip data from cloud ingestion to SQL analytics. [Case study](https://edutanvir.github.io/case-studies/nyc-taxi.html) | Azure Data Factory, ADLS Gen2, Synapse Analytics, SQL |
 
 ## Core skills
@@ -42,6 +42,7 @@ edutanvir.github.io/
 ├── admin.js                   Logic for the editor (in .gitignore too)
 ├── case-studies/
 │   ├── energy-data-lakehouse.html
+│   ├── oil-gas-analytics.html
 │   └── nyc-taxi.html
 ├── blog/                      Generated pages (do not edit by hand)
 │   ├── index.html

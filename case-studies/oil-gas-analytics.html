@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Oil &amp; Gas Analytics | Md Tanvir Ahmed</title>
+    <meta name="description"
+          content="A plain-English write-up of an oil and gas report built with Microsoft Fabric and Power BI: production, prices, inventory, suppliers and shipping delays on one page.">
+    <meta name="theme-color" content="#fefefe">
+
+    <!-- Site icon (the ?v=2 makes browsers fetch the new version) -->
+    <link rel="icon" type="image/png" href="../images/favicon.png?v=2">
+    <link rel="apple-touch-icon" href="../images/favicon.png?v=2">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <script>
+        /* Applies the saved theme before the page paints (no flash). First visit = light.
+           To follow the visitor's system setting on a first visit, replace "dark" with:
+           (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") */
+        (function () {
+            var root = document.documentElement, theme = null;
+            root.classList.add("js");
+            try { theme = localStorage.getItem("theme"); } catch (e) {}
+            if (theme !== "light" && theme !== "dark") theme = "light";
+            root.dataset.theme = theme;
+        })();
+    </script>
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <nav class="nav container" aria-label="Main navigation">
+            <a class="logo" href="../index.html" aria-label="Md Tanvir Ahmed, home">
+                <span class="logo-mark" aria-hidden="true">
+                    <img src="../images/profile.jpg" alt="" width="34" height="34">
+                    <svg class="logo-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="3"/><path d="M5 5.5v13c0 1.7 3.1 3 7 3s7-1.3 7-3v-13"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>
+                </span>
+                <span class="logo-text">Tanvir Ahmed</span>
+            </a>
+
+            <div class="nav-links">
+                <a class="nav-hide-sm" href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a class="nav-hide-sm" href="../index.html#approach">Approach</a>
+                <a href="../blog/">Blog</a>
+            </div>
+
+            <div class="nav-actions">
+                <a class="nav-ext" href="https://github.com/edutanvir"
+                   target="_blank" rel="noopener noreferrer">GitHub</a>
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme" aria-pressed="false">
+                    <svg class="ico ico-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+                    <svg class="ico ico-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+                </button>
+                <a class="btn btn-primary btn-small" href="../contact.html">Contact</a>
+            </div>
+        </nav>
+        <div class="scroll-progress" aria-hidden="true"></div>
+    </header>
+
+    <main id="main" data-post>
+        <!-- HERO -->
+        <section class="hero" id="top" data-rail="Intro">
+            <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <div class="float-icons" aria-hidden="true">
+                <span class="fi" style="--x:6%;--y:16%;--d:1.2;--c:#e8c066"><span class="fi-tile" style="--s:62px;--t:7s"><svg class="ico"><use href="#i-bolt"/></svg></span></span>
+                <span class="fi" style="--x:89%;--y:12%;--d:0.8;--c:#a9cde6"><span class="fi-tile" style="--s:52px;--t:8s"><svg class="ico"><use href="#i-globe"/></svg></span></span>
+                <span class="fi" style="--x:91%;--y:46%;--d:1.4;--c:#e49aa0"><span class="fi-tile" style="--s:56px;--t:6s"><svg class="ico"><use href="#i-chart"/></svg></span></span>
+                <span class="fi" style="--x:10%;--y:48%;--d:1;--c:#b3a6ee"><span class="fi-tile" style="--s:46px;--t:9s"><svg class="ico"><use href="#i-layers"/></svg></span></span>
+            </div>
+
+            <div class="container">
+                <p class="kicker">Project write-up · Microsoft Fabric</p>
+
+                <h1 class="display display--sm">
+                    <span class="line">Oil and gas.</span>
+                    <span class="line gradient-text">One connected view.</span>
+                </h1>
+
+                <p class="lead">
+                    A plain-English tour of a Microsoft Fabric and Power BI report that
+                    follows oil from supplier to destination: production, price,
+                    inventory and shipping delays on a single page.
+                </p>
+
+                <div class="byline">
+                    <img src="../images/profile.jpg" alt="Md Tanvir Ahmed" width="38" height="38">
+                    <span><strong>Md Tanvir Ahmed</strong></span>
+                    <span aria-hidden="true">·</span>
+                    <span data-reading-time>A few minutes to read</span>
+                </div>
+
+                <nav class="toc" aria-label="In this write-up">
+                    <a href="#story">The short version</a>
+                    <a href="#why">The problem</a>
+                    <a href="#journey">The route</a>
+                    <a href="#dashboard">The report</a>
+                    <a href="#questions">Questions</a>
+                    <a href="#next">What's next</a>
+                </nav>
+
+                <ul class="tag-list" role="list">
+                    <li>Microsoft Fabric</li>
+                    <li>Power BI</li>
+                    <li>Data analytics</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- THE SHORT VERSION -->
+        <section class="section section--tight" id="story" data-rail="The short version">
+            <div class="container">
+                <div class="prose reveal">
+                    <p class="kicker">The short version</p>
+                    <h2>One page, the whole supply chain.</h2>
+                    <p>
+                        I built an <strong>Executive Overview</strong> report in
+                        <strong>Microsoft Fabric</strong> and <strong>Power BI</strong>
+                        that puts oil production, the average oil price, inventory,
+                        suppliers and shipping delays side by side. Pick a supplier, a
+                        risk level or a date range, and you can see how the pieces
+                        connect.
+                    </p>
+                    <p>
+                        This write-up follows the oil in the order it moves. You don't
+                        need to be a data engineer to read it. I'll explain the jargon
+                        as we go.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE PROBLEM -->
+        <section class="section section--tight" id="why" data-rail="The problem">
+            <div class="container">
+                <div class="prose reveal">
+                    <p class="kicker">Why this was worth building</p>
+                    <h2>Each number only tells part of the story.</h2>
+                    <p>
+                        Production tells you how much oil is coming out. Price tells you
+                        what it is worth. Inventory tells you what is sitting in storage,
+                        and shipping tells you what is on its way and whether it is late.
+                        Look at any one of them alone and you miss how they affect each
+                        other.
+                    </p>
+                    <p>
+                        So the goal was simple: put all four on one page, so a reader can
+                        follow the oil from supplier to destination without switching
+                        between reports.
+                    </p>
+
+                    <aside class="callout" style="--c1:#e8c066;--c2:#e49aa0">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-spark"/></svg></span>
+                        <div>
+                            <strong>In plain English: what's a slicer?</strong>
+                            <p>
+                                A slicer is a filter you can see on the page, such as tick
+                                boxes or a date range. On this report the supplier, risk
+                                level and production date boxes are slicers. Use them to
+                                narrow the charts to the part of the picture you care about.
+                            </p>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE ROUTE -->
+        <section class="section section--light" id="journey" data-rail="The route">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">How to read the report</p>
+                    <h2>Follow the oil, left to right.</h2>
+                    <p class="lead">
+                        Four questions, in the order oil moves. The report answers each
+                        one on the same page.
+                    </p>
+                </div>
+
+                <!-- TODO (Tanvir): this section describes the report, not the pipeline behind it.
+                     When you are ready, add a second diagram or a short list covering where the
+                     data came from, which tables or notebooks prepare it in Fabric, and how the
+                     Power BI model reads them. The Fabric workspace in the screenshot is named
+                     "fabric-medallion…". If it follows a Bronze/Silver/Gold layout, say so here. -->
+                <div class="flow flow--wide reveal" data-flow role="img"
+                     aria-label="The report follows oil from suppliers, through production and inventory, to shipping">
+                    <div class="flow-node" style="--c1:#81accc;--c2:#a9cde6">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-globe"/></svg></span>
+                        <strong>Suppliers</strong>
+                        <span>Who produces the oil</span>
+                    </div>
+                    <div class="flow-link"></div>
+                    <div class="flow-node" style="--c1:#e8c066;--c2:#e49aa0">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-chart"/></svg></span>
+                        <strong>Production</strong>
+                        <span>How output moves over time</span>
+                    </div>
+                    <div class="flow-link"></div>
+                    <div class="flow-node" style="--c1:#b3a6ee;--c2:#e49cd0">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-layers"/></svg></span>
+                        <strong>Inventory</strong>
+                        <span>What is held in stock</span>
+                    </div>
+                    <div class="flow-link"></div>
+                    <div class="flow-node" style="--c1:#9ccf8a;--c2:#a9cde6">
+                        <span class="flow-ico"><svg class="ico"><use href="#i-compass"/></svg></span>
+                        <strong>Shipping</strong>
+                        <span>Days to each destination</span>
+                    </div>
+                </div>
+
+                <div class="steps" data-stagger style="margin-top: 36px;">
+                    <article class="card step">
+                        <h3>Suppliers</h3>
+                        <p>
+                            A bar chart ranks the suppliers in the data by how much they
+                            produce. A supplier filter narrows the page to one or more of them.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>Production</h3>
+                        <p>
+                            A line chart shows production across the selected dates. A date
+                            slider changes the window.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>Inventory</h3>
+                        <p>
+                            A headline card shows total inventory next to total production
+                            and the average oil price.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>Shipping</h3>
+                        <p>
+                            A pie chart splits shipping days by destination country, Canada
+                            and the USA, and by whether the shipment was delayed.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE REPORT -->
+        <section class="section" id="dashboard" data-rail="The report">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">The result</p>
+                    <h2>Meet the report.</h2>
+                    <p class="lead">
+                        Here's the finished page. Use the supplier, risk level and date
+                        filters to narrow what the charts show.
+                    </p>
+                </div>
+
+                <!-- TODO (Tanvir): after you rename the chart titles in Fabric (for example
+                     "Shipping days by destination and delay status", "Production over time",
+                     "Production by supplier") and take a new screenshot, save it over
+                     images/oil-gas-dashboard.png. The page and the home page pick it up as is. -->
+                <div class="figure-wrap reveal">
+                    <figure class="browser" data-tilt>
+                        <div class="browser-bar" aria-hidden="true">
+                            <i></i><i></i><i></i><span>Oil and gas executive overview</span>
+                        </div>
+                        <img src="../images/oil-gas-dashboard.png"
+                             alt="Microsoft Fabric oil and gas report, Executive Overview page. Three cards show total production, average oil price and total inventory. Charts show shipping days by destination country and delay status, the production trend over time, and production by supplier, with supplier, risk level and production date filters."
+                             loading="lazy">
+                        <figcaption>
+                            The Executive Overview page of the Fabric report: three headline cards, shipping days by destination country, production over time, and top suppliers by production, with filters for supplier, risk level and production date.
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <p class="kicker reveal">Three things worth a look</p>
+                <div class="grid-3" data-stagger>
+                    <article class="card">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-chart"/></svg></span>
+                        <h3>The headline numbers</h3>
+                        <p>
+                            Three cards at the top, Total Production, Avg Oil Price and
+                            Total Inventory, give the big picture at a glance.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-bolt"/></svg></span>
+                        <h3>Suppliers and the trend</h3>
+                        <p>
+                            The bar chart ranks the four suppliers in the data by
+                            production, and the line chart shows how production rises and
+                            falls across the dates you select.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-compass"/></svg></span>
+                        <h3>Where it ships</h3>
+                        <p>
+                            The pie chart shows shipping days by destination country and
+                            delay status, so you can compare destinations and see where the
+                            delays sit.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUESTIONS -->
+        <section class="section section--light" id="questions" data-rail="Questions">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">What it's for</p>
+                    <h2>Questions you can ask it.</h2>
+                </div>
+
+                <div class="grid-3" data-stagger>
+                    <article class="card">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-search"/></svg></span>
+                        <h3>Who supplies the most?</h3>
+                        <p>
+                            Which suppliers account for the most production, and does that
+                            change when you narrow the dates or the risk level?
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-chart"/></svg></span>
+                        <h3>How does output move?</h3>
+                        <p>
+                            How does production rise and fall across the dates you
+                            select, and which stretches stand out?
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="icon-tile"><svg class="ico"><use href="#i-compass"/></svg></span>
+                        <h3>Where are the delays?</h3>
+                        <p>
+                            How do shipping days split between Canada and the USA, and how
+                            much of that is delayed?
+                        </p>
+                    </article>
+                </div>
+
+                <p class="note">
+                    These are questions to explore, not proof of cause and effect.
+                    Always read a number alongside its source, units and date range.
+                </p>
+            </div>
+        </section>
+
+        <!-- WHAT'S NEXT -->
+        <section class="section" id="next" data-rail="What's next">
+            <div class="container">
+                <div class="prose reveal">
+                    <p class="kicker">Limitations and next steps</p>
+                    <h2>No report is ever finished.</h2>
+                    <p>
+                        A report is only as clear as the definitions behind it. If I kept
+                        going, I'd do three things:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Document the data.</strong> Write down where each table
+                            comes from, when it was loaded, and what each column means.
+                        </li>
+                        <li>
+                            <strong>Label the numbers.</strong> Show units and currency on
+                            the headline cards, and say how each total is calculated.
+                        </li>
+                        <li>
+                            <strong>Make it repeatable.</strong> Write down the steps that
+                            prepare the data and add checks that run the same way every time.
+                        </li>
+                    </ul>
+
+                    <blockquote class="pullquote">
+                        A report is only as trustworthy as the definitions underneath it.
+                    </blockquote>
+                </div>
+
+                <a class="card next-case reveal" href="nyc-taxi.html">
+                    <small>Next project write-up</small>
+                    <strong>NYC Taxi Analytics <span class="link-arrow"></span></strong>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>© 2026 Md Tanvir Ahmed</p>
+            <a href="../index.html#projects">All projects</a>
+            <p>Built with HTML, CSS and GitHub Pages.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
