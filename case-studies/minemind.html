@@ -1,0 +1,1244 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MineMind | Md Tanvir Ahmed</title>
+    <meta name="description"
+          content="MineMind is an AI-powered Canadian mining data intelligence platform combining NRCan geospatial mining features, Statistics Canada mineral production data, DuckDB analytics and Gemini-powered natural-language queries.">
+    <meta name="theme-color" content="#fefefe">
+
+    <link rel="icon" type="image/png" href="../images/favicon.png?v=2">
+    <link rel="apple-touch-icon" href="../images/favicon.png?v=2">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+
+    <script>
+        (function () {
+            var root = document.documentElement, theme = null;
+            root.classList.add("js");
+            try { theme = localStorage.getItem("theme"); } catch (e) {}
+            if (theme !== "light" && theme !== "dark") theme = "light";
+            root.dataset.theme = theme;
+        })();
+    </script>
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <nav class="nav container" aria-label="Main navigation">
+            <a class="logo" href="../index.html" aria-label="Md Tanvir Ahmed, home">
+                <span class="logo-mark" aria-hidden="true">
+                    <img src="../images/profile.jpg" alt="" width="34" height="34">
+                    <svg class="logo-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5.5" rx="7" ry="3"/>
+                        <path d="M5 5.5v13c0 1.7 3.1 3 7 3s7-1.3 7-3v-13"/>
+                        <path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>
+                    </svg>
+                </span>
+                <span class="logo-text">Tanvir Ahmed</span>
+            </a>
+
+            <div class="nav-links">
+                <a class="nav-hide-sm" href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a class="nav-hide-sm" href="../index.html#approach">Approach</a>
+                <a href="../blog/">Blog</a>
+            </div>
+
+            <div class="nav-actions">
+                <a class="nav-ext" href="https://github.com/edutanvir"
+                   target="_blank" rel="noopener noreferrer">GitHub</a>
+                <button class="theme-toggle" type="button" data-theme-toggle
+                        aria-label="Switch to light theme" aria-pressed="false">
+                    <svg class="ico ico-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+                    <svg class="ico ico-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+                </button>
+                <a class="btn btn-primary btn-small" href="../contact.html">Contact</a>
+            </div>
+        </nav>
+        <div class="scroll-progress" aria-hidden="true"></div>
+    </header>
+
+    <main id="main" data-post>
+
+        <!-- HERO -->
+        <section class="hero" id="top" data-rail="Intro">
+            <div class="aurora" aria-hidden="true">
+                <i></i><i></i><i></i><i></i>
+            </div>
+
+            <div class="float-icons" aria-hidden="true">
+                <span class="fi" style="--x:6%;--y:16%;--d:1.2;--c:#e8c066">
+                    <span class="fi-tile" style="--s:62px;--t:7s">
+                        <svg class="ico"><use href="#i-table"/></svg>
+                    </span>
+                </span>
+                <span class="fi" style="--x:89%;--y:12%;--d:0.8;--c:#81accc">
+                    <span class="fi-tile" style="--s:52px;--t:8s">
+                        <svg class="ico"><use href="#i-cloud"/></svg>
+                    </span>
+                </span>
+                <span class="fi" style="--x:91%;--y:46%;--d:1.4;--c:#b3a6ee">
+                    <span class="fi-tile" style="--s:56px;--t:6s">
+                        <svg class="ico"><use href="#i-db"/></svg>
+                    </span>
+                </span>
+                <span class="fi" style="--x:10%;--y:48%;--d:1;--c:#e49cd0">
+                    <span class="fi-tile" style="--s:46px;--t:9s">
+                        <svg class="ico"><use href="#i-spark"/></svg>
+                    </span>
+                </span>
+            </div>
+
+            <div class="container">
+                <p class="kicker">Featured project · Data Engineering + AI</p>
+
+                <h1 class="display display--sm">
+                    <span class="line">Mine</span>
+                    <span class="line gradient-text">Mind.</span>
+                </h1>
+
+                <p class="lead">
+                    An AI-powered mining data intelligence platform that turns
+                    Canadian public mining datasets into searchable, explainable
+                    and evidence-backed insights.
+                </p>
+
+                <div class="byline">
+                    <img src="../images/profile.jpg" alt="Md Tanvir Ahmed"
+                         width="38" height="38">
+                    <span><strong>Md Tanvir Ahmed</strong></span>
+                    <span aria-hidden="true">·</span>
+                    <span>Data Engineering Project</span>
+                </div>
+
+                <nav class="toc" aria-label="In this write-up">
+                    <a href="#story">The idea</a>
+                    <a href="#problem">The challenge</a>
+                    <a href="#architecture">Architecture</a>
+                    <a href="#explorer">Mine Explorer</a>
+                    <a href="#analytics">Production Analytics</a>
+                    <a href="#ai">Ask MineMind</a>
+                    <a href="#debugging">Debugging</a>
+                    <a href="#uniqueness">What makes it different</a>
+                    <a href="#next">What's next</a>
+                </nav>
+
+                <ul class="tag-list" role="list">
+                    <li>Python</li>
+                    <li>Streamlit</li>
+                    <li>DuckDB</li>
+                    <li>SQL</li>
+                    <li>Gemini API</li>
+                    <li>Geospatial Analytics</li>
+                    <li>Statistics Canada</li>
+                    <li>NRCan</li>
+                </ul>
+            </div>
+        </section>
+
+
+        <!-- THE SHORT VERSION -->
+        <section class="section section--tight" id="story"
+                 data-rail="The idea">
+            <div class="container">
+                <div class="prose reveal">
+                    <p class="kicker">The idea</p>
+                    <h2>Making Canadian mining data easier to understand.</h2>
+
+                    <p>
+                        Canada publishes valuable information about its mining
+                        industry through different government datasets. These
+                        sources contain geographic information about mining
+                        features, along with monthly statistics on mineral
+                        production and shipments.
+                    </p>
+
+                    <p>
+                        But finding useful insights means working with different
+                        formats, understanding statistical definitions, querying
+                        large datasets and knowing where the limitations are.
+                    </p>
+
+                    <p>
+                        I built <strong>MineMind</strong> to bring these
+                        capabilities together in one application. It combines
+                        data engineering, geospatial exploration, statistical
+                        analytics and AI-powered natural-language interaction.
+                    </p>
+
+                    <p>
+                        Instead of navigating multiple datasets manually, users
+                        can explore mining features through an interactive
+                        dashboard or ask questions and receive answers grounded
+                        in the underlying data.
+                    </p>
+
+                    <aside class="callout" style="--c1:#e8c066;--c2:#81accc">
+                        <span class="icon-tile">
+                            <svg class="ico"><use href="#i-spark"/></svg>
+                        </span>
+                        <div>
+                            <strong>The central idea</strong>
+                            <p>
+                                Not another chatbot that simply generates
+                                plausible answers. MineMind connects an AI model
+                                to engineered datasets and controlled analytical
+                                tools, so its answers can be traced back to data.
+                            </p>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- THE PROBLEM -->
+        <section class="section section--tight" id="problem"
+                 data-rail="The challenge">
+            <div class="container">
+                <div class="prose reveal">
+                    <p class="kicker">Why this was worth building</p>
+                    <h2>Two datasets. Different structures. Different meanings.</h2>
+
+                    <p>
+                        The project uses two independent Canadian public data
+                        sources. They describe different aspects of the mining
+                        industry and cannot simply be treated as one dataset.
+                    </p>
+
+                    <article class="card">
+                        <h3>01 · NRCan Map 900A</h3>
+                        <p>
+                            Natural Resources Canada provides mapped information
+                            about principal mineral areas, producing mines and
+                            oil and gas fields.
+                        </p>
+                        <p>
+                            MineMind uses its geographic features and associated
+                            attributes to support mine exploration, operator
+                            searches and distance-based analysis.
+                        </p>
+                        <p><strong>What it provides:</strong> mapped features,
+                           locations, operators and available commodity information.</p>
+                    </article>
+
+                    <article class="card" style="margin-top:16px">
+                        <h3>02 · Statistics Canada Table 16-10-0019-01</h3>
+                        <p>
+                            Statistics Canada's monthly statistics provide
+                            information about mineral production, shipments
+                            and inventories across Canadian geographies.
+                        </p>
+                        <p>
+                            MineMind uses the table to explore commodity trends,
+                            statistical series, reporting periods and units.
+                        </p>
+                        <p><strong>What it provides:</strong> monthly statistical
+                           observations, not production records for individual mines.</p>
+                    </article>
+
+                    <aside class="callout" style="--c1:#e8c066;--c2:#e49aa0">
+                        <span class="icon-tile">
+                            <svg class="ico"><use href="#i-search"/></svg>
+                        </span>
+                        <div>
+                            <strong>An important data limitation</strong>
+                            <p>
+                                NRCan mapped features and Statistics Canada
+                                provincial production statistics are not joined
+                                by individual mine. Provincial nickel production
+                                cannot be attributed to a specific mine simply
+                                because that mine appears on the map.
+                            </p>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ARCHITECTURE -->
+        <section class="section section--light" id="architecture"
+                 data-rail="Architecture">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">The engineering behind it</p>
+                    <h2>From public datasets to AI-powered insights.</h2>
+                    <p class="lead">
+                        MineMind separates data preparation, analytical
+                        queries and AI interaction instead of putting
+                        everything inside one application layer.
+                    </p>
+                </div>
+
+                <!-- Replace with your actual architecture diagram if available. -->
+                <div class="reveal">
+                    <figure class="browser" data-tilt>
+                        <div class="browser-bar" aria-hidden="true">
+                            <i></i><i></i><i></i>
+                            <span>MineMind · Data architecture</span>
+                        </div>
+                        <img src="../images/minemind-architecture.png"
+                             alt="MineMind architecture showing NRCan and Statistics Canada source datasets flowing through data preparation into DuckDB Gold tables, then into Streamlit dashboards and Gemini-powered analytical tools."
+                             loading="lazy">
+                        <figcaption>
+                            MineMind architecture: independent source datasets,
+                            curated analytical tables, application dashboards
+                            and AI-powered data access.
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <div class="flow flow--wide reveal" data-flow role="img"
+                     aria-label="Public datasets flow through data preparation into DuckDB, then into Streamlit dashboards and Gemini-powered tools">
+
+                    <div class="flow-node" style="--c1:#81accc;--c2:#a9cde6">
+                        <span class="flow-ico">
+                            <svg class="ico"><use href="#i-cloud"/></svg>
+                        </span>
+                        <strong>Public sources</strong>
+                        <span>NRCan + Statistics Canada</span>
+                    </div>
+
+                    <div class="flow-link"></div>
+
+                    <div class="flow-node" style="--c1:#b3a6ee;--c2:#e49cd0">
+                        <span class="flow-ico">
+                            <svg class="ico"><use href="#i-table"/></svg>
+                        </span>
+                        <strong>Data preparation</strong>
+                        <span>Cleaning and modelling</span>
+                    </div>
+
+                    <div class="flow-link"></div>
+
+                    <div class="flow-node" style="--c1:#e8c066;--c2:#e49aa0">
+                        <span class="flow-ico">
+                            <svg class="ico"><use href="#i-db"/></svg>
+                        </span>
+                        <strong>DuckDB</strong>
+                        <span>Curated Gold tables</span>
+                    </div>
+                </div>
+
+                <div class="flow flow--wide reveal" data-flow
+                     role="img"
+                     aria-label="DuckDB supplies Streamlit dashboards and Gemini-powered analytical tools">
+
+                    <div class="flow-node" style="--c1:#81accc;--c2:#a9cde6">
+                        <span class="flow-ico">
+                            <svg class="ico"><use href="#i-db"/></svg>
+                        </span>
+                        <strong>DuckDB</strong>
+                        <span>Read-only analytical access</span>
+                    </div>
+
+                    <div class="flow-link"></div>
+
+                    <div class="flow-node" style="--c1:#b3a6ee;--c2:#e49cd0">
+                        <span class="flow-ico">
+                            <svg class="ico"><use href="#i-chart"/></svg>
+                        </span>
+                        <strong>Streamlit</strong>
+                        <span>Interactive dashboards</span>
+                    </div>
+
+                    <div class="flow-link"></div>
+
+                    <div class="flow-node" style="--c1:#e8c066;--c2:#e49aa0">
+                        <span class="flow-ico">
+                            <svg class="ico"><use href="#i-spark"/></svg>
+                        </span>
+                        <strong>Gemini AI</strong>
+                        <span>Natural-language analytics</span>
+                    </div>
+                </div>
+
+                <div class="steps" data-stagger style="margin-top:36px">
+                    <article class="card step">
+                        <h3>Collect and prepare</h3>
+                        <p>
+                            Work with the original public datasets, inspect
+                            their schemas, handle data types and prepare
+                            analytical structures.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>Store and query</h3>
+                        <p>
+                            Use DuckDB and SQL to provide a structured
+                            analytical layer, with Gold tables serving
+                            the application.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>Explore and ask</h3>
+                        <p>
+                            Streamlit presents the data through interactive
+                            dashboards and gives Gemini controlled access
+                            through Python analytical tools.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- MINE EXPLORER -->
+        <section class="section" id="explorer" data-rail="Mine Explorer">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">Application · 01</p>
+                    <h2>Canada Mine Explorer.</h2>
+                    <p class="lead">
+                        Explore mapped mining features across Canada and investigate
+                        the information available for individual locations.
+                    </p>
+                </div>
+
+                <div class="reveal">
+                    <figure class="browser" data-tilt>
+                        <div class="browser-bar" aria-hidden="true">
+                            <i></i><i></i><i></i>
+                            <span>MineMind · Mine Explorer</span>
+                        </div>
+                        <img src="../images/minemind-mine-explorer.png"
+                             alt="MineMind Mine Explorer showing mapped mining features, marker categories and feature information."
+                             loading="lazy">
+                        <figcaption>
+                            Mine Explorer: mapped features across Canada and
+                            their associated information from NRCan.
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <div class="prose reveal">
+                    <p>
+                        The Mine Explorer turns the geographic source data
+                        into an interactive way to investigate Canada's
+                        mining landscape.
+                    </p>
+                    <p>
+                        Users can explore mapped features and inspect
+                        available attributes such as feature name,
+                        operator, city, commodity and feature type.
+                    </p>
+                </div>
+
+                <div class="grid-2" data-stagger>
+                    <article class="card">
+                        <span class="icon-tile">
+                            <svg class="ico"><use href="#i-compass"/></svg>
+                        </span>
+                        <h3>Geographic exploration</h3>
+                        <p>
+                            Visualize mapped features and understand
+                            where the recorded mining locations are.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="icon-tile">
+                            <svg class="ico"><use href="#i-search"/></svg>
+                        </span>
+                        <h3>Feature-level inspection</h3>
+                        <p>
+                            Examine available feature details, including
+                            operator, commodity and facility information.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- PRODUCTION ANALYTICS -->
+        <section class="section section--light" id="analytics"
+                 data-rail="Production Analytics">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">Application · 02</p>
+                    <h2>Monthly mineral production analytics.</h2>
+                    <p class="lead">
+                        Go beyond a commodity name. Investigate the exact
+                        statistical series, measurement unit and reporting
+                        period behind a number.
+                    </p>
+                </div>
+
+                <div class="reveal">
+                    <figure class="browser" data-tilt>
+                        <div class="browser-bar" aria-hidden="true">
+                            <i></i><i></i><i></i>
+                            <span>MineMind · Production Analytics</span>
+                        </div>
+                        <img src="../images/minemind-production-analytics.png"
+                             alt="MineMind production analytics dashboard showing monthly mineral production statistics and filters for geography, commodity, measure, unit and statistical series."
+                             loading="lazy">
+                        <figcaption>
+                            Production Analytics: exploring monthly
+                            Statistics Canada observations.
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <div class="prose reveal">
+                    <p>
+                        One of the important challenges in this dataset
+                        is that a commodity can have multiple statistical
+                        series. For example, nickel may be reported as
+                        concentrates, recoverable material or refined
+                        products.
+                    </p>
+                    <p>
+                        These are different statistical measurements.
+                        Selecting a commodity alone is not enough to
+                        identify the correct series.
+                    </p>
+                    <p>
+                        MineMind therefore uses the available series
+                        attributes, including commodity, measure,
+                        unit, vector and coordinate, to distinguish
+                        observations accurately.
+                    </p>
+                </div>
+
+                <aside class="callout reveal"
+                       style="--c1:#e8c066;--c2:#81accc">
+                    <span class="icon-tile">
+                        <svg class="ico"><use href="#i-table"/></svg>
+                    </span>
+                    <div>
+                        <strong>Why this matters</strong>
+                        <p>
+                            Concentrates, recoverable and refined
+                            nickel are not interchangeable numbers.
+                            Combining them without understanding
+                            their definitions could produce misleading
+                            conclusions.
+                        </p>
+                    </div>
+                </aside>
+
+                <div class="grid-2" data-stagger>
+                    <article class="card">
+                        <h3>Series-level filtering</h3>
+                        <p>
+                            Narrow down the analysis using the
+                            statistical definitions and measurement
+                            units instead of relying on commodity
+                            names alone.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <h3>Preserving original observations</h3>
+                        <p>
+                            Filters can help identify useful series,
+                            while the chart retains the underlying
+                            zero and missing observations for
+                            accurate interpretation.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ASK MINEMIND -->
+        <section class="section" id="ai" data-rail="Ask MineMind">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">Application · 03</p>
+                    <h2>Ask MineMind.</h2>
+                    <p class="lead">
+                        What if exploring mining data did not require
+                        writing SQL manually?
+                    </p>
+                </div>
+
+                <div class="reveal">
+                    <figure class="browser" data-tilt>
+                        <div class="browser-bar" aria-hidden="true">
+                            <i></i><i></i><i></i>
+                            <span>MineMind · Ask MineMind</span>
+                        </div>
+                        <img src="../images/minemind-ask.png"
+                             alt="MineMind conversational AI interface showing a natural-language mining question, a data-backed answer and the tools used."
+                             loading="lazy">
+                        <figcaption>
+                            Ask MineMind: natural-language questions
+                            answered using controlled analytical tools.
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <div class="prose reveal">
+                    <p>
+                        Ask MineMind integrates Google's Gemini API
+                        with a set of Python functions that act as
+                        controlled analytical tools.
+                    </p>
+                    <p>
+                        The model interprets the question, selects
+                        an appropriate tool, and receives the
+                        structured result. It then explains the
+                        returned information in natural language.
+                    </p>
+                    <p>
+                        The AI does not receive unrestricted access
+                        to the database. The available tools use
+                        read-only DuckDB connections and
+                        parameterized SQL queries.
+                    </p>
+                </div>
+
+                <div class="flow flow--wide reveal" data-flow
+                     role="img"
+                     aria-label="User question flows to Gemini, which selects a Python tool, queries DuckDB and returns results to Gemini for an evidence-backed answer">
+
+                    <div class="flow-node" style="--c1:#81accc;--c2:#a9cde6">
+                        <span class="flow-ico">
+                            <svg class="ico"><use href="#i-search"/></svg>
+                        </span>
+                        <strong>User question</strong>
+                        <span>Natural language</span>
+                    </div>
+
+                    <div class="flow-link"></div>
+
+                    <div class="flow-node" style="--c1:#b3a6ee;--c2:#e49cd0">
+                        <span class="flow-ico">
+                            <svg class="ico"><use href="#i-spark"/></svg>
+                        </span>
+                        <strong>Gemini</strong>
+                        <span>Tool selection</span>
+                    </div>
+
+                    <div class="flow-link"></div>
+
+                    <div class="flow-node" style="--c1:#e8c066;--c2:#e49aa0">
+                        <span class="flow-ico">
+                            <svg class="ico"><use href="#i-code"/></svg>
+                        </span>
+                        <strong>Python tools</strong>
+                        <span>Controlled execution</span>
+                    </div>
+                </div>
+
+                <div class="flow flow--wide reveal" data-flow
+                     role="img"
+                     aria-label="Python tools query DuckDB and return structured results to Gemini for a final answer">
+
+                    <div class="flow-node" style="--c1:#81accc;--c2:#a9cde6">
+                        <span class="flow-ico">
+                            <svg class="ico"><use href="#i-db"/></svg>
+                        </span>
+                        <strong>DuckDB</strong>
+                        <span>Read-only SQL</span>
+                    </div>
+
+                    <div class="flow-link"></div>
+
+                    <div class="flow-node" style="--c1:#b3a6ee;--c2:#e49cd0">
+                        <span class="flow-ico">
+                            <svg class="ico"><use href="#i-table"/></svg>
+                        </span>
+                        <strong>Structured results</strong>
+                        <span>Rows and summaries</span>
+                    </div>
+
+                    <div class="flow-link"></div>
+
+                    <div class="flow-node" style="--c1:#e8c066;--c2:#e49aa0">
+                        <span class="flow-ico">
+                            <svg class="ico"><use href="#i-spark"/></svg>
+                        </span>
+                        <strong>Final answer</strong>
+                        <span>Evidence-backed response</span>
+                    </div>
+                </div>
+
+                <div class="steps" data-stagger style="margin-top:36px">
+                    <article class="card step">
+                        <h3>Search mining features</h3>
+                        <p>
+                            Find mapped features using filters such
+                            as province, commodity and feature name.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>Explore nearby locations</h3>
+                        <p>
+                            Calculate which mapped features fall
+                            within a requested radius of supported
+                            places such as Sudbury or Timmins.
+                        </p>
+                    </article>
+
+                    <article class="card step">
+                        <h3>Analyse production trends</h3>
+                        <p>
+                            Retrieve monthly production series
+                            with their units, reporting periods
+                            and statistical summaries.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="prose reveal" style="margin-top:42px">
+                    <p class="kicker">A question worth asking</p>
+                    <h3>Can we understand the mining landscape around Sudbury?</h3>
+                    <p>
+                        A demonstration question for Ask MineMind:
+                    </p>
+
+                    <blockquote class="pullquote">
+                        "Identify all mapped mining features within
+                        50 km of Sudbury, group them by operator,
+                        and explain how Ontario's nickel production
+                        has changed over the last 36 months.
+                        Distinguish the different nickel product
+                        series and explain what the data cannot
+                        tell us about production at individual mines."
+                    </blockquote>
+
+                    <p>
+                        This question combines spatial analysis,
+                        operator information, provincial production
+                        statistics and responsible interpretation.
+                        It also tests whether the AI understands
+                        the difference between a mapped mine
+                        feature and a provincial statistical total.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- DEBUGGING JOURNEY -->
+        <section class="section section--light" id="debugging"
+                 data-rail="Debugging">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">Engineering in practice</p>
+                    <h2>Building it meant solving real problems.</h2>
+                    <p class="lead">
+                        The interesting part was not just getting the
+                        application to work. It was understanding
+                        why something failed and isolating the
+                        problem before changing the code.
+                    </p>
+                </div>
+
+                <!-- DEBUGGING 01 -->
+                <div class="prose reveal">
+                    <h3>01 · Investigating unexpected statistical values</h3>
+
+                    <p>
+                        While exploring Statistics Canada's mineral
+                        production data, I noticed that some
+                        geographic and commodity combinations
+                        contained many zero values.
+                    </p>
+
+                    <p>
+                        Instead of immediately treating these as
+                        missing data or changing the ETL logic,
+                        I traced the observations back to the
+                        original CSV files.
+                    </p>
+
+                    <p>
+                        For example, the Alberta Gold series
+                        contained observations that were zero
+                        in the source records as well as in the
+                        analytical database. This established
+                        that the values were not introduced by
+                        the ingestion process.
+                    </p>
+
+                    <p>
+                        I also examined the statistical status
+                        symbols to distinguish reported zeros
+                        from unavailable or suppressed values.
+                    </p>
+
+                    <aside class="callout"
+                           style="--c1:#e8c066;--c2:#e49aa0">
+                        <span class="icon-tile">
+                            <svg class="ico"><use href="#i-search"/></svg>
+                        </span>
+                        <div>
+                            <strong>The lesson</strong>
+                            <p>
+                                A zero is not automatically a missing
+                                value. A missing or suppressed
+                                observation is not automatically
+                                zero. Data-quality decisions must
+                                be based on source definitions
+                                and evidence.
+                            </p>
+                        </div>
+                    </aside>
+                </div>
+
+                <!-- DEBUGGING 02 -->
+                <div class="prose reveal" style="margin-top:48px">
+                    <h3>02 · Finding the correct statistical series</h3>
+
+                    <p>
+                        Another challenge appeared in the production
+                        analytics filters. Selecting a commodity
+                        alone could expose several distinct
+                        statistical series.
+                    </p>
+
+                    <p>
+                        I investigated the original source
+                        attributes, including <strong>commodity,
+                        unit, vector and coordinate</strong>,
+                        to identify the exact series.
+                    </p>
+
+                    <p>
+                        I also separated the logic used to populate
+                        dashboard choices from the data used
+                        to display the time series. This allowed
+                        the interface to avoid presenting
+                        zero-only series as useful default
+                        choices without removing the original
+                        zero and missing observations from
+                        the analytical chart.
+                    </p>
+                </div>
+
+                <!-- DEBUGGING 03 -->
+                <div class="prose reveal" style="margin-top:48px">
+                    <h3>03 · The Ask MineMind request that never returned</h3>
+
+                    <p>
+                        When I first tested the conversational
+                        assistant, a simple question about
+                        mining features within 50 km of Sudbury
+                        remained stuck at "Querying the data..."
+                    </p>
+
+                    <p>
+                        Rather than immediately rewriting
+                        the Gemini integration, I tested
+                        the database tool independently.
+                    </p>
+
+                    <article class="card">
+                        <h3>First: isolate the database query</h3>
+                        <p>
+                            I called the <code>mines_near_place</code>
+                            Python function directly, bypassing
+                            Gemini and Streamlit's conversational
+                            workflow.
+                        </p>
+                        <p>
+                            The DuckDB query completed in
+                            <strong>0.08 seconds</strong> and
+                            returned 10 mapped features within
+                            50 km of Sudbury.
+                        </p>
+                    </article>
+
+                    <article class="card" style="margin-top:16px">
+                        <h3>Second: isolate the Gemini connection</h3>
+                        <p>
+                            I tested a basic text-generation
+                            request without any database tools.
+                            The request also remained pending.
+                        </p>
+                        <p>
+                            I added an explicit 30-second
+                            timeout to capture the underlying
+                            error instead of waiting indefinitely.
+                        </p>
+                        <p>
+                            The result was:
+                        </p>
+                        <pre class="code"><code>ServerError
+504 DEADLINE_EXCEEDED
+
+Deadline expired before
+operation could complete.</code></pre>
+                    </article>
+
+                    <article class="card" style="margin-top:16px">
+                        <h3>Third: compare model behaviour</h3>
+                        <p>
+                            I was using <code>google-genai 3.6.1</code>
+                            and the configured model was
+                            <code>gemini-3.8-flash</code>.
+                        </p>
+                        <p>
+                            I repeated the same basic API
+                            request with <code>gemini-3.5-flash-lite</code>,
+                            keeping the API key, SDK and
+                            request content unchanged.
+                        </p>
+
+                        <div class="grid-2" style="margin-top:18px">
+                            <div class="card">
+                                <p class="kicker">Original model</p>
+                                <h3>3.8 Flash</h3>
+                                <p><strong>504 timeout</strong></p>
+                                <p>28.20 seconds</p>
+                            </div>
+                            <div class="card">
+                                <p class="kicker">Alternative model</p>
+                                <h3>3.5 Flash-Lite</h3>
+                                <p><strong>Successful response</strong></p>
+                                <p>0.69 seconds</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <aside class="callout"
+                           style="--c1:#81accc;--c2:#e8c066;
+                                  margin-top:20px">
+                        <span class="icon-tile">
+                            <svg class="ico"><use href="#i-spark"/></svg>
+                        </span>
+                        <div>
+                            <strong>What this investigation established</strong>
+                            <p>
+                                The database query was working.
+                                The basic request to the original
+                                model was timing out, while the
+                                alternative model responded
+                                successfully. Switching the
+                                configured model resolved the
+                                immediate application issue.
+                            </p>
+                        </div>
+                    </aside>
+
+                    <p style="margin-top:20px">
+                        This did not prove that the original
+                        model is always slower or that
+                        function calling itself was defective.
+                        It isolated the immediate failure
+                        to the original model request in
+                        that test.
+                    </p>
+                </div>
+
+                <!-- DEBUGGING 04 -->
+                <div class="prose reveal" style="margin-top:48px">
+                    <h3>04 · Why I prefer evidence over quick fixes</h3>
+
+                    <p>
+                        These investigations reinforced an
+                        important engineering habit: isolate
+                        the components before changing the
+                        system.
+                    </p>
+
+                    <ul>
+                        <li>Test the database independently.</li>
+                        <li>Test the external API independently.</li>
+                        <li>Capture the actual error with a timeout.</li>
+                        <li>Compare model behaviour using the same request.</li>
+                        <li>Change only the component supported by the evidence.</li>
+                    </ul>
+
+                    <p>
+                        A working application is important,
+                        but understanding why it works
+                        and why it fails is just as important.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- UNIQUENESS -->
+        <section class="section" id="uniqueness"
+                 data-rail="What makes it different">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker">Beyond a conventional chatbot</p>
+                    <h2>What makes MineMind different?</h2>
+                    <p class="lead">
+                        The value is not simply that an AI model
+                        can answer a question. It is that the
+                        application gives the model access
+                        to a carefully engineered analytical
+                        environment.
+                    </p>
+                </div>
+
+                <div class="grid-2" data-stagger>
+                    <article class="card">
+                        <span class="icon-tile">
+                            <svg class="ico"><use href="#i-db"/></svg>
+                        </span>
+                        <h3>Data-grounded answers</h3>
+                        <p>
+                            Answers are supported by queries
+                            against curated Gold tables rather
+                            than relying exclusively on
+                            general model knowledge.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="icon-tile">
+                            <svg class="ico"><use href="#i-compass"/></svg>
+                        </span>
+                        <h3>Spatial intelligence</h3>
+                        <p>
+                            Users can explore geographic
+                            relationships between mapped
+                            mining features and selected
+                            locations.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="icon-tile">
+                            <svg class="ico"><use href="#i-table"/></svg>
+                        </span>
+                        <h3>Statistical awareness</h3>
+                        <p>
+                            The application distinguishes
+                            statistical series, units,
+                            missing values, suppressed
+                            observations and reported zeros.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="icon-tile">
+                            <svg class="ico"><use href="#i-code"/></svg>
+                        </span>
+                        <h3>Controlled tool execution</h3>
+                        <p>
+                            Gemini receives a defined set
+                            of Python functions that query
+                            the database through
+                            read-only connections and
+                            parameterized SQL.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="icon-tile">
+                            <svg class="ico"><use href="#i-search"/></svg>
+                        </span>
+                        <h3>Traceable responses</h3>
+                        <p>
+                            The Tools used panel exposes
+                            the analytical functions called,
+                            their arguments, returned row
+                            counts and source information.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <span class="icon-tile">
+                            <svg class="ico"><use href="#i-shield"/></svg>
+                        </span>
+                        <h3>Responsible interpretation</h3>
+                        <p>
+                            The AI is instructed not to
+                            attribute provincial production
+                            totals to individual mines or
+                            invent unavailable values.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="prose reveal" style="margin-top:42px">
+                    <h3>How would MineMind compare with a general AI model?</h3>
+
+                    <p>
+                        MineMind is not intended to prove
+                        that its underlying language model
+                        is inherently more intelligent than
+                        other models.
+                    </p>
+
+                    <p>
+                        Its advantage is the combination
+                        of domain-specific data, engineered
+                        analytical tools, explicit
+                        statistical rules and traceable
+                        results.
+                    </p>
+
+                    <p>
+                        A fair comparison would give a
+                        general-purpose model the same
+                        questions without access to
+                        MineMind's database, then compare
+                        both systems against verified
+                        source records.
+                    </p>
+
+                    <p>
+                        The evaluation would measure
+                        factual accuracy, data grounding,
+                        statistical interpretation,
+                        source traceability and
+                        unsupported claims.
+                    </p>
+
+                    <blockquote class="pullquote">
+                        The goal is not to make AI sound
+                        knowledgeable about mining.
+                        It is to make mining data
+                        accessible without losing
+                        the evidence behind an answer.
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- WHAT I LEARNED -->
+        <section class="section section--light" id="learnings"
+                 data-rail="What I learned">
+            <div class="container">
+                <div class="prose reveal">
+                    <p class="kicker">Engineering reflection</p>
+                    <h2>What building MineMind taught me.</h2>
+
+                    <p>
+                        This project brought together several
+                        parts of data engineering that are
+                        often treated separately: ingestion,
+                        data modelling, SQL analytics,
+                        geospatial data, application
+                        development and AI integration.
+                    </p>
+
+                    <p>
+                        More importantly, it showed me
+                        that the hardest part is not always
+                        writing code. It is understanding
+                        the source data, validating its
+                        meaning and deciding what conclusions
+                        the data can actually support.
+                    </p>
+
+                    <ul>
+                        <li>
+                            <strong>Data quality starts at the source:</strong>
+                            investigate original observations
+                            before changing transformation logic.
+                        </li>
+                        <li>
+                            <strong>Statistical definitions matter:</strong>
+                            identical commodity names do not
+                            necessarily represent identical
+                            measurements.
+                        </li>
+                        <li>
+                            <strong>AI needs boundaries:</strong>
+                            controlled tools and reliable
+                            data access matter more than
+                            simply connecting an API.
+                        </li>
+                        <li>
+                            <strong>Debugging needs isolation:</strong>
+                            independently test each component
+                            before changing the architecture.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- WHAT'S NEXT -->
+        <section class="section" id="next" data-rail="What's next">
+            <div class="container">
+                <div class="prose reveal">
+                    <p class="kicker">What's next</p>
+                    <h2>Where I'd take MineMind next.</h2>
+
+                    <p>
+                        MineMind is a foundation for a more
+                        comprehensive Canadian mining
+                        intelligence platform. There are
+                        several areas I would develop further:
+                    </p>
+
+                    <ul>
+                        <li>
+                            <strong>More public data sources:</strong>
+                            introduce additional verified
+                            datasets where their definitions
+                            and relationships can be established.
+                        </li>
+                        <li>
+                            <strong>Stronger data-quality monitoring:</strong>
+                            automate checks for missing values,
+                            unusual observations, duplicate
+                            records and changes in source
+                            structures.
+                        </li>
+                        <li>
+                            <strong>AI evaluation:</strong>
+                            create a benchmark of domain-specific
+                            questions to measure accuracy,
+                            tool selection, response quality
+                            and source grounding.
+                        </li>
+                        <li>
+                            <strong>Production readiness:</strong>
+                            improve API timeout handling,
+                            monitoring, caching, security
+                            and deployment reliability.
+                        </li>
+                    </ul>
+
+                    <blockquote class="pullquote">
+                        Good data engineering makes information
+                        usable. Good AI makes it easier to
+                        explore. Trustworthy intelligence
+                        requires both.
+                    </blockquote>
+                </div>
+
+                <a class="card next-case reveal"
+                   href="../index.html#projects">
+                    <small>Explore more projects</small>
+                    <strong>Back to all projects
+                        <span class="link-arrow"></span>
+                    </strong>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>© 2026 Md Tanvir Ahmed</p>
+            <a href="../index.html#projects">All projects</a>
+            <p>Built with Python, Streamlit and DuckDB.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>

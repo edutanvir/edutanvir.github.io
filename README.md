@@ -11,10 +11,11 @@ My portfolio of Azure data engineering projects: cloud pipelines, lakehouse arch
 | **Energy Data Lakehouse** | Energy generation, CO₂, prices, and energy-source patterns in an interactive report. [Case study](https://edutanvir.github.io/case-studies/energy-data-lakehouse.html) | Microsoft Fabric, PySpark, Power BI |
 | **Oil & Gas Analytics** | Production trends, oil prices, inventory, suppliers, and shipping delays. [Case study](https://edutanvir.github.io/case-studies/oil-gas-analytics.html) | Microsoft Fabric, Power BI |
 | **NYC Taxi Analytics** | Taxi trip data from cloud ingestion to SQL analytics. [Case study](https://edutanvir.github.io/case-studies/nyc-taxi.html) | Azure Data Factory, ADLS Gen2, Synapse Analytics, SQL |
+| **MineMind** | Canadian mining data explored through maps, production analytics and an AI assistant whose answers trace back to the data. [Case study](https://edutanvir.github.io/case-studies/minemind.html) | Python, DuckDB, Streamlit, Gemini API |
 
 ## Core skills
 
-Azure Data Factory, Databricks, PySpark, Spark SQL, SQL, ADLS Gen2, Azure Synapse, Azure SQL, Microsoft Fabric, Power BI, Azure DevOps CI/CD, Key Vault, RBAC, Managed Identities.
+Azure Data Factory, Databricks, PySpark, Spark SQL, SQL, ADLS Gen2, Azure Synapse, Azure SQL, Microsoft Fabric, Power BI, Azure DevOps CI/CD, Key Vault, RBAC, Managed Identities, Python, DuckDB, Streamlit, Gemini API.
 
 ## About this site
 

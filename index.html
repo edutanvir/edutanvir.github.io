@@ -150,6 +150,9 @@
                     <li class="chip">Microsoft Fabric</li>
                     <li class="chip">Power BI</li>
                     <li class="chip">Python</li>
+                    <li class="chip">DuckDB</li>
+                    <li class="chip">Streamlit</li>
+                    <li class="chip">Gemini API</li>
                     <li class="chip">Azure DevOps CI/CD</li>
                     <li class="chip">Key Vault</li>
                     <li class="chip">Managed Identities</li>
@@ -238,6 +241,13 @@
                                         <a href="case-studies/nyc-taxi.html">
                                             <span class="win-pill">NYC Taxi Analytics</span>
                                             <span class="win-meta">Data Factory, ADLS Gen2, Synapse, SQL</span>
+                                            <span class="win-go">read</span>
+                                        </a>
+                                    </li>
+                                    <li style="--chip:var(--c-brown)">
+                                        <a href="case-studies/minemind.html">
+                                            <span class="win-pill">MineMind</span>
+                                            <span class="win-meta">Python, DuckDB, Streamlit, Gemini</span>
                                             <span class="win-go">read</span>
                                         </a>
                                     </li>
@@ -340,7 +350,7 @@
 
                     <div class="carousel-stage">
                         <!-- Project 1: Energy -->
-                        <article data-short="Energy" class="slide is-active" aria-roledescription="slide" aria-label="1 of 3"
+                        <article data-short="Energy" class="slide is-active" aria-roledescription="slide" aria-label="1 of 4"
                                  style="--c1:#9ccf8a;--c2:#a9cde6;--ck:#14803c">
                             <div class="slide-copy">
                                 <p class="kicker">Microsoft Fabric</p>
@@ -375,7 +385,7 @@
                         </article>
 
                         <!-- Project 2: Oil and gas -->
-                        <article data-short="Oil &amp; gas" class="slide" aria-roledescription="slide" aria-label="2 of 3"
+                        <article data-short="Oil &amp; gas" class="slide" aria-roledescription="slide" aria-label="2 of 4"
                                  style="--c1:#e8c066;--c2:#e49aa0;--ck:#b45309">
                             <div class="slide-copy">
                                 <p class="kicker">Fabric analytics</p>
@@ -410,7 +420,7 @@
                         </article>
 
                         <!-- Project 3: NYC Taxi -->
-                        <article data-short="NYC taxi" class="slide" aria-roledescription="slide" aria-label="3 of 3"
+                        <article data-short="NYC taxi" class="slide" aria-roledescription="slide" aria-label="3 of 4"
                                  style="--c1:#b3a6ee;--c2:#e49cd0;--ck:#5b4bdb">
                             <div class="slide-copy">
                                 <p class="kicker">Azure data platform</p>
@@ -445,9 +455,44 @@
                             </a>
                         </article>
 
-                        <!-- MineGuard: copy one of the slides above, update the text, image
-                             and colours, paste it here, and change the aria-labels to "4 of 4".
-                             Then add a fourth .carousel-dot button below. -->
+
+                        <!-- Project 4: MineMind -->
+                        <article data-short="MineMind" class="slide" aria-roledescription="slide" aria-label="4 of 4"
+                                 style="--c1:#9ccf8a;--c2:#81accc;--ck:#14803c">
+                            <div class="slide-copy">
+                                <p class="kicker">AI-powered data intelligence</p>
+                                <h3>MineMind</h3>
+                                <p>
+                                    Explore Canadian mining data through interactive maps,
+                                    production analytics and an AI-powered natural-language
+                                    interface. Built with Python, DuckDB, Streamlit and Gemini,
+                                    with a focus on traceable data and reliable answers.
+                                </p>
+                                <ul class="tag-list" role="list">
+                                    <li>Python</li>
+                                    <li>DuckDB</li>
+                                    <li>Streamlit</li>
+                                    <li>Gemini API</li>
+                                    <li>Geospatial Analytics</li>
+                                </ul>
+                                <a class="btn btn-primary" href="case-studies/minemind.html">
+                                    Read the full story
+                                </a>
+                            </div>
+
+                            <a class="slide-media" href="case-studies/minemind.html"
+                               data-cursor="view" aria-label="Open the MineMind write-up">
+                                <figure class="browser" data-tilt>
+                                    <div class="browser-bar" aria-hidden="true">
+                                        <i></i><i></i><i></i><span>MineMind – Mine Explorer</span>
+                                    </div>
+                                    <img src="images/minemind-mine-explorer.png"
+                                        alt="MineMind Mine Explorer showing mapped mining features and facility information."
+                                        loading="lazy">
+                                </figure>
+                            </a>
+                        </article>
+
                     </div>
 
                     <div class="carousel-controls">
@@ -458,9 +503,11 @@
                                     aria-label="Show Oil and Gas Analytics"></button>
                             <button class="carousel-dot" type="button"
                                     aria-label="Show NYC Taxi Analytics"></button>
+                            <button class="carousel-dot" type="button"
+                                    aria-label="Show MineMind"></button>
                         </div>
 
-                        <p class="carousel-counter" aria-live="polite">01 / 03</p>
+                        <p class="carousel-counter" aria-live="polite">01 / 04</p>
 
                         <div class="carousel-arrows">
                             <button class="carousel-arrow" type="button"

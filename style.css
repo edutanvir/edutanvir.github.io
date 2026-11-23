@@ -5079,3 +5079,71 @@ a.win--cal strong {
         margin-inline: 8px;
     }
 }
+
+/* Text on the pink desktop: sit it on a solid window panel (like the note) so the
+   dither pattern never runs behind a sentence. Applies to long prose, section intros,
+   call-outs and the chart captions. White sections are untouched. */
+.section--light .prose {
+    padding: clamp(18px, 2.6vw, 34px);
+    border: 2px solid var(--edge);
+    background: var(--surface);
+    box-shadow: 5px 5px 0 var(--edge);
+}
+
+.section--light .section-head .lead {
+    width: fit-content;
+    max-width: 46rem;
+    margin-inline: auto;
+    padding: 12px 20px;
+    border: 2px solid var(--edge);
+    background: var(--surface);
+    box-shadow: 4px 4px 0 var(--edge);
+    color: var(--text);
+}
+
+.section--light .callout {
+    background: var(--surface);
+}
+
+.section--light .prose .callout {
+    background: var(--field-bg);
+}
+
+.section--light .desk-head .lead {
+    width: fit-content;
+    max-width: 46rem;
+    margin-inline: auto;
+    padding: 12px 20px;
+    border: 2px solid var(--edge);
+    background: var(--surface);
+    box-shadow: 4px 4px 0 var(--edge);
+    color: var(--text);
+}
+
+.section--light .evidence-col figcaption {
+    min-height: 7.2rem;
+    margin-top: 18px;
+    padding: 10px 14px;
+    border: 2px solid var(--edge);
+    background: var(--surface);
+    box-shadow: 4px 4px 0 var(--edge);
+}
+
+/* Breathing room between stacked blocks on the long case-study pages */
+.container > .flow--wide + .flow--wide {
+    margin-top: 20px;
+}
+
+.container > .reveal + .prose,
+.container > .prose + .grid-2,
+.container > .prose + .callout,
+.container > .callout + .grid-2,
+.container > .grid-2 + .prose {
+    margin-top: 28px;
+}
+
+.prose > p + .card,
+.prose > .card + .card,
+.prose > p + .grid-2 {
+    margin-top: 18px;
+}
