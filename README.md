@@ -134,4 +134,13 @@ python3 -m http.server 8000
 
 ## License
 
-Copyright © 2026 Md Tanvir Ahmed. All rights reserved. See [LICENSE](LICENSE).
+---
+
+## Copyright and License
+
+Copyright © 2026 Md Tanvir Ahmed. All Rights Reserved.
+
+MineMind is proprietary software. Unauthorized copying, modification,
+redistribution, deployment, or commercial use is prohibited.
+
+See the [LICENSE](LICENSE) file for details.
